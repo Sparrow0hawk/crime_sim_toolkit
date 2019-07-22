@@ -1,0 +1,6 @@
+# gitignore file
+
+# folders
+crime_sim_toolkit.egg-info
+
+# specific files
