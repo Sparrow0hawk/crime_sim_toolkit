@@ -2,5 +2,6 @@
 
 # folders
 crime_sim_toolkit.egg-info
+__pycache__
 
 # specific files
