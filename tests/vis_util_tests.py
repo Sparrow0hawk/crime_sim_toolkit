@@ -44,6 +44,18 @@ class Test(unittest.TestCase):
 
             self.assertNotEqual(self.data, self.matchFalse)
 
+    def test_map_Geojson(self):
+        """
+        Test to check we can do full data to folium map
+        """
+
+        self.data = pd.read_csv(os.path.join(test_dir,'./testing_data/data_to_map.csv'), index_col=False)
+
+        print(self.data)
+
+        self.test = vis_utils.get_choropleth(data=self.data)
+
+
 
 
 if __name__ == "__main__":
