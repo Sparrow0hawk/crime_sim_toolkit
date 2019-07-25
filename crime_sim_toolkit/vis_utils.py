@@ -68,7 +68,7 @@ def get_choropleth(data=None, inline=True):
     if inline == True:
         display(m)
     else:
-        m.save('/output/choropleth.html')
+        m.save('./output/choropleth.html')
 
 def match_LSOA_to_LA(LSOA_cd):
 
@@ -79,3 +79,56 @@ def match_LSOA_to_LA(LSOA_cd):
     row_of_interest = LSOA_pop.set_index('LSOA Code').loc[LSOA_cd]
 
     return row_of_interest['Local authority code']
+
+def get_LA_GeoJson(LA_cd):
+    """
+    returns a link to LSOA geojson file within LA passed from https://github.com/martinjc/UK-GeoJSON/
+    """
+
+    link_base = 'https://raw.githubusercontent.com/martinjc/UK-GeoJSON/master/json/statistical/eng/lsoa_by_lad/'
+
+    new_link = link_base+str(LA_cd)+'.json'
+
+    return new_link
+
+
+def get_GeoJson(LA_name):
+
+    # get links to geojson files
+    links = []
+
+    for LA in LA_name:
+        links.append(get_LA_GeoJson(LA))
+
+    print('Total number of LAs passed.')
+    # section for loading jsons into list
+
+    geojson_lst = []
+
+    for link in links:
+
+        # use requests to load json file as dict
+        # TODO: need to include some error catching for invalid requests
+        geojson_lst.append(requests.get(link).json())
+
+    for idx, json in enumerate(geojson_lst):
+
+        counter1 = 0
+
+        for feat in json['features']:
+
+            counter1 += 1
+
+        print('For file %s there are %s LSOAs' % (str(idx), str(counter1)))
+
+    # combine geojsons
+    start_json = dict(geojson_lst[0])
+
+    # begin appending file by file ignoring first file
+    for file in geojson_lst[1:]:
+
+        for polygon in file['features']:
+
+            start_json['features'].append(polygon)
+
+    return start_json

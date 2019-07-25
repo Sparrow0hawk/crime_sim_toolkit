@@ -3,5 +3,7 @@
 # folders
 crime_sim_toolkit.egg-info
 __pycache__
+.ipynb_checkpoints
 
 # specific files
+scrapbook.ipynb
