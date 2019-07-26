@@ -1,3 +1,6 @@
+# TODO: do we build lots of little methods that are called by a big method?
+#       or a series of class methods that are called sequentially?
+
 # import libraries
 import sys
 import math
@@ -29,6 +32,10 @@ class Initialiser:
         Input: LA_names : local authority names, python list of capitalised strings of local authority names
                src folder
                data folder: populated with monthly csv files from custom downloads from https://data.police.uk/data/
+
+        TODO: build some tests
+              Does it return data with right columns? Does it match an expected length after concat?
+              Can you return certain LSOA household value etc
         """
 
         # boot up LSOA lists from 2011 census
@@ -37,13 +44,13 @@ class Initialiser:
 
         LSOA_pop = LSOA_pop[LSOA_pop['Local authority name'].isin(LA_names)]
 
-        LSOA_counts_WY = LSOA_pop[['LSOA Code','LSOA Name','Persons','Households']].reset_index(drop=True)
+        LSOA_counts = LSOA_pop[['LSOA Code','LSOA Name','Persons','Households']].reset_index(drop=True)
 
-        LSOA_counts_WY.columns = ['LSOA_code','LSOA_name','persons','households']
+        LSOA_counts.columns = ['LSOA_code','LSOA_name','persons','households']
 
-        LSOA_counts_WY.persons = LSOA_counts_WY.persons.apply(lambda x: np.int64(x.replace(',', '')))
+        LSOA_counts.persons = LSOA_counts.persons.apply(lambda x: np.int64(x.replace(',', '')))
 
-        LSOA_counts_WY.households = LSOA_counts_WY.households.apply(lambda x: np.int64(x.replace(',', '')))
+        LSOA_counts.households = LSOA_counts.households.apply(lambda x: np.int64(x.replace(',', '')))
 
         # section for pulling in and concatenating police report data
         files_list = glob.glob('data/policedata*/*/*.csv')
@@ -60,7 +67,11 @@ class Initialiser:
 
         combined_files.reset_index(inplace=True, drop=True)
 
-        return (combined_files, LSOA_counts_WY)
+        self.report_frame = combined_files
+
+        self.LSOA_hh_counts = LSOA_counts
+
+        return 'Data Initialised.'
 
     def random_date_allocate(self, data, Week=False):
         """
