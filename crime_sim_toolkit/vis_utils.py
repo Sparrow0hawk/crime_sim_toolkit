@@ -1,14 +1,12 @@
 """
 File for defining some visualisation/mapping functions
 """
-import pandas as pd
-import glob
-import folium
-import branca
 import json
 import requests
-import time
-from IPython.display import display, clear_output
+import pandas as pd
+import folium
+import branca
+
 
 def get_choropleth(data=None, inline=True):
 
@@ -29,8 +27,9 @@ def get_choropleth(data=None, inline=True):
     geodata = get_GeoJson(LA_ser.tolist())
 
     # build basic folium map
-    m = folium.Map(tiles='OpenStreetMap',
-                   zoom_start=10)
+    m = folium.Map(location=[54.132393, -3.325583],
+                   tiles='OpenStreetMap',
+                   zoom_start=6)
 
     # get crime counts per LSOA for given week in 2018
     choro_counts = data.groupby('LSOA_code')['Counts'].sum().reset_index('LSOA_code')
@@ -46,22 +45,23 @@ def get_choropleth(data=None, inline=True):
     for feat in geodata['features']:
         # set new property Count as the integer value of counts in a specific LSOA
         # using get to match the pandas series index (LSOA_code) to geojson lsoa code property
-        feat['properties']['Counts']=int(choro_counts.get(feat['properties']['LSOA11CD']))
+        # default zero here will handle missing LSOAs and return 0 counts
+        feat['properties']['Counts']=int(choro_counts.get(feat['properties']['LSOA11CD'], default=0))
 
     # define a style function that will colour lsoas based on crime counts
     # does not colour 0 black for unknown reason
     def style_func(feature):
-        counted = choro_counts.get(feature['properties']['LSOA11CD'])
+        counted = choro_counts.get(feature['properties']['LSOA11CD'], default=0)
         return {
         'fillOpacity': 0.7,
         'weight': 0.3,
         'fillColor': '#black' if counted == 0 else colorscale(counted)
-            }
+        }
 
 
     # plot geojson file with style function including a tooltip
     folium.GeoJson(
-          data=WY_geodata,
+          data=geodata,
           style_function=style_func,
           tooltip=folium.features.GeoJsonTooltip(['LSOA11CD','Counts'],
                                                 aliases=['LSOA code','Crime count'])
@@ -72,7 +72,10 @@ def get_choropleth(data=None, inline=True):
     if inline == True:
         display(m)
     else:
-        m.save('./output/choropleth.html')
+        # user can define map output name
+        file_name = input('Please pass a name for your choropleth: ')
+
+        m.save('./output/'+str(file_name)+'.html')
 
 def match_LSOA_to_LA(LSOA_cd):
 

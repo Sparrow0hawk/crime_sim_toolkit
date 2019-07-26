@@ -51,9 +51,7 @@ class Test(unittest.TestCase):
 
         self.data = pd.read_csv(os.path.join(test_dir,'./testing_data/data_to_map.csv'), index_col=False)
 
-        print(self.data)
-
-        self.test = vis_utils.get_choropleth(data=self.data)
+        self.test = vis_utils.get_choropleth(data=self.data, inline=False)
 
 
 
