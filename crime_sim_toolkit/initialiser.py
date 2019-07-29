@@ -21,7 +21,22 @@ class Initialiser:
     def __init__(self):
         pass
 
+    def get_data(self, LA_names, Week=False):
+        """
+        One-caller function that loads and manipulates data ready for use
+        """
 
+        print('Fetching count data from police reports.')
+        print('Sit back and have a brew, this may take sometime.')
+
+        # this initialises two class variables
+        self.initialise_data(LA_names)
+
+        dated_data = self.random_date_allocate(data=self.report_frame, Week=False)
+
+        mut_counts_frame = self.reports_to_counts(dated_data)
+
+        return mut_counts_frame
 
     def initialise_data(self, LA_names):
         """
@@ -40,7 +55,7 @@ class Initialiser:
 
         # boot up LSOA lists from 2011 census
 
-        LSOA_pop = pd.read_csv('./src/census_2011_population_hh.csv')
+        LSOA_pop = pd.read_csv('./src/LSOA_data/census_2011_population_hh.csv')
 
         LSOA_pop = LSOA_pop[LSOA_pop['Local authority name'].isin(LA_names)]
 
@@ -71,12 +86,13 @@ class Initialiser:
 
         self.LSOA_hh_counts = LSOA_counts
 
-        return 'Data Initialised.'
+        return 'Data Loaded.'
 
     def random_date_allocate(self, data, Week=False):
         """
         function for randomly allocating Days or weeks to police data
         """
+
         try:
             data['Month'] == True
         except KeyError:
@@ -84,7 +100,6 @@ class Initialiser:
             print('Please try again with Month in a Year-Month format.')
             return False
             sys.exit()
-
 
         dated_data = data.copy()
 
@@ -120,38 +135,25 @@ class Initialiser:
 
         counts_frame = pd.DataFrame(reports_frame.groupby(['Year','Mon','Crime type','LSOA code'])[timeframe].value_counts()).reset_index(level=['Mon','Crime type','Year','LSOA code'])
 
-        print(counts_frame.columns)
-
         counts_frame.columns = ['Year', 'Mon', 'Crime_type','LSOA_code', 'Counts']
 
         counts_frame.reset_index(inplace=True)
 
         # filter for just WY LSOA
 
-        counts_frame = counts_frame[counts_frame.LSOA_code.isin(LSOA_counts_WY.LSOA_code)]
+        counts_frame = counts_frame[counts_frame.LSOA_code.isin(self.LSOA_hh_counts.LSOA_code)]
 
         counts_frame.reset_index(inplace=True, drop=True)
 
-        counts_frame.head()
+        return counts_frame
 
-        counts_frame.LSOA_code.isin(LSOA_counts_WY.LSOA_code).shape
-
-        LSOA_counts_WY.LSOA_code.unique().shape
-
-        frame1 = tot_counts[tot_counts.Year == 2016]
-
-        frame1 = frame1[frame1.Week == 33]
-
-        frame1.head()
-
-
-    def add_zero_counts(self):
+    def add_zero_counts(self, counts_frame):
         """
         Function to include of zero crime to date-allocated crime counts dataframe
         """
         pile_o_df = []
 
-        for year in tot_counts.Year.unique():
+        for year in counts_frame.Year.unique():
 
             year_frame = tot_counts.copy()
 
@@ -186,19 +188,21 @@ class Initialiser:
 
         new_tot_counts.reset_index(drop=True, inplace=True)
 
+        return new_tot_counts
+
 
 # check whether each week has the same number of unique LSOAs (indicating zero results have been filled in)
-    def zeros_check(self):
+    def zeros_check(self, counts_frame):
         """
         Function to print out number of unique LSOAs per timeframe (week/day)
         Checks that LSOAs with zero crime have been included
         TODO: unclear if needed or should be formatted into test
         """
-        for year in new_tot_counts.Year.unique():
+        for year in counts_frame.Year.unique():
 
             print(year)
 
-            year_frame = new_tot_counts.copy()
+            year_frame = counts_frame.copy()
 
             year_frame = year_frame[year_frame.Year == year]
 
