@@ -7,6 +7,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import scipy.stats
 from sklearn.metrics import mean_squared_error, median_absolute_error, mean_absolute_error
+from crime_sim_toolkit.initialiser import Initialiser
 
 
 class Poisson_sim:
@@ -15,32 +16,69 @@ class Poisson_sim:
     Requires data from https://data.police.uk/ in data folder
     """
 
-    def __init__(self):
-        pass
+    def __init__(self, LA_names):
+
+        self.data = Initialiser().get_data(LA_names=LA_names)
 
 
-    def out_of_bag_prep(self):
+    def out_of_bag_prep(self, full_year=True):
         """
         Function for selecting out a year of real data from counts data for
         out-of-bag sampler comparison
         """
 
-        oob_crime_counts = new_tot_counts[(new_tot_counts.Year != 2018) & (new_tot_counts.Year != 2019)]
+        original_frame = self.data
+
+        # identify highest year with complete counts for entire year
+        # this will be used as out-of-bag comparator
+        if full_year == True:
+
+            try:
+                oob_year = original_frame.Year.unique()[original_frame.groupby('Year')['Mon'].unique().map(lambda x: len(x) == 12)].max()
+
+            except ValueError:
+                print('The passed data does not appear to have a full years (Jan-Dec) worth of data.')
+                print('Try with full_year argument set to False.')
+
+        else:
+            print('Defaulting to select out-of-bag sample for most recent year.')
+            oob_year = original_frame.Year.unique().max()
+
+        # slice get dataframe for that year
+        self.oob_data = original_frame[original_frame.Year == oob_year]
+
+        # define data for modelling that removes year being modelled
+        self.train_data = original_frame[(original_frame.Year != oob_year)]
 
 
     def SimplePoission(self):
+        """
+        Function for generating synthetic crime count data at LSOA at timescale resolution
+        based on historic data loaded from the initialiser.
+        """
+
+        # initialise oob data
+
+        self.out_of_bag_prep()
 
         # building a model that incorporates these local populations
-        # performs out-of-bag sampling for 2018
+
+        year = self.oob_data.Year.unique().max()
+
+        oob_data = self.oob_data
+
+        historic_data = self.train_data
 
         # a list for all rows of data frame produced
+        print('Beginning sampling.')
+
         frames_pile = []
 
-        # for each month in 12 months
-        for mon in range(1,13):
+        # for each month in the range of months in oob data
+        for mon in range(oob_data.Mon.unique().min(), (oob_data.Mon.unique().max() + 1)):
 
-            # use week range for 2018 for comparison
-            accepted_wk_range = new_tot_counts[(new_tot_counts.Year == 2018) & (new_tot_counts.Mon == mon)].Week.unique()
+            # use week range for oob year
+            accepted_wk_range = oob_data[(oob_data.Year == year) & (oob_data.Mon == mon)].Week.unique()
 
             # for each week
             for wk in accepted_wk_range:
@@ -49,11 +87,11 @@ class Poisson_sim:
 
                 # for each crime type
 
-                for crim_typ in oob_crime_counts['Crime_type'].unique():
+                for crim_typ in historic_data['Crime_type'].unique():
 
-                    frame_OI = oob_crime_counts[(oob_crime_counts['Mon'] == mon) &
-                                            (oob_crime_counts['Week'] == wk) &
-                                            (oob_crime_counts['Crime_type'] == crim_typ)]
+                    frame_OI = historic_data[(historic_data['Mon'] == mon) &
+                                            (historic_data['Week'] == wk) &
+                                            (historic_data['Crime_type'] == crim_typ)]
 
                     for LSOA in frame_OI['LSOA_code'].unique():
 
@@ -75,10 +113,10 @@ class Poisson_sim:
 
                             # create a dictionary for the row of data corresponding to simulated crime counts for the given day in a given month for a given crime type
                             crime_count = {'Week' : [wk],
-                                                    'Mon' : [mon],
-                                                    'Crime type' : [crim_typ],
-                                                    'Count' : [sim_count],
-                                                    'LSOA_code' : [LSOA]}
+                                           'Mon' : [mon],
+                                           'Crime type' : [crim_typ],
+                                           'Count' : [sim_count],
+                                           'LSOA_code' : [LSOA]}
 
                             # create a dataframe from the above dict
                             frame_line1 = pd.DataFrame.from_dict(crime_count)
@@ -93,31 +131,38 @@ class Poisson_sim:
         # reset the index
         simulated_year_frame.reset_index(inplace=True, drop=True)
 
+        return simulated_year_frame
+
 
 # this takes a very long time, quite a lot of dimensions going on.
-    def figure_comparison(self):
+    def figure_comparison(self, simulated_data):
         """
         Function for plotting simulated v real data
         TODO: is this function necessary?
         """
 
+        oob_data = self.oob_data
+
         plt.figure(figsize=(16,10))
         plt.subplot(2,2,1)
-        simulated_year_frame.Count.value_counts().plot.bar()
+        simulated_data.Count.value_counts().plot.bar()
         plt.title('Simulated years count distribution')
 
         plt.subplot(2,2,2)
-        new_tot_counts[(new_tot_counts.Year == 2018)].Counts.value_counts().plot.bar()
+        oob_data[(oob_data.Year == 2018)].Counts.value_counts().plot.bar()
         plt.title('Count distribution for 2018')
 
         plt.figure(figsize=(16,10))
         plt.subplot(2,2,1)
-        simulated_year_frame.groupby(['Mon','Week'])['Count'].sum().plot()
+        simulated_data.groupby(['Mon','Week'])['Count'].sum().plot()
         plt.title('Simulated counts per week')
 
         plt.subplot(2,2,2)
-        new_tot_counts[(new_tot_counts.Year == 2018)].groupby(['Mon','Week'])['Counts'].sum().plot()
+        oob_data[(oob_data.Year == 2018)].groupby(['Mon','Week'])['Counts'].sum().plot()
         plt.title('Counts per week for 2018')
+
+        return plt.show()
+
 
     def error_Reporting(self):
         """
