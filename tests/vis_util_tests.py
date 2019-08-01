@@ -2,6 +2,7 @@
 import os
 import json
 import unittest
+from unittest.mock import patch
 import pandas as pd
 from crime_sim_toolkit import vis_utils
 
@@ -44,7 +45,8 @@ class Test(unittest.TestCase):
 
             self.assertNotEqual(self.data, self.matchFalse)
 
-    def test_map_Geojson(self):
+    @patch('crime_sim_toolkit.vis_utils.get_choropleth', return_value='test')
+    def test_map_Geojson(self, input):
         """
         Test to check we can do full data to folium map
         """

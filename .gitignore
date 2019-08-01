@@ -13,3 +13,12 @@ scrapbook.ipynb
 # keeps
 !data/policedata/.gitkeep
 !output/.gitkeep
+
+# packaging stuff
+venv/*
+
+# testing
+.coverage
+htmlcov/*
+.coveragerc
+coverage.xml
