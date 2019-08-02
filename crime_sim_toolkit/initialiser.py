@@ -3,13 +3,10 @@
 
 # import libraries
 import sys
-import math
 import glob
 from calendar import monthrange
 import pandas as pd
 import numpy as np
-import matplotlib.pyplot as plt
-import scipy.stats
 
 
 class Initialiser:
@@ -28,6 +25,7 @@ class Initialiser:
 
         print('Fetching count data from police reports.')
         print('Sit back and have a brew, this may take sometime.')
+        print(' ')
 
         # this initialises two class variables
         self.initialise_data(LA_names)
@@ -68,7 +66,16 @@ class Initialiser:
         LSOA_counts.households = LSOA_counts.households.apply(lambda x: np.int64(x.replace(',', '')))
 
         # section for pulling in and concatenating police report data
+        # adding if block that will search for data in data folder
+        # if none found default to using test data in tests folder
         files_list = glob.glob('data/policedata*/*/*.csv')
+
+        print('Number of data files found: ', str(len(files_list)))
+
+        if len(files_list) == 0:
+            print('No files found in data folder.')
+            print('Defaulting to test data.')
+            files_list = glob.glob('tests/testing_data/test_policedata/*/*.csv')
 
         files_combo = []
 
@@ -99,7 +106,6 @@ class Initialiser:
             print('Your data does not appear to have a month column.')
             print('Please try again with Month in a Year-Month format.')
             return False
-            sys.exit()
 
         dated_data = data.copy()
 

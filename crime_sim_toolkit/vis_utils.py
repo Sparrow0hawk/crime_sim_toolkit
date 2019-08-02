@@ -77,6 +77,8 @@ def get_choropleth(data=None, inline=True):
 
         m.save('./output/'+str(file_name)+'.html')
 
+    return m
+
 def match_LSOA_to_LA(LSOA_cd):
 
     # load LSOA population frame

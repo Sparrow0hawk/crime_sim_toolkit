@@ -20,8 +20,7 @@ class Poisson_sim:
 
         self.data = Initialiser().get_data(LA_names=LA_names)
 
-
-    def out_of_bag_prep(self, full_year=True):
+    def out_of_bag_prep(self):
         """
         Function for selecting out a year of real data from counts data for
         out-of-bag sampler comparison
@@ -31,24 +30,33 @@ class Poisson_sim:
 
         # identify highest year with complete counts for entire year
         # this will be used as out-of-bag comparator
-        if full_year == True:
+        try:
+            oob_year = original_frame.Year.unique()[original_frame.groupby('Year')['Mon'].unique().map(lambda x: len(x) == 12)].max()
 
-            try:
-                oob_year = original_frame.Year.unique()[original_frame.groupby('Year')['Mon'].unique().map(lambda x: len(x) == 12)].max()
-
-            except ValueError:
-                print('The passed data does not appear to have a full years (Jan-Dec) worth of data.')
-                print('Try with full_year argument set to False.')
-
-        else:
+        except ValueError:
+            print('The passed data does not appear to have a full years (Jan-Dec) worth of data.')
             print('Defaulting to select out-of-bag sample for most recent year.')
             oob_year = original_frame.Year.unique().max()
 
         # slice get dataframe for that year
         self.oob_data = original_frame[original_frame.Year == oob_year]
 
+        return self.oob_data
+
+    def oob_train_split(self):
+        """
+        Function that takes the generated out of bag frame and creates a training dataset
+        from full data by removing oob data
+        """
+
+        oob_year = self.oob_data.Year.unique().max()
+
+        original_frame = self.data
+
         # define data for modelling that removes year being modelled
-        self.train_data = original_frame[(original_frame.Year != oob_year)]
+        train_data = original_frame[(original_frame.Year != oob_year)]
+
+        return train_data
 
 
     def SimplePoission(self):
@@ -67,7 +75,14 @@ class Poisson_sim:
 
         oob_data = self.oob_data
 
-        historic_data = self.train_data
+        historic_data = self.oob_train_split()
+
+        # test if psuedo-Weeks have been allocated
+        if 'Week' in historic_data.columns:
+            time_res = 'Week'
+        else:
+            time_res = 'Day'
+
 
         # a list for all rows of data frame produced
         print('Beginning sampling.')
@@ -78,19 +93,18 @@ class Poisson_sim:
         for mon in range(oob_data.Mon.unique().min(), (oob_data.Mon.unique().max() + 1)):
 
             # use week range for oob year
-            accepted_wk_range = oob_data[(oob_data.Year == year) & (oob_data.Mon == mon)].Week.unique()
+            accepted_wk_range = oob_data[(oob_data.Year == year) & (oob_data.Mon == mon)][time_res].unique()
 
             # for each week
             for wk in accepted_wk_range:
 
-                print('Month :'+str(mon)+' Week: '+str(wk))
+                print('Month :'+str(mon)+' '+time_res+': '+str(wk))
 
                 # for each crime type
-
                 for crim_typ in historic_data['Crime_type'].unique():
 
                     frame_OI = historic_data[(historic_data['Mon'] == mon) &
-                                            (historic_data['Week'] == wk) &
+                                            (historic_data[time_res] == wk) &
                                             (historic_data['Crime_type'] == crim_typ)]
 
                     for LSOA in frame_OI['LSOA_code'].unique():
@@ -106,13 +120,10 @@ class Poisson_sim:
 
                             # create a normal distribution of crime counts on the given day in a given month and randomly select a count number (round it to integer)
                             # if standard deviation is nan set value for that day at 0
-
                             sim_count = scipy.stats.poisson(day_mean).rvs()
 
-                              # if check to ensure number is not negative
-
                             # create a dictionary for the row of data corresponding to simulated crime counts for the given day in a given month for a given crime type
-                            crime_count = {'Week' : [wk],
+                            crime_count = {time_res : [wk],
                                            'Mon' : [mon],
                                            'Crime type' : [crim_typ],
                                            'Count' : [sim_count],
@@ -134,7 +145,6 @@ class Poisson_sim:
         return simulated_year_frame
 
 
-# this takes a very long time, quite a lot of dimensions going on.
     def figure_comparison(self, simulated_data):
         """
         Function for plotting simulated v real data
@@ -164,18 +174,24 @@ class Poisson_sim:
         return plt.show()
 
 
-    def error_Reporting(self):
+    def error_Reporting(self, simulated_data):
         """
         function for building comparison of simulated dataframe to actual out-of-bag frame
         """
 
-        comparison_frame = pd.concat([simulated_year_frame.groupby(['Week','LSOA_code'])['Count'].sum(), new_tot_counts[new_tot_counts.Year == 2018].groupby(['Week','LSOA_code'])['Counts'].sum()],axis=1)
+        # test for days or Weeks
+        # TODO: improve this somehow??
+        # specify value as class attribute earlier?
+        if 'Week' in simulated_data.columns:
+            time_res = 'Week'
+        else:
+            time_res = 'Day'
 
-        comparison_frame.reset_index('Week', inplace=True)
+        comparison_frame = pd.concat([simulated_data.groupby([time_res,'LSOA_code'])['Count'].sum(), self.oob_data.groupby([time_res,'LSOA_code'])['Counts'].sum()],axis=1)
 
-        comparison_frame.columns = ['Week','Pred_counts','Actual']
+        comparison_frame.reset_index(time_res, inplace=True)
 
-        comparison_frame.head()
+        comparison_frame.columns = [time_res,'Pred_counts','Actual']
 
         comparison_frame['Difference'] = abs(comparison_frame.Pred_counts - comparison_frame.Actual)
 
@@ -191,7 +207,9 @@ class Poisson_sim:
 
         print('Median absolute error: ', round(y_medae, 1))
 
-        comparison_frame['Difference'].sum() / len(comparison_frame)
-
         comparison_frame[['Pred_counts','Actual']].plot.scatter(x='Actual',y='Pred_counts')
         plt.plot([0,175],[0,175], 'k--')
+
+        plt.show()
+
+        return comparison_frame
