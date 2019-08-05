@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.com/Sparrow0hawk/crime_sim_toolkit.svg?branch=refactor_poisson)](https://travis-ci.com/Sparrow0hawk/crime_sim_toolkit)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/5f1ccffc3bf64553b039e31afb638045)](https://www.codacy.com?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Sparrow0hawk/crime_sim_toolkit&amp;utm_campaign=Badge_Grade)
 [![Codacy Badge](https://api.codacy.com/project/badge/Coverage/5f1ccffc3bf64553b039e31afb638045)](https://www.codacy.com?utm_source=github.com&utm_medium=referral&utm_content=Sparrow0hawk/crime_sim_toolkit&utm_campaign=Badge_Coverage)
 # Crime data simulating toolkit
