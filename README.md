@@ -15,4 +15,4 @@ the census_2011_population_hh.csv file is derived from [ONS data] (https://www.o
 
 ## To use
 
-For the poisson simulator the package expects a raw dump of folders from [Police data]{https://data.police.uk/} into data/policedata. If it can't find data there it will default to test data.
+For the poisson simulator the package expects a raw dump of folders from [Police data] (https://data.police.uk/) into data/policedata. If it can't find data there it will default to test data.
