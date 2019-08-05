@@ -18,7 +18,7 @@ class Poisson_sim:
 
     def __init__(self, LA_names):
 
-        self.data = Initialiser().get_data(LA_names=LA_names)
+        self.data = Initialiser(LA_names=LA_names).get_data()
 
     def out_of_bag_prep(self):
         """
@@ -66,11 +66,9 @@ class Poisson_sim:
         """
 
         # initialise oob data
-
         self.out_of_bag_prep()
 
         # building a model that incorporates these local populations
-
         year = self.oob_data.Year.unique().max()
 
         oob_data = self.oob_data
@@ -87,7 +85,11 @@ class Poisson_sim:
         # a list for all rows of data frame produced
         print('Beginning sampling.')
 
-        frames_pile = []
+        time_lbl = []
+        mon_lbl = []
+        crime_lbl = []
+        count_lbl = []
+        LSOA_lbl = []
 
         # for each month in the range of months in oob data
         for mon in range(oob_data.Mon.unique().min(), (oob_data.Mon.unique().max() + 1)):
@@ -96,9 +98,9 @@ class Poisson_sim:
             accepted_wk_range = oob_data[(oob_data.Year == year) & (oob_data.Mon == mon)][time_res].unique()
 
             # for each week
-            for wk in accepted_wk_range:
+            for wk in np.sort(accepted_wk_range):
 
-                print('Month :'+str(mon)+' '+time_res+': '+str(wk))
+                print('Month: '+str(mon)+' '+time_res+': '+str(wk))
 
                 # for each crime type
                 for crim_typ in historic_data['Crime_type'].unique():
@@ -113,34 +115,24 @@ class Poisson_sim:
 
                         if len(frame_OI2) > 0:
 
-                            # calculate the mean total count of that crime type for the given day on the given month
-                            # using built in mean calculation will not take into account years without crime as they do not feature as a 0
-                            day_mean = round(frame_OI2['Counts'].mean(), 0)
-
-
                             # create a normal distribution of crime counts on the given day in a given month and randomly select a count number (round it to integer)
                             # if standard deviation is nan set value for that day at 0
-                            sim_count = scipy.stats.poisson(day_mean).rvs()
+                            sim_count = scipy.stats.poisson(round(frame_OI2['Counts'].mean(), 0)).rvs()
 
-                            # create a dictionary for the row of data corresponding to simulated crime counts for the given day in a given month for a given crime type
-                            crime_count = {time_res : [wk],
-                                           'Mon' : [mon],
-                                           'Crime type' : [crim_typ],
-                                           'Count' : [sim_count],
-                                           'LSOA_code' : [LSOA]}
-
-                            # create a dataframe from the above dict
-                            frame_line1 = pd.DataFrame.from_dict(crime_count)
-
-                            # append this dataframe (1 line) to the frames_pile
-                            frames_pile.append(frame_line1)
-
+                            # append values to lists that will be merged into dict in final step
+                            time_lbl.append(wk)
+                            mon_lbl.append(mon)
+                            crime_lbl.append(crim_typ)
+                            count_lbl.append(sim_count)
+                            LSOA_lbl.append(LSOA)
 
         # concatenate all these compiled dataframe rows into one large dataframe
-        simulated_year_frame = pd.concat(frames_pile, axis=0)
+        simulated_year_frame = pd.DataFrame.from_dict({time_res : time_lbl,
+                                                       'Mon' : mon_lbl,
+                                                       'Crime type' : crime_lbl,
+                                                       'Count' : count_lbl,
+                                                       'LSOA_code' : LSOA_lbl})
 
-        # reset the index
-        simulated_year_frame.reset_index(inplace=True, drop=True)
 
         return simulated_year_frame
 

@@ -2,7 +2,6 @@
 #       or a series of class methods that are called sequentially?
 
 # import libraries
-import sys
 import glob
 from calendar import monthrange
 import pandas as pd
@@ -15,44 +14,11 @@ class Initialiser:
     Requires data from https://data.police.uk/ in data folder
     """
 
-    def __init__(self):
-        pass
+    def __init__(self, LA_names):
 
-    def get_data(self, LA_names, Week=False):
-        """
-        One-caller function that loads and manipulates data ready for use
-        """
-
-        print('Fetching count data from police reports.')
-        print('Sit back and have a brew, this may take sometime.')
-        print(' ')
-
-        # this initialises two class variables
-        self.initialise_data(LA_names)
-
-        dated_data = self.random_date_allocate(data=self.report_frame, Week=False)
-
-        mut_counts_frame = self.reports_to_counts(dated_data)
-
-        return mut_counts_frame
-
-    def initialise_data(self, LA_names):
-        """
-        Function to initialise dataset
-
-        This will load data from the embedded data folder (src) and user passed dataset
-
-        Input: LA_names : local authority names, python list of capitalised strings of local authority names
-               src folder
-               data folder: populated with monthly csv files from custom downloads from https://data.police.uk/data/
-
-        TODO: build some tests
-              Does it return data with right columns? Does it match an expected length after concat?
-              Can you return certain LSOA household value etc
-        """
+        self.LA_names = LA_names
 
         # boot up LSOA lists from 2011 census
-
         LSOA_pop = pd.read_csv('./src/LSOA_data/census_2011_population_hh.csv')
 
         LSOA_pop = LSOA_pop[LSOA_pop['Local authority name'].isin(LA_names)]
@@ -64,6 +30,44 @@ class Initialiser:
         LSOA_counts.persons = LSOA_counts.persons.apply(lambda x: np.int64(x.replace(',', '')))
 
         LSOA_counts.households = LSOA_counts.households.apply(lambda x: np.int64(x.replace(',', '')))
+
+        self.LSOA_hh_counts = LSOA_counts
+
+    def get_data(self, Week=False):
+        """
+        One-caller function that loads and manipulates data ready for use
+        """
+
+        print('Fetching count data from police reports.')
+        print('Sit back and have a brew, this may take sometime.')
+        print(' ')
+
+        LA_names = self.LA_names
+
+        # this initialises two class variables
+        self.initialise_data()
+
+        dated_data = self.random_date_allocate(data=self.report_frame, Week=False)
+
+        mut_counts_frame = self.reports_to_counts(dated_data)
+
+        mut_counts_frame = self.add_zero_counts(mut_counts_frame)
+
+        return mut_counts_frame
+
+    def initialise_data(self):
+        """
+        Function to initialise dataset
+
+        This will load data from the embedded data folder (src) and user passed dataset
+
+        Input: src folder
+               data folder: populated with monthly csv files from custom downloads from https://data.police.uk/data/
+
+        TODO: build some tests
+              Does it return data with right columns? Does it match an expected length after concat?
+              Can you return certain LSOA household value etc
+        """
 
         # section for pulling in and concatenating police report data
         # adding if block that will search for data in data folder
@@ -90,8 +94,6 @@ class Initialiser:
         combined_files.reset_index(inplace=True, drop=True)
 
         self.report_frame = combined_files
-
-        self.LSOA_hh_counts = LSOA_counts
 
         return 'Data Loaded.'
 
@@ -158,22 +160,28 @@ class Initialiser:
         Function to include of zero crime to date-allocated crime counts dataframe
         """
         pile_o_df = []
+        # test if psuedo-Weeks have been allocated
+        if 'Week' in counts_frame.columns:
+            time_res = 'Week'
+        else:
+            time_res = 'Day'
 
         for year in counts_frame.Year.unique():
 
-            year_frame = tot_counts.copy()
+            year_frame = counts_frame.copy()
 
             year_frame = year_frame[year_frame.Year == year]
 
-            for wk in year_frame.Week.unique():
+            for wk in year_frame[time_res].unique():
 
-                wk_frame = year_frame[year_frame.Week == wk]
+                wk_frame = year_frame[year_frame[time_res] == wk]
 
-                for crim_typ in tot_counts['Crime_type'].unique():
+                # only crime types within existing data
+                for crim_typ in counts_frame['Crime_type'].unique():
 
                     sliced_frame = wk_frame[wk_frame.Crime_type == crim_typ]
 
-                    missing_LSOA = LSOA_counts_WY.LSOA_code[~LSOA_counts_WY.LSOA_code.isin(sliced_frame.LSOA_code)].tolist()
+                    missing_LSOA = self.LSOA_hh_counts.LSOA_code[~self.LSOA_hh_counts.LSOA_code.isin(sliced_frame.LSOA_code)].tolist()
 
                     new_fram = pd.DataFrame(missing_LSOA, columns=['LSOA_code'], index=range(len(missing_LSOA)))
 
@@ -183,37 +191,15 @@ class Initialiser:
 
                     new_fram['Mon'] = sliced_frame.Mon.unique().tolist()[0]
 
-                    new_fram['Week'] = sliced_frame.Week.unique().tolist()[0]
+                    new_fram[time_res] = sliced_frame[time_res].unique().tolist()[0]
 
                     new_fram['Year'] = sliced_frame.Year.unique().tolist()[0]
 
                     pile_o_df.append(new_fram)
 
 
-        new_tot_counts = pd.concat([tot_counts,pd.concat(pile_o_df)], sort=True)
+        new_tot_counts = pd.concat([counts_frame,pd.concat(pile_o_df)], sort=True)
 
         new_tot_counts.reset_index(drop=True, inplace=True)
 
         return new_tot_counts
-
-
-# check whether each week has the same number of unique LSOAs (indicating zero results have been filled in)
-    def zeros_check(self, counts_frame):
-        """
-        Function to print out number of unique LSOAs per timeframe (week/day)
-        Checks that LSOAs with zero crime have been included
-        TODO: unclear if needed or should be formatted into test
-        """
-        for year in counts_frame.Year.unique():
-
-            print(year)
-
-            year_frame = counts_frame.copy()
-
-            year_frame = year_frame[year_frame.Year == year]
-
-            for wk in year_frame.Week.unique():
-
-                wk_frame = year_frame[year_frame.Week == wk]
-
-                print('For week: '+str(wk)+' number of unique LSOAs: '+str(len(wk_frame.LSOA_code.unique())))

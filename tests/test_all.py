@@ -128,6 +128,20 @@ class Test(unittest.TestCase):
 
         pd.testing.assert_series_equal(test_frame['Counts'].sort_index(), pd.Series([1,1,2,1,1,1,1,1,1,1,1,1,2], index=range(0,13), name='Counts').sort_index())
 
+    def test_add_zero_counts(self):
+        """
+        Test that adding zero function works
+        """
+        self.data = pd.read_csv('./tests/testing_data/test_counts1.csv')
+
+        self.init = Initialiser.Initialiser(LA_names=['Kirklees','Calderdale','Leeds','Bradford','Wakefield'])
+
+        self.test = self.init.add_zero_counts(self.data)
+
+        self.assertTrue(isinstance(self.test, pd.DataFrame))
+
+        self.assertEqual(len(self.test[self.test.Day == 3].LSOA_code.unique()), 1388)
+
 
     def test_oob(self):
         """

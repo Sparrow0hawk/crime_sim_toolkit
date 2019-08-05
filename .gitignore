@@ -9,6 +9,8 @@ data/policedata/*
 
 # specific files
 scrapbook.ipynb
+short_test.py
+samplingoutput.txt
 
 # keeps
 !data/policedata/.gitkeep
