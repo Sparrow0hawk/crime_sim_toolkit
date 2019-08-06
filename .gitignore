@@ -2,5 +2,25 @@
 
 # folders
 crime_sim_toolkit.egg-info
+__pycache__
+.ipynb_checkpoints
+output/*
+data/policedata/*
 
 # specific files
+scrapbook.ipynb
+short_test.py
+samplingoutput.txt
+
+# keeps
+!data/policedata/.gitkeep
+!output/.gitkeep
+
+# packaging stuff
+venv/*
+
+# testing
+.coverage
+htmlcov/*
+.coveragerc
+coverage.xml
