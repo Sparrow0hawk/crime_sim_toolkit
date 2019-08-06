@@ -33,7 +33,7 @@ class Initialiser:
 
         self.LSOA_hh_counts = LSOA_counts
 
-    def get_data(self, Week=False):
+    def get_data(self, Week=True):
         """
         One-caller function that loads and manipulates data ready for use
         """
@@ -47,9 +47,9 @@ class Initialiser:
         # this initialises two class variables
         self.initialise_data()
 
-        dated_data = self.random_date_allocate(data=self.report_frame, Week=False)
+        dated_data = self.random_date_allocate(data=self.report_frame, Week=Week)
 
-        mut_counts_frame = self.reports_to_counts(dated_data)
+        mut_counts_frame = self.reports_to_counts(dated_data, timeframe='Week')
 
         mut_counts_frame = self.add_zero_counts(mut_counts_frame)
 
@@ -134,7 +134,7 @@ class Initialiser:
 
         return dated_data
 
-    def reports_to_counts(self, reports_frame, timeframe='Day'):
+    def reports_to_counts(self, reports_frame, timeframe='Week'):
         """
         function to convert policedata from individal reports level to aggregate counts at time scale, LSOA, crime type
         """
@@ -159,8 +159,10 @@ class Initialiser:
         """
         Function to include of zero crime to date-allocated crime counts dataframe
         """
-        pile_o_df = []
         # test if psuedo-Weeks have been allocated
+
+        pile_o_df = []
+
         if 'Week' in counts_frame.columns:
             time_res = 'Week'
         else:
@@ -172,30 +174,34 @@ class Initialiser:
 
             year_frame = year_frame[year_frame.Year == year]
 
-            for wk in year_frame[time_res].unique():
+            for month in counts_frame.Mon.unique():
 
-                wk_frame = year_frame[year_frame[time_res] == wk]
+                # for either day or week in temp resolution provided
+                for wk in year_frame[time_res].unique():
+
+                    wk_frame = year_frame[(year_frame[time_res].values == wk) & (year_frame.Mon.values == month)]
 
                 # only crime types within existing data
-                for crim_typ in counts_frame['Crime_type'].unique():
 
-                    sliced_frame = wk_frame[wk_frame.Crime_type == crim_typ]
+                    for crim_typ in counts_frame['Crime_type'].unique():
 
-                    missing_LSOA = self.LSOA_hh_counts.LSOA_code[~self.LSOA_hh_counts.LSOA_code.isin(sliced_frame.LSOA_code)].tolist()
+                        sliced_frame = wk_frame[wk_frame.Crime_type == crim_typ]
 
-                    new_fram = pd.DataFrame(missing_LSOA, columns=['LSOA_code'], index=range(len(missing_LSOA)))
+                        missing_LSOA = self.LSOA_hh_counts.LSOA_code[~self.LSOA_hh_counts.LSOA_code.isin(sliced_frame.LSOA_code)].tolist()
 
-                    new_fram['Crime_type'] = crim_typ
+                        new_fram = pd.DataFrame(missing_LSOA, columns=['LSOA_code'], index=range(len(missing_LSOA)))
 
-                    new_fram['Counts'] = 0
+                        new_fram['Crime_type'] = crim_typ
 
-                    new_fram['Mon'] = sliced_frame.Mon.unique().tolist()[0]
+                        new_fram['Counts'] = 0
 
-                    new_fram[time_res] = sliced_frame[time_res].unique().tolist()[0]
+                        new_fram['Mon'] = month
 
-                    new_fram['Year'] = sliced_frame.Year.unique().tolist()[0]
+                        new_fram[time_res] = wk
 
-                    pile_o_df.append(new_fram)
+                        new_fram['Year'] = year
+
+                        pile_o_df.append(new_fram)
 
 
         new_tot_counts = pd.concat([counts_frame,pd.concat(pile_o_df)], sort=True)

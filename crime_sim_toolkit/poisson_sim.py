@@ -91,6 +91,8 @@ class Poisson_sim:
         count_lbl = []
         LSOA_lbl = []
 
+        crime_types_lst = historic_data['Crime_type'].unique()
+
         # for each month in the range of months in oob data
         for mon in range(oob_data.Mon.unique().min(), (oob_data.Mon.unique().max() + 1)):
 
@@ -102,19 +104,17 @@ class Poisson_sim:
 
                 print('Month: '+str(mon)+' '+time_res+': '+str(wk))
 
-                frame_OI = historic_data[(historic_data['Mon'].values == mon) & (historic_data[time_res].values == wk)]
 
                 # for each crime type
                 for crim_typ in historic_data['Crime_type'].unique():
 
-                    frame_OI = frame_OI[frame_OI['Crime_type'].values == crim_typ]
+                    frame_OI = historic_data[(historic_data['Mon'] == mon) &
+                                             (historic_data[time_res] == wk) &
+                                             (historic_data['Crime_type'] == crim_typ)]
 
-                    # use only LSOAs within already sliced frame
-                    # LSOAs present in past data for that mon/day for that crime type
-                    # can then add zero counts back in?
                     for LSOA in frame_OI['LSOA_code'].unique():
 
-                        frame_OI2 = frame_OI[frame_OI['LSOA_code'].values == LSOA]
+                        frame_OI2 = frame_OI[(frame_OI['LSOA_code'] == LSOA)]
 
                         if len(frame_OI2) > 0:
 

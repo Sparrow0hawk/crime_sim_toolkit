@@ -4,6 +4,7 @@ python:
 
 install:
   - pip install -r requirements.txt
+  - travis_wait 20 mvn install
 
 script:
   - python setup.py install
