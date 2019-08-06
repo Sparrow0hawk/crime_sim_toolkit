@@ -4,11 +4,10 @@ python:
 
 install:
   - pip install -r requirements.txt
-  - travis_wait 20 python tests/test_all.py
 
 script:
   - python setup.py install
-  - python tests/test_all.py
+  - travis wait 20 python tests/test_all.py
   - coverage run tests/test_all.py
   - coverage xml
   - python-codacy-coverage -r coverage.xml

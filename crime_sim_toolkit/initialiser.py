@@ -42,8 +42,6 @@ class Initialiser:
         print('Sit back and have a brew, this may take sometime.')
         print(' ')
 
-        LA_names = self.LA_names
-
         # this initialises two class variables
         self.initialise_data()
 
@@ -97,7 +95,8 @@ class Initialiser:
 
         return 'Data Loaded.'
 
-    def random_date_allocate(self, data, Week=False):
+    @classmethod
+    def random_date_allocate(cls, data, Week=False):
         """
         function for randomly allocating Days or weeks to police data
         """
