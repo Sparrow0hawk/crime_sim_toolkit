@@ -122,7 +122,7 @@ class Test(unittest.TestCase):
         """
         self.data = pd.read_csv(os.path.join(test_dir,'./testing_data/report_2_counts.csv'))
 
-        test_frame = self.init.reports_to_counts(self.data)
+        test_frame = self.init.reports_to_counts(self.data, timeframe='Day')
 
         pd.testing.assert_series_equal(test_frame['Day'].value_counts().sort_index(), pd.Series([3,2,2,4,1,1], index=[1,4,6,20,7,3], name='Day').sort_index())
 
@@ -152,7 +152,7 @@ class Test(unittest.TestCase):
 
         self.assertTrue(isinstance(self.data, pd.DataFrame))
 
-        self.assertEqual(self.data.Year.unique().max(), 2019)
+        self.assertEqual(self.data.Year.unique().max(), 2018)
 
     def test_oob_split(self):
         """
@@ -165,13 +165,13 @@ class Test(unittest.TestCase):
 
         self.assertTrue(isinstance(self.data2, pd.DataFrame))
 
-        self.assertTrue(2018 in self.data2.Year.unique())
+        self.assertTrue(2017 in self.data2.Year.unique())
 
-        self.assertFalse(2019 in self.data2.Year.unique())
+        self.assertFalse(2018 in self.data2.Year.unique())
 
-        self.assertTrue(2019 in self.data1.Year.unique())
+        self.assertTrue(2018 in self.data1.Year.unique())
 
-        self.assertFalse(2018 in self.data1.Year.unique())
+        self.assertFalse(2017 in self.data1.Year.unique())
 
     def test_sampler(self):
         """
@@ -182,7 +182,7 @@ class Test(unittest.TestCase):
 
         self.assertTrue(isinstance(self.data, pd.DataFrame))
 
-        self.assertEqual(self.data.columns.tolist(), ['Day','Mon','Crime type','Count','LSOA_code'])
+        self.assertEqual(self.data.columns.tolist(), ['Week','Mon','Crime type','Count','LSOA_code'])
 
 
     #TODO: start here.
