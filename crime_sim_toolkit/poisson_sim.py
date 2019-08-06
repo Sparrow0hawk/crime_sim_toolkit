@@ -109,7 +109,10 @@ class Poisson_sim:
 
                     frame_OI = frame_OI[frame_OI['Crime_type'].values == crim_typ]
 
-                    for LSOA in historic_data['LSOA_code'].unique():
+                    # use only LSOAs within already sliced frame
+                    # LSOAs present in past data for that mon/day for that crime type
+                    # can then add zero counts back in?
+                    for LSOA in frame_OI['LSOA_code'].unique():
 
                         frame_OI2 = frame_OI[frame_OI['LSOA_code'].values == LSOA]
 
