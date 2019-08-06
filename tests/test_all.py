@@ -14,9 +14,9 @@ class Test(unittest.TestCase):
 
     def setUp(self):
 
-        self.init = Initialiser.Initialiser()
+        self.init = Initialiser.Initialiser(LA_names=['Kirklees','Calderdale','Leeds','Bradford','Wakefield'])
 
-        self.init_data = self.init.initialise_data(LA_names=['Kirklees','Calderdale','Leeds','Bradford','Wakefield'])
+        self.init_data = self.init.initialise_data()
 
     @classmethod
     def setUpClass(cls):
