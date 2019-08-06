@@ -95,23 +95,23 @@ class Poisson_sim:
         for mon in range(oob_data.Mon.unique().min(), (oob_data.Mon.unique().max() + 1)):
 
             # use week range for oob year
-            accepted_wk_range = oob_data[(oob_data.Year == year) & (oob_data.Mon == mon)][time_res].unique()
+            accepted_wk_range = oob_data[(oob_data.Year.values == year) & (oob_data.Mon.values == mon)][time_res].unique()
 
             # for each week
             for wk in np.sort(accepted_wk_range):
 
                 print('Month: '+str(mon)+' '+time_res+': '+str(wk))
 
+                frame_OI = historic_data[(historic_data['Mon'].values == mon) & (historic_data[time_res].values == wk)]
+
                 # for each crime type
                 for crim_typ in historic_data['Crime_type'].unique():
 
-                    frame_OI = historic_data[(historic_data['Mon'] == mon) &
-                                            (historic_data[time_res] == wk) &
-                                            (historic_data['Crime_type'] == crim_typ)]
+                    frame_OI = frame_OI[frame_OI['Crime_type'].values == crim_typ]
 
-                    for LSOA in frame_OI['LSOA_code'].unique():
+                    for LSOA in historic_data['LSOA_code'].unique():
 
-                        frame_OI2 = frame_OI[(frame_OI['LSOA_code'] == LSOA)]
+                        frame_OI2 = frame_OI[frame_OI['LSOA_code'].values == LSOA]
 
                         if len(frame_OI2) > 0:
 
