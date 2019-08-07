@@ -22,7 +22,9 @@ class Test(unittest.TestCase):
     def setUpClass(cls):
         super(Test, cls).setUpClass()
 
-        cls.poisson = Poisson_sim.Poisson_sim(LA_names=['Kirklees','Calderdale','Leeds','Bradford','Wakefield'])
+        cls.poisson = Poisson_sim.Poisson_sim(LA_names=['Kirklees','Calderdale','Leeds','Bradford','Wakefield'], timeframe='Week')
+
+        cls.poisson_day = Poisson_sim.Poisson_sim(LA_names=['Kirklees','Calderdale','Leeds','Bradford','Wakefield'], timeframe='Day')
 
 
     def test_match_LSOA_to_LA(self):
@@ -92,7 +94,9 @@ class Test(unittest.TestCase):
 
         self.assertTrue('Day' in self.init.random_date_allocate(data=self.dataTrue).columns)
 
-        self.assertTrue('Week' in self.init.random_date_allocate(data=self.dataTrue, Week=True).columns)
+        self.assertTrue('Week' in self.init.random_date_allocate(data=self.dataTrue).columns)
+
+        self.assertFalse('Week' in self.init.random_date_allocate(data=self.dataTrue, timeframe='Day').columns)
 
         self.assertFalse(self.init.random_date_allocate(data=self.dataFalse))
 
@@ -178,28 +182,40 @@ class Test(unittest.TestCase):
         Test for checking the output of the poisson sampler is as expected
         """
 
-        self.data = self.poisson.SimplePoission()
+        self.poi_data = self.poisson.SimplePoission()
 
-        self.assertTrue(isinstance(self.data, pd.DataFrame))
+        self.assertTrue(isinstance(self.poi_data, pd.DataFrame))
 
-        self.assertEqual(self.data.columns.tolist(), ['Week','Mon','Crime type','Count','LSOA_code'])
+        self.assertEqual(self.poi_data.columns.tolist(), ['Week','Mon','Crime type','Counts','LSOA_code'])
+
+    def test_sampler_day(self):
+        """
+        Test for checking the output of the poisson sampler is as expected
+        when sampling using days
+        """
+
+        self.poi_data = self.poisson_day.SimplePoission()
+
+        self.assertTrue(isinstance(self.poi_data, pd.DataFrame))
+
+        self.assertEqual(self.poi_data.columns.tolist(), ['Day','Mon','Crime type','Counts','LSOA_code'])
 
 
     #TODO: start here.
-    #def test_error(self):
-        #"""
-        #Testing for the error reporting function
-        #"""
+    def test_sampler_error(self):
+        """
+        Testing for the error reporting function for sampler
+        """
         # TODO: the double call of SimplePoission here is very labourious and may not be necessary
-        # this errors on calculating rmse Input contains NaN, infinity or a value too large for dtype('float64').
+        # this errors on calculating rmse Input contains NaN, infinity or a value too large for dtype('float64')
 
-        #self.data = self.poisson.SimplePoission()
+        self.poi_data = self.poisson.SimplePoission()
 
-        #self.plot = self.poisson.error_Reporting(self.data)
+        self.plot = self.poisson.error_Reporting(self.poi_data)
 
-        #self.assertTrue(isinstance(self.plot, pd.DataFrame))
+        self.assertTrue(isinstance(self.plot, pd.DataFrame))
 
-        #self.assertEqual(self.plot.columns.tolist(), ['Day','Pred_counts','Actual'])
+        self.assertEqual(self.plot.columns.tolist(), ['Week','Pred_counts','Actual','Difference'])
 
 
 

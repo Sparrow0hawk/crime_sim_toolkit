@@ -33,7 +33,7 @@ class Initialiser:
 
         self.LSOA_hh_counts = LSOA_counts
 
-    def get_data(self, Week=True):
+    def get_data(self, timeframe='Week'):
         """
         One-caller function that loads and manipulates data ready for use
         """
@@ -45,9 +45,9 @@ class Initialiser:
         # this initialises two class variables
         self.initialise_data()
 
-        dated_data = self.random_date_allocate(data=self.report_frame, Week=Week)
+        dated_data = self.random_date_allocate(data=self.report_frame, timeframe=timeframe)
 
-        mut_counts_frame = self.reports_to_counts(dated_data, timeframe='Week')
+        mut_counts_frame = self.reports_to_counts(dated_data, timeframe=timeframe)
 
         mut_counts_frame = self.add_zero_counts(mut_counts_frame)
 
@@ -96,7 +96,7 @@ class Initialiser:
         return 'Data Loaded.'
 
     @classmethod
-    def random_date_allocate(cls, data, Week=False):
+    def random_date_allocate(cls, data, timeframe='Week'):
         """
         function for randomly allocating Days or weeks to police data
         """
@@ -124,7 +124,7 @@ class Initialiser:
         print('Psuedo days allocated to all reports.')
 
         # are weeks required?
-        if Week == True:
+        if timeframe == 'Week':
             # get week of the year based on month, year and psuedo-day allocated above
             # we're converting all separated columns to datetime format and extract week number
             dated_data['Week'] = dated_data.apply(lambda x: pd.to_datetime([str(x.Year)+'/'+str(x.Mon)+'/'+str(x.Day)]).week[0], axis=1)

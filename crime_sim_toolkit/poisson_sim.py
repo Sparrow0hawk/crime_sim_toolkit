@@ -16,9 +16,9 @@ class Poisson_sim:
     Requires data from https://data.police.uk/ in data folder
     """
 
-    def __init__(self, LA_names):
+    def __init__(self, LA_names, timeframe='Week'):
 
-        self.data = Initialiser(LA_names=LA_names).get_data()
+        self.data = Initialiser(LA_names=LA_names).get_data(timeframe=timeframe)
 
     def out_of_bag_prep(self):
         """
@@ -108,13 +108,13 @@ class Poisson_sim:
                 # for each crime type
                 for crim_typ in historic_data['Crime_type'].unique():
 
-                    frame_OI = historic_data[(historic_data['Mon'] == mon) &
-                                             (historic_data[time_res] == wk) &
-                                             (historic_data['Crime_type'] == crim_typ)]
+                    frame_OI = historic_data[(historic_data['Mon'].isin([mon])) &
+                                             (historic_data[time_res].isin([wk])) &
+                                             (historic_data['Crime_type'].isin([crim_typ]))]
 
                     for LSOA in frame_OI['LSOA_code'].unique():
 
-                        frame_OI2 = frame_OI[(frame_OI['LSOA_code'] == LSOA)]
+                        frame_OI2 = frame_OI[(frame_OI['LSOA_code'].isin([LSOA]))]
 
                         if len(frame_OI2) > 0:
 
@@ -133,40 +133,11 @@ class Poisson_sim:
         simulated_year_frame = pd.DataFrame.from_dict({time_res : time_lbl,
                                                        'Mon' : mon_lbl,
                                                        'Crime type' : crime_lbl,
-                                                       'Count' : count_lbl,
+                                                       'Counts' : count_lbl,
                                                        'LSOA_code' : LSOA_lbl})
 
 
         return simulated_year_frame
-
-
-    def figure_comparison(self, simulated_data):
-        """
-        Function for plotting simulated v real data
-        TODO: is this function necessary?
-        """
-
-        oob_data = self.oob_data
-
-        plt.figure(figsize=(16,10))
-        plt.subplot(2,2,1)
-        simulated_data.Count.value_counts().plot.bar()
-        plt.title('Simulated years count distribution')
-
-        plt.subplot(2,2,2)
-        oob_data[(oob_data.Year == 2018)].Counts.value_counts().plot.bar()
-        plt.title('Count distribution for 2018')
-
-        plt.figure(figsize=(16,10))
-        plt.subplot(2,2,1)
-        simulated_data.groupby(['Mon','Week'])['Count'].sum().plot()
-        plt.title('Simulated counts per week')
-
-        plt.subplot(2,2,2)
-        oob_data[(oob_data.Year == 2018)].groupby(['Mon','Week'])['Counts'].sum().plot()
-        plt.title('Counts per week for 2018')
-
-        return plt.show()
 
 
     def error_Reporting(self, simulated_data):
@@ -182,7 +153,7 @@ class Poisson_sim:
         else:
             time_res = 'Day'
 
-        comparison_frame = pd.concat([simulated_data.groupby([time_res,'LSOA_code'])['Count'].sum(), self.oob_data.groupby([time_res,'LSOA_code'])['Counts'].sum()],axis=1)
+        comparison_frame = pd.concat([simulated_data.groupby([time_res,'LSOA_code'])['Counts'].sum(), self.oob_data.groupby([time_res,'LSOA_code'])['Counts'].sum()],axis=1)
 
         comparison_frame.reset_index(time_res, inplace=True)
 
