@@ -4,7 +4,7 @@ import unittest
 from unittest.mock import patch
 import pandas as pd
 import folium
-from crime_sim_toolkit import vis_utils
+from crime_sim_toolkit import vis_utils, utils
 import crime_sim_toolkit.initialiser as Initialiser
 import crime_sim_toolkit.poisson_sim as Poisson_sim
 

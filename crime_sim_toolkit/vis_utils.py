@@ -15,9 +15,6 @@ def get_choropleth(data=None, inline=True):
     # get crime counts per LSOA for given week in 2018
     choro_counts = data.groupby('LSOA_code')['Counts'].sum().reset_index('LSOA_code')
 
-    # narrow dataframe into just LSOA code and crime counts
-    choro_counts = choro_counts.set_index('LSOA_code')['Counts']
-
     LA_lst = []
     # get LA codes from LSOAs files
     for LSOA_cd in choro_counts.LSOA_code:
@@ -38,6 +35,9 @@ def get_choropleth(data=None, inline=True):
     # adding popups to the map requires data to either be in geopandas format or within the geojson
     # geopandas throws a wobbly in colabs so we'll use a simple approach to adding the count data
     # into the geojson properties
+
+    # narrow dataframe into just LSOA code and crime counts
+    choro_counts = choro_counts.set_index('LSOA_code')['Counts']
 
     #Loop over GeoJSON features and add the new properties
     for feat in geodata['features']:
