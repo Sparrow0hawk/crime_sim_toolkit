@@ -106,7 +106,7 @@ class Poisson_sim:
 
 
                 # for each crime type
-                for crim_typ in historic_data['Crime_type'].unique():
+                for crim_typ in crime_types_lst:
 
                     frame_OI = historic_data[(historic_data['Mon'].isin([mon])) &
                                              (historic_data[time_res].isin([wk])) &
