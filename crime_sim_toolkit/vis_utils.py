@@ -12,6 +12,11 @@ def get_choropleth(data=None, inline=True):
     # set colour map
     colorscale = branca.colormap.linear.YlOrRd_09.scale(data.Counts.describe()['25%'],
                                                         data.Counts.describe()['75%'])
+    # get crime counts per LSOA for given week in 2018
+    choro_counts = data.groupby('LSOA_code')['Counts'].sum().reset_index('LSOA_code')
+
+    # narrow dataframe into just LSOA code and crime counts
+    choro_counts = choro_counts.set_index('LSOA_code')['Counts']
 
     LA_lst = []
     # get LA codes from LSOAs files
@@ -29,12 +34,6 @@ def get_choropleth(data=None, inline=True):
     m = folium.Map(location=[54.132393, -3.325583],
                    tiles='OpenStreetMap',
                    zoom_start=6)
-
-    # get crime counts per LSOA for given week in 2018
-    choro_counts = data.groupby('LSOA_code')['Counts'].sum().reset_index('LSOA_code')
-
-    # narrow dataframe into just LSOA code and crime counts
-    choro_counts = choro_counts.set_index('LSOA_code')['Counts']
 
     # adding popups to the map requires data to either be in geopandas format or within the geojson
     # geopandas throws a wobbly in colabs so we'll use a simple approach to adding the count data

@@ -152,41 +152,48 @@ class Test(unittest.TestCase):
         Test for checking out-of-bag sampling works as desired
         """
 
-        self.data = self.poisson.out_of_bag_prep()
 
-        self.assertTrue(isinstance(self.data, pd.DataFrame))
+        self.data = pd.read_csv('./tests/testing_data/test_data4pois.csv')
 
-        self.assertEqual(self.data.Year.unique().max(), 2018)
+        self.output = self.poisson.out_of_bag_prep(self.data)
+
+        self.assertTrue(isinstance(self.output, pd.DataFrame))
+
+        self.assertEqual(self.output.Year.unique().max(), 2018)
 
     def test_oob_split(self):
         """
         Test function for splitting data based on oob data
         """
 
-        self.data1 = self.poisson.out_of_bag_prep()
+        self.oobdata = pd.read_csv('./tests/testing_data/test_oobdata.csv')
 
-        self.data2 = self.poisson.oob_train_split()
+        self.data = pd.read_csv('./tests/testing_data/test_data4pois.csv')
 
-        self.assertTrue(isinstance(self.data2, pd.DataFrame))
+        self.train_output = self.poisson.oob_train_split(full_data=self.data, test_data=self.oobdata)
 
-        self.assertTrue(2017 in self.data2.Year.unique())
+        self.assertTrue(isinstance(self.train_output, pd.DataFrame))
 
-        self.assertFalse(2018 in self.data2.Year.unique())
+        self.assertTrue(2017 in self.train_output.Year.unique())
 
-        self.assertTrue(2018 in self.data1.Year.unique())
-
-        self.assertFalse(2017 in self.data1.Year.unique())
+        self.assertFalse(2018 in self.train_output.Year.unique())
 
     def test_sampler(self):
         """
         Test for checking the output of the poisson sampler is as expected
         """
 
-        self.poi_data = self.poisson.SimplePoission()
+        self.oobdata = pd.read_csv('./tests/testing_data/test_oobdata.csv')
+
+        self.traindata = pd.read_csv('./tests/testing_data/test_traindata.csv')
+
+        self.poi_data = self.poisson.SimplePoission(train_data = self.traindata, test_data = self.oobdata)
 
         self.assertTrue(isinstance(self.poi_data, pd.DataFrame))
 
         self.assertEqual(self.poi_data.columns.tolist(), ['Week','Mon','Crime type','Counts','LSOA_code'])
+
+        self.assertEqual(self.poi_data.Week.unique().tolist(), [26,27,28,29,30,31])
 
     def test_sampler_day(self):
         """
@@ -194,28 +201,57 @@ class Test(unittest.TestCase):
         when sampling using days
         """
 
-        self.poi_data = self.poisson_day.SimplePoission()
+        self.oobdata = pd.read_csv('./tests/testing_data/test_oobDay_data.csv')
+
+        self.traindata = pd.read_csv('./tests/testing_data/test_trainDay_data.csv')
+
+        self.poi_data = self.poisson_day.SimplePoission(train_data = self.traindata, test_data = self.oobdata)
 
         self.assertTrue(isinstance(self.poi_data, pd.DataFrame))
 
         self.assertEqual(self.poi_data.columns.tolist(), ['Day','Mon','Crime type','Counts','LSOA_code'])
 
+        self.assertEqual(len(self.poi_data.Day.unique()), 31)
 
-    #TODO: start here.
-    def test_sampler_error(self):
+    @patch('matplotlib.pyplot.show')
+    def test_sampler_error(self, mock_show):
         """
         Testing for the error reporting function for sampler
         """
         # TODO: the double call of SimplePoission here is very labourious and may not be necessary
         # this errors on calculating rmse Input contains NaN, infinity or a value too large for dtype('float64')
 
-        self.poi_data = self.poisson.SimplePoission()
+        self.oobdata = pd.read_csv('./tests/testing_data/test_oobdata.csv')
 
-        self.plot = self.poisson.error_Reporting(self.poi_data)
+        self.traindata = pd.read_csv('./tests/testing_data/test_traindata.csv')
+
+        self.poi_data = self.poisson.SimplePoission(train_data = self.traindata, test_data = self.oobdata)
+
+        self.plot = self.poisson.error_Reporting(test_data = self.oobdata, simulated_data = self.poi_data)
 
         self.assertTrue(isinstance(self.plot, pd.DataFrame))
 
         self.assertEqual(self.plot.columns.tolist(), ['Week','Pred_counts','Actual','Difference'])
+
+    @patch('matplotlib.pyplot.show')
+    def test_sampler_errorDay(self, mock_show):
+        """
+        Testing for the error reporting function for sampler
+        """
+        # TODO: the double call of SimplePoission here is very labourious and may not be necessary
+        # this errors on calculating rmse Input contains NaN, infinity or a value too large for dtype('float64')
+
+        self.oobdata = pd.read_csv('./tests/testing_data/test_oobDay_data.csv')
+
+        self.traindata = pd.read_csv('./tests/testing_data/test_trainDay_data.csv')
+
+        self.poi_data = self.poisson_day.SimplePoission(train_data = self.traindata, test_data = self.oobdata)
+
+        self.plot = self.poisson.error_Reporting(test_data = self.oobdata, simulated_data = self.poi_data)
+
+        self.assertTrue(isinstance(self.plot, pd.DataFrame))
+
+        self.assertEqual(self.plot.columns.tolist(), ['Day','Pred_counts','Actual','Difference'])
 
 
 

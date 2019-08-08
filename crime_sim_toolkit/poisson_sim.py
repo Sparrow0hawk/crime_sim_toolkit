@@ -20,13 +20,18 @@ class Poisson_sim:
 
         self.data = Initialiser(LA_names=LA_names).get_data(timeframe=timeframe)
 
-    def out_of_bag_prep(self):
+    @classmethod
+    def out_of_bag_prep(cls, full_data):
         """
         Function for selecting out a year of real data from counts data for
         out-of-bag sampler comparison
+
+        Input: Pandas dataframe of crime counts in format from initialiser | can pass class instance
+
+        Output: Pandas dataframe of crime counts for maximum year in dataset to be held as out of bag test set
         """
 
-        original_frame = self.data
+        original_frame = full_data
 
         # identify highest year with complete counts for entire year
         # this will be used as out-of-bag comparator
@@ -39,41 +44,54 @@ class Poisson_sim:
             oob_year = original_frame.Year.unique().max()
 
         # slice get dataframe for that year
-        self.oob_data = original_frame[original_frame.Year == oob_year]
+        oob_data = original_frame[original_frame.Year == oob_year]
 
-        return self.oob_data
+        return oob_data
 
-    def oob_train_split(self):
+    @classmethod
+    def oob_train_split(cls, full_data, test_data):
         """
         Function that takes the generated out of bag frame and creates a training dataset
         from full data by removing oob data
+
+        Input:
+            full_data = Pandas dataframe of crime counts from Initialiser
+            test_data = Pandas dataframe output from out_of_bag_prep (holdout year data)
+
+        Output:
+            train_data = Pandas dataframe of crime counts that are not in test_data
         """
 
-        oob_year = self.oob_data.Year.unique().max()
+        oob_year = test_data.Year.unique().max()
 
-        original_frame = self.data
+        original_frame = full_data
 
         # define data for modelling that removes year being modelled
         train_data = original_frame[(original_frame.Year != oob_year)]
 
         return train_data
 
-
-    def SimplePoission(self):
+    @classmethod
+    def SimplePoission(cls, train_data, test_data):
         """
         Function for generating synthetic crime count data at LSOA at timescale resolution
         based on historic data loaded from the initialiser.
+
+        Inputs:
+            train_data = Pandas dataframe output from oob_train_split
+            test_data = Pandas dataframe output from out_of_bag_prep
+
+        Output:
+            simulated_year_frame = Pandas dataframe of simulated data based on train_data
+                                   to be compared to test_data
         """
 
-        # initialise oob data
-        self.out_of_bag_prep()
-
         # building a model that incorporates these local populations
-        year = self.oob_data.Year.unique().max()
+        year = test_data.Year.unique().max()
 
-        oob_data = self.oob_data
+        oob_data = test_data
 
-        historic_data = self.oob_train_split()
+        historic_data = train_data
 
         # test if psuedo-Weeks have been allocated
         if 'Week' in historic_data.columns:
@@ -140,9 +158,18 @@ class Poisson_sim:
         return simulated_year_frame
 
 
-    def error_Reporting(self, simulated_data):
+    @classmethod
+    def error_Reporting(cls, test_data, simulated_data):
         """
         function for building comparison of simulated dataframe to actual out-of-bag frame
+
+        Inputs:
+            test_data = Pandas dataframe output from out_of_bag_prep
+            simulated_year_frame = Pandas dataframe output from SimplePoission of simulated year crime counts
+
+        Outputs:
+            comparison_frame = Pandas dataframe that shows comparison of simulated data to test_data
+                               with error scores printed and plot
         """
 
         # test for days or Weeks
@@ -153,7 +180,7 @@ class Poisson_sim:
         else:
             time_res = 'Day'
 
-        comparison_frame = pd.concat([simulated_data.groupby([time_res,'LSOA_code'])['Counts'].sum(), self.oob_data.groupby([time_res,'LSOA_code'])['Counts'].sum()],axis=1)
+        comparison_frame = pd.concat([simulated_data.groupby([time_res,'LSOA_code'])['Counts'].sum(), test_data.groupby([time_res,'LSOA_code'])['Counts'].sum()],axis=1)
 
         comparison_frame.reset_index(time_res, inplace=True)
 
