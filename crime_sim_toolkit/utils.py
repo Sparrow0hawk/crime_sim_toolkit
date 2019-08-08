@@ -4,7 +4,6 @@ Utility functions for general use
 
 import pandas as pd
 import numpy as np
-import string
 
 def counts_to_reports(counts_frame):
     """

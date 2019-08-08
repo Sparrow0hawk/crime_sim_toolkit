@@ -150,7 +150,7 @@ class Poisson_sim:
         # concatenate all these compiled dataframe rows into one large dataframe
         simulated_year_frame = pd.DataFrame.from_dict({time_res : time_lbl,
                                                        'Mon' : mon_lbl,
-                                                       'Crime type' : crime_lbl,
+                                                       'Crime_type' : crime_lbl,
                                                        'Counts' : count_lbl,
                                                        'LSOA_code' : LSOA_lbl})
 
