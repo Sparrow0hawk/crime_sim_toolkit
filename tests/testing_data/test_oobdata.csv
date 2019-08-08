@@ -1,0 +1,80 @@
+Counts,Crime_type,LSOA_code,Mon,Week,Year
+2,Criminal damage and arson,E01010569,7,27,2018
+1,Criminal damage and arson,E01010569,7,28,2018
+1,Criminal damage and arson,E01010569,7,29,2018
+1,Criminal damage and arson,E01010569,7,30,2018
+3,Other theft,E01010569,7,27,2018
+1,Other theft,E01010569,7,28,2018
+1,Other theft,E01010569,7,29,2018
+1,Other theft,E01010569,7,30,2018
+1,Other theft,E01010569,7,31,2018
+1,Public order,E01010569,7,26,2018
+1,Public order,E01010569,7,27,2018
+1,Public order,E01010569,7,30,2018
+1,Vehicle crime,E01010569,7,28,2018
+1,Vehicle crime,E01010569,7,29,2018
+1,Vehicle crime,E01010569,7,30,2018
+2,Violence and sexual offences,E01010569,7,28,2018
+2,Violence and sexual offences,E01010569,7,29,2018
+2,Violence and sexual offences,E01010569,7,30,2018
+1,Violence and sexual offences,E01010569,7,26,2018
+1,Violence and sexual offences,E01010569,7,27,2018
+1,Violence and sexual offences,E01010569,7,31,2018
+0,Anti-social behaviour,E01010569,7,29,2018
+0,Bicycle theft,E01010569,7,29,2018
+0,Drugs,E01010569,7,29,2018
+0,Other crime,E01010569,7,29,2018
+0,Possession of weapons,E01010569,7,29,2018
+0,Public order,E01010569,7,29,2018
+0,Robbery,E01010569,7,29,2018
+0,Shoplifting,E01010569,7,29,2018
+0,Theft from the person,E01010569,7,29,2018
+0,Bicycle theft,E01010569,7,28,2018
+0,Drugs,E01010569,7,28,2018
+0,Other crime,E01010569,7,28,2018
+0,Possession of weapons,E01010569,7,28,2018
+0,Public order,E01010569,7,28,2018
+0,Robbery,E01010569,7,28,2018
+0,Shoplifting,E01010569,7,28,2018
+0,Theft from the person,E01010569,7,28,2018
+0,Bicycle theft,E01010569,7,30,2018
+0,Burglary,E01010569,7,30,2018
+0,Drugs,E01010569,7,30,2018
+0,Other crime,E01010569,7,30,2018
+0,Possession of weapons,E01010569,7,30,2018
+0,Robbery,E01010569,7,30,2018
+0,Shoplifting,E01010569,7,30,2018
+0,Theft from the person,E01010569,7,30,2018
+0,Bicycle theft,E01010569,7,27,2018
+0,Burglary,E01010569,7,27,2018
+0,Drugs,E01010569,7,27,2018
+0,Other crime,E01010569,7,27,2018
+0,Possession of weapons,E01010569,7,27,2018
+0,Robbery,E01010569,7,27,2018
+0,Shoplifting,E01010569,7,27,2018
+0,Theft from the person,E01010569,7,27,2018
+0,Vehicle crime,E01010569,7,27,2018
+0,Anti-social behaviour,E01010569,7,31,2018
+0,Bicycle theft,E01010569,7,31,2018
+0,Burglary,E01010569,7,31,2018
+0,Criminal damage and arson,E01010569,7,31,2018
+0,Drugs,E01010569,7,31,2018
+0,Other crime,E01010569,7,31,2018
+0,Possession of weapons,E01010569,7,31,2018
+0,Public order,E01010569,7,31,2018
+0,Robbery,E01010569,7,31,2018
+0,Shoplifting,E01010569,7,31,2018
+0,Theft from the person,E01010569,7,31,2018
+0,Vehicle crime,E01010569,7,31,2018
+0,Anti-social behaviour,E01010569,7,26,2018
+0,Bicycle theft,E01010569,7,26,2018
+0,Burglary,E01010569,7,26,2018
+0,Criminal damage and arson,E01010569,7,26,2018
+0,Drugs,E01010569,7,26,2018
+0,Other crime,E01010569,7,26,2018
+0,Other theft,E01010569,7,26,2018
+0,Possession of weapons,E01010569,7,26,2018
+0,Robbery,E01010569,7,26,2018
+0,Shoplifting,E01010569,7,26,2018
+0,Theft from the person,E01010569,7,26,2018
+0,Vehicle crime,E01010569,7,26,2018

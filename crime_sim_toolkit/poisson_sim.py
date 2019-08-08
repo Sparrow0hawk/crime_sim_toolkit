@@ -16,17 +16,22 @@ class Poisson_sim:
     Requires data from https://data.police.uk/ in data folder
     """
 
-    def __init__(self, LA_names):
+    def __init__(self, LA_names, timeframe='Week'):
 
-        self.data = Initialiser(LA_names=LA_names).get_data()
+        self.data = Initialiser(LA_names=LA_names).get_data(timeframe=timeframe)
 
-    def out_of_bag_prep(self):
+    @classmethod
+    def out_of_bag_prep(cls, full_data):
         """
         Function for selecting out a year of real data from counts data for
         out-of-bag sampler comparison
+
+        Input: Pandas dataframe of crime counts in format from initialiser | can pass class instance
+
+        Output: Pandas dataframe of crime counts for maximum year in dataset to be held as out of bag test set
         """
 
-        original_frame = self.data
+        original_frame = full_data
 
         # identify highest year with complete counts for entire year
         # this will be used as out-of-bag comparator
@@ -39,41 +44,54 @@ class Poisson_sim:
             oob_year = original_frame.Year.unique().max()
 
         # slice get dataframe for that year
-        self.oob_data = original_frame[original_frame.Year == oob_year]
+        oob_data = original_frame[original_frame.Year == oob_year]
 
-        return self.oob_data
+        return oob_data
 
-    def oob_train_split(self):
+    @classmethod
+    def oob_train_split(cls, full_data, test_data):
         """
         Function that takes the generated out of bag frame and creates a training dataset
         from full data by removing oob data
+
+        Input:
+            full_data = Pandas dataframe of crime counts from Initialiser
+            test_data = Pandas dataframe output from out_of_bag_prep (holdout year data)
+
+        Output:
+            train_data = Pandas dataframe of crime counts that are not in test_data
         """
 
-        oob_year = self.oob_data.Year.unique().max()
+        oob_year = test_data.Year.unique().max()
 
-        original_frame = self.data
+        original_frame = full_data
 
         # define data for modelling that removes year being modelled
         train_data = original_frame[(original_frame.Year != oob_year)]
 
         return train_data
 
-
-    def SimplePoission(self):
+    @classmethod
+    def SimplePoission(cls, train_data, test_data):
         """
         Function for generating synthetic crime count data at LSOA at timescale resolution
         based on historic data loaded from the initialiser.
+
+        Inputs:
+            train_data = Pandas dataframe output from oob_train_split
+            test_data = Pandas dataframe output from out_of_bag_prep
+
+        Output:
+            simulated_year_frame = Pandas dataframe of simulated data based on train_data
+                                   to be compared to test_data
         """
 
-        # initialise oob data
-        self.out_of_bag_prep()
-
         # building a model that incorporates these local populations
-        year = self.oob_data.Year.unique().max()
+        year = test_data.Year.unique().max()
 
-        oob_data = self.oob_data
+        oob_data = test_data
 
-        historic_data = self.oob_train_split()
+        historic_data = train_data
 
         # test if psuedo-Weeks have been allocated
         if 'Week' in historic_data.columns:
@@ -91,6 +109,8 @@ class Poisson_sim:
         count_lbl = []
         LSOA_lbl = []
 
+        crime_types_lst = historic_data['Crime_type'].unique()
+
         # for each month in the range of months in oob data
         for mon in range(oob_data.Mon.unique().min(), (oob_data.Mon.unique().max() + 1)):
 
@@ -102,16 +122,17 @@ class Poisson_sim:
 
                 print('Month: '+str(mon)+' '+time_res+': '+str(wk))
 
-                frame_OI = historic_data[(historic_data['Mon'].values == mon) & (historic_data[time_res].values == wk)]
 
                 # for each crime type
-                for crim_typ in historic_data['Crime_type'].unique():
+                for crim_typ in crime_types_lst:
 
-                    frame_OI = frame_OI[frame_OI['Crime_type'].values == crim_typ]
+                    frame_OI = historic_data[(historic_data['Mon'].isin([mon])) &
+                                             (historic_data[time_res].isin([wk])) &
+                                             (historic_data['Crime_type'].isin([crim_typ]))]
 
-                    for LSOA in historic_data['LSOA_code'].unique():
+                    for LSOA in frame_OI['LSOA_code'].unique():
 
-                        frame_OI2 = frame_OI[frame_OI['LSOA_code'].values == LSOA]
+                        frame_OI2 = frame_OI[(frame_OI['LSOA_code'].isin([LSOA]))]
 
                         if len(frame_OI2) > 0:
 
@@ -130,45 +151,25 @@ class Poisson_sim:
         simulated_year_frame = pd.DataFrame.from_dict({time_res : time_lbl,
                                                        'Mon' : mon_lbl,
                                                        'Crime type' : crime_lbl,
-                                                       'Count' : count_lbl,
+                                                       'Counts' : count_lbl,
                                                        'LSOA_code' : LSOA_lbl})
 
 
         return simulated_year_frame
 
 
-    def figure_comparison(self, simulated_data):
-        """
-        Function for plotting simulated v real data
-        TODO: is this function necessary?
-        """
-
-        oob_data = self.oob_data
-
-        plt.figure(figsize=(16,10))
-        plt.subplot(2,2,1)
-        simulated_data.Count.value_counts().plot.bar()
-        plt.title('Simulated years count distribution')
-
-        plt.subplot(2,2,2)
-        oob_data[(oob_data.Year == 2018)].Counts.value_counts().plot.bar()
-        plt.title('Count distribution for 2018')
-
-        plt.figure(figsize=(16,10))
-        plt.subplot(2,2,1)
-        simulated_data.groupby(['Mon','Week'])['Count'].sum().plot()
-        plt.title('Simulated counts per week')
-
-        plt.subplot(2,2,2)
-        oob_data[(oob_data.Year == 2018)].groupby(['Mon','Week'])['Counts'].sum().plot()
-        plt.title('Counts per week for 2018')
-
-        return plt.show()
-
-
-    def error_Reporting(self, simulated_data):
+    @classmethod
+    def error_Reporting(cls, test_data, simulated_data):
         """
         function for building comparison of simulated dataframe to actual out-of-bag frame
+
+        Inputs:
+            test_data = Pandas dataframe output from out_of_bag_prep
+            simulated_year_frame = Pandas dataframe output from SimplePoission of simulated year crime counts
+
+        Outputs:
+            comparison_frame = Pandas dataframe that shows comparison of simulated data to test_data
+                               with error scores printed and plot
         """
 
         # test for days or Weeks
@@ -179,7 +180,7 @@ class Poisson_sim:
         else:
             time_res = 'Day'
 
-        comparison_frame = pd.concat([simulated_data.groupby([time_res,'LSOA_code'])['Count'].sum(), self.oob_data.groupby([time_res,'LSOA_code'])['Counts'].sum()],axis=1)
+        comparison_frame = pd.concat([simulated_data.groupby([time_res,'LSOA_code'])['Counts'].sum(), test_data.groupby([time_res,'LSOA_code'])['Counts'].sum()],axis=1)
 
         comparison_frame.reset_index(time_res, inplace=True)
 
