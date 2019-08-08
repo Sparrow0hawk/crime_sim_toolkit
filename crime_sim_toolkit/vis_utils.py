@@ -20,7 +20,7 @@ def get_choropleth(data=None, inline=True):
 
     LA_lst = []
     # get LA codes from LSOAs files
-    for LSOA_cd in data.LSOA_code:
+    for LSOA_cd in choro_counts.LSOA_code:
 
         LA_lst.append(match_LSOA_to_LA(LSOA_cd))
 

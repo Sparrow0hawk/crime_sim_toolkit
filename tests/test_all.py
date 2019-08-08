@@ -49,6 +49,24 @@ class Test(unittest.TestCase):
 
         self.assertEqual(vis_utils.get_LA_GeoJson('E08000036'), self.target)
 
+    def test_counts_to_reports(self):
+        """
+        Test the counts_to_reports util function
+        """
+
+        self.data = pd.read_csv('./tests/testing_data/test_data4pois.csv')
+
+        self.output = utils.counts_to_reports(self.data)
+
+        # length of new dataframe should equal the sum of all counts of passed data
+        self.assertEqual(len(self.output), self.data.Counts.sum())
+
+        # simple check output is actually a dataframe
+        self.assertTrue(isinstance(self.output, pd.DataFrame))
+
+        # test unique IDs are produced as expected
+        self.assertEqual(self.output.UID[0], 'E0101277A')
+
     def test_get_Geojson(self):
         """
         Test to confirm that get_GeoJson function works
