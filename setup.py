@@ -21,7 +21,11 @@ setup(
     packages=find_packages(),
     package_data={
                 'crime_sim_toolkit' : ['src/*','tests/testing_data/*']
+<<<<<<< HEAD
     },
+=======
+    }
+>>>>>>> dcb5ec31b7898acf8ceb6feeb394dc07b3634769
     include_package_data=True
 
 
