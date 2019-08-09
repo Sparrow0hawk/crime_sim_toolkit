@@ -20,7 +20,8 @@ setup(
     python_requires= '>=3.5',
     packages=find_packages(),
     package_data={
-                'crime_sim_toolkit' : ['src/*','tests/testing_data/*']
+                'crime_sim_toolkit' : ['src/*'],
+                'crime_sim_toolkit' : ['tests/testing_data/*']
     },
     include_package_data=True
 
