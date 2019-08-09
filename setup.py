@@ -19,6 +19,9 @@ setup(
     long_description_content_type='text/markdown',
     python_requires= '>=3.5',
     packages=find_packages(),
+    package_data={
+                'crime_sim_toolkit' : ['src/*','tests/testing_data/*']
+    },
     include_package_data=True
 
 
