@@ -11,7 +11,7 @@ def read_reqs():
 setup(
     name='crime_sim_toolkit',
     url='https://github.com/Sparrow0hawk/crime_sim_toolkit',
-    version=1.1,
+    version=1.2,
     author='Alex Coleman',
     author_email='a.coleman1@leeds.ac.uk',
     description='A toolkit for simulating UK crime data.',
@@ -19,6 +19,7 @@ setup(
     long_description_content_type='text/markdown',
     python_requires= '>=3.5',
     packages=find_packages(),
+    include_package_data=True
 
 
 )

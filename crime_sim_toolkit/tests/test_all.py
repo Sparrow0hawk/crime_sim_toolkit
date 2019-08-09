@@ -7,8 +7,10 @@ import folium
 from crime_sim_toolkit import vis_utils, utils
 import crime_sim_toolkit.initialiser as Initialiser
 import crime_sim_toolkit.poisson_sim as Poisson_sim
+import pkg_resources
 
-test_dir = os.path.dirname(os.path.abspath(__file__))
+# Could be any dot-separated package/module name or a "Requirement"
+resource_package = 'crime_sim_toolkit'
 
 class Test(unittest.TestCase):
 
@@ -32,7 +34,7 @@ class Test(unittest.TestCase):
         test for a given LSOA code this will return the local area code
         """
 
-        self.to_match = pd.read_csv(os.path.join(test_dir,'./testing_data/match_LSOA_test.csv'))
+        self.to_match = pd.read_csv(pkg_resources.resource_filename(resource_package, 'tests/testing_data/match_LSOA_test.csv'))
 
         self.assertEqual(vis_utils.match_LSOA_to_LA(self.to_match['LSOA_cd'][0]),self.to_match['LA_cd'][0])
 
@@ -54,7 +56,7 @@ class Test(unittest.TestCase):
         Test the counts_to_reports util function
         """
 
-        self.data = pd.read_csv('./tests/testing_data/test_data4pois.csv')
+        self.data = pd.read_csv(pkg_resources.resource_filename(resource_package, 'tests/testing_data/test_data4pois.csv'))
 
         self.output = utils.counts_to_reports(self.data)
 
@@ -75,7 +77,7 @@ class Test(unittest.TestCase):
 
         self.data = vis_utils.get_GeoJson(['E09000020'])
 
-        with open(os.path.join(test_dir,'./testing_data/test_1.json')) as datafile , open(os.path.join(test_dir,'./testing_data/test_2.json')) as falsefile:
+        with open(pkg_resources.resource_filename(resource_package, 'tests/testing_data/test_1.json')) as datafile , open(pkg_resources.resource_filename(resource_package, 'tests/testing_data/test_2.json')) as falsefile:
 
             self.matchTrue = json.loads(datafile.read())
 
@@ -91,7 +93,7 @@ class Test(unittest.TestCase):
         Test to check we can take a dataframe and build a folium map
         """
 
-        self.data = pd.read_csv(os.path.join(test_dir,'./testing_data/data_to_map.csv'), index_col=False)
+        self.data = pd.read_csv(pkg_resources.resource_filename(resource_package, 'tests/testing_data/data_to_map.csv'), index_col=False)
 
         self.test = vis_utils.get_choropleth(data=self.data, inline=False)
 
@@ -104,9 +106,9 @@ class Test(unittest.TestCase):
         TODO: test it generates max and min days in given month
         """
 
-        self.dataTrue = pd.read_csv(os.path.join(test_dir,'./testing_data/random_date1.csv'))
+        self.dataTrue = pd.read_csv(pkg_resources.resource_filename(resource_package, 'tests/testing_data/random_date1.csv'))
 
-        self.dataFalse = pd.read_csv(os.path.join(test_dir,'./testing_data/random_date2.csv'))
+        self.dataFalse = pd.read_csv(pkg_resources.resource_filename(resource_package, 'tests/testing_data/random_date2.csv'))
 
         self.assertTrue('Mon' in self.init.random_date_allocate(data=self.dataTrue).columns)
 
@@ -142,7 +144,7 @@ class Test(unittest.TestCase):
         """
         Test to check the reports to counts converter works
         """
-        self.data = pd.read_csv(os.path.join(test_dir,'./testing_data/report_2_counts.csv'))
+        self.data = pd.read_csv(pkg_resources.resource_filename(resource_package, 'tests/testing_data/report_2_counts.csv'))
 
         test_frame = self.init.reports_to_counts(self.data, timeframe='Day')
 
@@ -154,7 +156,7 @@ class Test(unittest.TestCase):
         """
         Test that adding zero function works
         """
-        self.data = pd.read_csv('./tests/testing_data/test_counts1.csv')
+        self.data = pd.read_csv(pkg_resources.resource_filename(resource_package, 'tests/testing_data/test_counts1.csv'))
 
         self.init = Initialiser.Initialiser(LA_names=['Kirklees','Calderdale','Leeds','Bradford','Wakefield'])
 
@@ -171,7 +173,7 @@ class Test(unittest.TestCase):
         """
 
 
-        self.data = pd.read_csv('./tests/testing_data/test_data4pois.csv')
+        self.data = pd.read_csv(pkg_resources.resource_filename(resource_package, 'tests/testing_data/test_data4pois.csv'))
 
         self.output = self.poisson.out_of_bag_prep(self.data)
 
@@ -184,9 +186,9 @@ class Test(unittest.TestCase):
         Test function for splitting data based on oob data
         """
 
-        self.oobdata = pd.read_csv('./tests/testing_data/test_oobdata.csv')
+        self.oobdata = pd.read_csv(pkg_resources.resource_filename(resource_package, 'tests/testing_data/test_oobdata.csv'))
 
-        self.data = pd.read_csv('./tests/testing_data/test_data4pois.csv')
+        self.data = pd.read_csv(pkg_resources.resource_filename(resource_package, 'tests/testing_data/test_data4pois.csv'))
 
         self.train_output = self.poisson.oob_train_split(full_data=self.data, test_data=self.oobdata)
 
@@ -201,15 +203,15 @@ class Test(unittest.TestCase):
         Test for checking the output of the poisson sampler is as expected
         """
 
-        self.oobdata = pd.read_csv('./tests/testing_data/test_oobdata.csv')
+        self.oobdata = pd.read_csv(pkg_resources.resource_filename(resource_package, 'tests/testing_data/test_oobdata.csv'))
 
-        self.traindata = pd.read_csv('./tests/testing_data/test_traindata.csv')
+        self.traindata = pd.read_csv(pkg_resources.resource_filename(resource_package, 'tests/testing_data/test_traindata.csv'))
 
         self.poi_data = self.poisson.SimplePoission(train_data = self.traindata, test_data = self.oobdata)
 
         self.assertTrue(isinstance(self.poi_data, pd.DataFrame))
 
-        self.assertEqual(self.poi_data.columns.tolist(), ['Week','Mon','Crime type','Counts','LSOA_code'])
+        self.assertEqual(self.poi_data.columns.tolist(), ['Week','Mon','Crime_type','Counts','LSOA_code'])
 
         self.assertEqual(self.poi_data.Week.unique().tolist(), [26,27,28,29,30,31])
 
@@ -219,15 +221,15 @@ class Test(unittest.TestCase):
         when sampling using days
         """
 
-        self.oobdata = pd.read_csv('./tests/testing_data/test_oobDay_data.csv')
+        self.oobdata = pd.read_csv(pkg_resources.resource_filename(resource_package, 'tests/testing_data/test_oobDay_data.csv'))
 
-        self.traindata = pd.read_csv('./tests/testing_data/test_trainDay_data.csv')
+        self.traindata = pd.read_csv(pkg_resources.resource_filename(resource_package, 'tests/testing_data/test_trainDay_data.csv'))
 
         self.poi_data = self.poisson_day.SimplePoission(train_data = self.traindata, test_data = self.oobdata)
 
         self.assertTrue(isinstance(self.poi_data, pd.DataFrame))
 
-        self.assertEqual(self.poi_data.columns.tolist(), ['Day','Mon','Crime type','Counts','LSOA_code'])
+        self.assertEqual(self.poi_data.columns.tolist(), ['Day','Mon','Crime_type','Counts','LSOA_code'])
 
         self.assertEqual(len(self.poi_data.Day.unique()), 31)
 
@@ -239,9 +241,9 @@ class Test(unittest.TestCase):
         # TODO: the double call of SimplePoission here is very labourious and may not be necessary
         # this errors on calculating rmse Input contains NaN, infinity or a value too large for dtype('float64')
 
-        self.oobdata = pd.read_csv('./tests/testing_data/test_oobdata.csv')
+        self.oobdata = pd.read_csv(pkg_resources.resource_filename(resource_package, 'tests/testing_data/test_oobdata.csv'))
 
-        self.traindata = pd.read_csv('./tests/testing_data/test_traindata.csv')
+        self.traindata = pd.read_csv(pkg_resources.resource_filename(resource_package, 'tests/testing_data/test_traindata.csv'))
 
         self.poi_data = self.poisson.SimplePoission(train_data = self.traindata, test_data = self.oobdata)
 
@@ -259,9 +261,9 @@ class Test(unittest.TestCase):
         # TODO: the double call of SimplePoission here is very labourious and may not be necessary
         # this errors on calculating rmse Input contains NaN, infinity or a value too large for dtype('float64')
 
-        self.oobdata = pd.read_csv('./tests/testing_data/test_oobDay_data.csv')
+        self.oobdata = pd.read_csv(pkg_resources.resource_filename(resource_package, 'tests/testing_data/test_oobDay_data.csv'))
 
-        self.traindata = pd.read_csv('./tests/testing_data/test_trainDay_data.csv')
+        self.traindata = pd.read_csv(pkg_resources.resource_filename(resource_package, 'tests/testing_data/test_trainDay_data.csv'))
 
         self.poi_data = self.poisson_day.SimplePoission(train_data = self.traindata, test_data = self.oobdata)
 

@@ -84,6 +84,9 @@ class Poisson_sim:
         Output:
             simulated_year_frame = Pandas dataframe of simulated data based on train_data
                                    to be compared to test_data
+
+        Notes:
+            Could this be performed before the psuedo day/week allocation?
         """
 
         # building a model that incorporates these local populations
