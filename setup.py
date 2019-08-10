@@ -20,8 +20,9 @@ setup(
     python_requires= '>=3.5',
     packages=find_packages(),
     package_data={
-                'crime_sim_toolkit' : ['src/LSOA_data/*'],
-                'crime_sim_toolkit' : ['tests/testing_data/*']
+                # removed brackets on glob paths
+                'crime_sim_toolkit' : 'src/LSOA_data/*',
+                'crime_sim_toolkit' : 'tests/testing_data/*'
     }
     # removed as a test
     #include_package_data=True
