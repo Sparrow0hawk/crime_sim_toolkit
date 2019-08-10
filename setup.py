@@ -22,8 +22,9 @@ setup(
     package_data={
                 'crime_sim_toolkit' : ['src/LSOA_data/*'],
                 'crime_sim_toolkit' : ['tests/testing_data/*']
-    },
-    include_package_data=True
+    }
+    # removed as a test
+    #include_package_data=True
 
 
 )
