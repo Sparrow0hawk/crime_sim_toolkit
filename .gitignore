@@ -14,7 +14,7 @@ samplingoutput.txt
 
 # keeps
 !data/policedata/.gitkeep
-!output/.gitkeep
+!crime_sim_toolkit/output/.gitkeep
 
 # packaging stuff
 venv/*
