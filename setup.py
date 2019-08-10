@@ -20,12 +20,13 @@ setup(
     python_requires= '>=3.5',
     # changed to name of package
     packages=['crime_sim_toolkit'],
-    package_data={
+    #package_data={
                 # removed brackets on glob paths
                 # added file types
-                'crime_sim_toolkit' : ['src/LSOA_data/*.csv'],
-                'crime_sim_toolkit' : 'tests/testing_data/*.*'
-    },
+                #'crime_sim_toolkit' : ['src/LSOA_data/*.csv'],
+                #'crime_sim_toolkit' : ['tests/testing_data/*.*']
+    #},
+    zip_safe=False,
     # removed as a test
     include_package_data=True
 
