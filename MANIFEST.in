@@ -1,4 +1,4 @@
 include requirements.txt
 include README.md
-include src/*/*
-include tests/testing_data/*
+include src/*/*.*
+include tests/testing_data/*.*
