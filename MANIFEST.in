@@ -1,4 +1,4 @@
 include requirements.txt
 include README.md
-include *.csv
-include tests/testing_data/*.*
+recursive-include src/LSOA_data *
+recursive-include tests/testing_data *
