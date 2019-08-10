@@ -1,9 +1,4 @@
 include requirements.txt
 include README.md
-<<<<<<< HEAD
-recursive-include src/LSOA_data *
-recursive-include tests/testing_data *
-=======
-recursive include src/LSOA_data *
-recursive include tests/testing_data *
->>>>>>> 47b91997f24779e9e59a5b5bebd0b0fa6a305027
+recursive-include crime_sim_toolkit/src/LSOA_data/*
+recursive-include crime_sim_toolkit/tests/testing_data/*
