@@ -23,11 +23,11 @@ setup(
     package_data={
                 # removed brackets on glob paths
                 # added file types
-                'crime_sim_toolkit' : 'src/LSOA_data/*.csv',
+                'crime_sim_toolkit' : ['src/LSOA_data/*.csv'],
                 'crime_sim_toolkit' : 'tests/testing_data/*.*'
-    }
+    },
     # removed as a test
-    #include_package_data=True
+    include_package_data=True
 
 
 )
