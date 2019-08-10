@@ -20,6 +20,7 @@ setup(
     python_requires= '>=3.5',
     # changed to name of package
     packages=['crime_sim_toolkit'],
+    package_dir={'crime_sim_toolkit' : 'crime_sim_toolkit'},
     package_data={
                 # removed brackets on glob paths
                 # added file types
