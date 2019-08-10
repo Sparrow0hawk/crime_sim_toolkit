@@ -18,11 +18,13 @@ setup(
     long_description=readme(),
     long_description_content_type='text/markdown',
     python_requires= '>=3.5',
-    packages=find_packages(),
+    # changed to name of package
+    packages=['crime_sim_toolkit'],
     package_data={
                 # removed brackets on glob paths
-                'crime_sim_toolkit' : 'src/LSOA_data/*',
-                'crime_sim_toolkit' : 'tests/testing_data/*'
+                # added file types
+                'crime_sim_toolkit' : 'src/LSOA_data/*.csv',
+                'crime_sim_toolkit' : 'tests/testing_data/*.*'
     }
     # removed as a test
     #include_package_data=True
