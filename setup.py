@@ -11,7 +11,7 @@ def read_reqs():
 setup(
     name='crime_sim_toolkit',
     url='https://github.com/Sparrow0hawk/crime_sim_toolkit',
-    version=1.1,
+    version=1.2,
     author='Alex Coleman',
     author_email='a.coleman1@leeds.ac.uk',
     description='A toolkit for simulating UK crime data.',
@@ -19,6 +19,16 @@ setup(
     long_description_content_type='text/markdown',
     python_requires= '>=3.5',
     packages=find_packages(),
+    #package_dir={'crime_sim_toolkit' : 'crime_sim_toolkit'},
+    #package_data={
+                # removed brackets on glob paths
+                # added file types
+                #'' : ['*.csv'],
+                #'crime_sim_toolkit' : ['tests/testing_data/*.*']
+    #},
+    zip_safe=False,
+    # removed as a test
+    include_package_data=True
 
 
 )

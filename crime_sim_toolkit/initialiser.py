@@ -6,6 +6,10 @@ import glob
 from calendar import monthrange
 import pandas as pd
 import numpy as np
+import pkg_resources
+
+# Could be any dot-separated package/module name or a "Requirement"
+resource_package = 'crime_sim_toolkit'
 
 
 class Initialiser:
@@ -19,7 +23,7 @@ class Initialiser:
         self.LA_names = LA_names
 
         # boot up LSOA lists from 2011 census
-        LSOA_pop = pd.read_csv('./src/LSOA_data/census_2011_population_hh.csv')
+        LSOA_pop = pd.read_csv(pkg_resources.resource_filename(resource_package, 'src/LSOA_data/census_2011_population_hh.csv'))
 
         LSOA_pop = LSOA_pop[LSOA_pop['Local authority name'].isin(LA_names)]
 
@@ -70,14 +74,15 @@ class Initialiser:
         # section for pulling in and concatenating police report data
         # adding if block that will search for data in data folder
         # if none found default to using test data in tests folder
-        files_list = glob.glob('data/policedata*/*/*.csv')
+        # TODO: restructure data input rather than from internal folder
+        files_list = glob.glob(pkg_resources.resource_filename(resource_package, 'data/policedata/')+'*/*.csv')
 
         print('Number of data files found: ', str(len(files_list)))
 
         if len(files_list) == 0:
             print('No files found in data folder.')
             print('Defaulting to test data.')
-            files_list = glob.glob('tests/testing_data/test_policedata/*/*.csv')
+            files_list = glob.glob(pkg_resources.resource_filename(resource_package, 'tests/testing_data/test_policedata/')+'*/*.csv')
 
         files_combo = []
 

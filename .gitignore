@@ -4,8 +4,8 @@
 crime_sim_toolkit.egg-info
 __pycache__
 .ipynb_checkpoints
-output/*
-data/policedata/*
+crime_sim_toolkit/output/*
+crime_sim_toolkit/data/policedata/*
 
 # specific files
 scrapbook.ipynb
@@ -14,7 +14,7 @@ samplingoutput.txt
 
 # keeps
 !data/policedata/.gitkeep
-!output/.gitkeep
+!crime_sim_toolkit/output/.gitkeep
 
 # packaging stuff
 venv/*

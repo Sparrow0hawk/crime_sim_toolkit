@@ -84,6 +84,9 @@ class Poisson_sim:
         Output:
             simulated_year_frame = Pandas dataframe of simulated data based on train_data
                                    to be compared to test_data
+
+        Notes:
+            Could this be performed before the psuedo day/week allocation?
         """
 
         # building a model that incorporates these local populations
@@ -150,7 +153,7 @@ class Poisson_sim:
         # concatenate all these compiled dataframe rows into one large dataframe
         simulated_year_frame = pd.DataFrame.from_dict({time_res : time_lbl,
                                                        'Mon' : mon_lbl,
-                                                       'Crime type' : crime_lbl,
+                                                       'Crime_type' : crime_lbl,
                                                        'Counts' : count_lbl,
                                                        'LSOA_code' : LSOA_lbl})
 

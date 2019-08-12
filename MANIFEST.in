@@ -1,0 +1,5 @@
+include requirements.txt
+include README.md
+recursive-include crime_sim_toolkit/src/LSOA_data *
+recursive-include crime_sim_toolkit/tests/testing_data *
+recursive-include crime_sim_toolkit/output *
