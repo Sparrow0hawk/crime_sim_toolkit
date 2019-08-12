@@ -51,3 +51,11 @@ def counts_to_reports(counts_frame):
     reports_frame['UID'] = UID_col
 
     return reports_frame
+
+def populate_offense(crime_frame):
+    """
+    Function for adding in more specific offense descriptions based on Police
+    Recorded Crime Data tables.
+    """
+
+    return populated_frame

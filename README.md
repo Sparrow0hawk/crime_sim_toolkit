@@ -10,6 +10,8 @@ The toolkit exists in three main strategies for data simualtion:
 *   a decision tree using a wide range of predictor variables
 *   a microsimulation using transition probabilities
 
+The data_manipulation folder contains notebooks highlighting how some data sources have been constructed.
+
 ## Notes on datafiles
 
 the census_2011_population_hh.csv file is derived from [ONS data](https://www.ons.gov.uk/file?uri=/peoplepopulationandcommunity/populationandmigration/populationestimates/datasets/2011censuspopulationandhouseholdestimatesforwardsandoutputareasinenglandandwales/rft-table-php01-2011-msoas-and-lsoas.zip). Taking data from sheet LSOA and using row 12 as the header row and keeping only rows below with data.
