@@ -274,6 +274,22 @@ class Test(unittest.TestCase):
         self.assertEqual(self.plot.columns.tolist(), ['Day','Pred_counts','Actual','Difference'])
 
 
+    def test_get_crime_description(self):
+        """
+        Test that crime description generator works as expected
+        """
+
+        # can use the sample crime reports data
+        self.data = pd.read_csv(pkg_resources.resource_filename(resource_package, 'tests/testing_data/report_2_counts.csv'))
+
+        self.descriptions = utils.populate_offence(self.data)
+
+        self.assertTrue(isinstance(self.descriptions, pd.DataFrame))
+
+        self.assertTrue(self.descriptions.Crime_description[0], 'Anti-social behaviour')
+
+        # TODO: write a test to catch actual random choice outputs
+
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)

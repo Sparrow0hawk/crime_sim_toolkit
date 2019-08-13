@@ -4,6 +4,9 @@ Utility functions for general use
 
 import pandas as pd
 import numpy as np
+import pkg_resources
+
+resource_package = 'crime_sim_toolkit'
 
 def counts_to_reports(counts_frame):
     """
@@ -52,10 +55,47 @@ def counts_to_reports(counts_frame):
 
     return reports_frame
 
-def populate_offense(crime_frame):
+def populate_offence(crime_frame):
     """
     Function for adding in more specific offense descriptions based on Police
     Recorded Crime Data tables.
     """
+
+    # format columns to remove spaces
+    crime_frame.columns = crime_frame.columns.str.replace(' ','_')
+
+    # initially load reference tables
+    LSOA_pf_reference = pd.read_csv(pkg_resources.resource_filename(resource_package, 'src/LSOA_data/PoliceforceLSOA.csv'),
+                                    index_col=0)
+
+    descriptions_reference = pd.read_csv(pkg_resources.resource_filename(resource_package, 'src/prc-pfa-201718_new.csv'),
+                             index_col=0)
+
+    # first identify police force
+    list_of_descriptions = []
+
+    for index, row in crime_frame.iterrows():
+
+        police_force = LSOA_pf_reference[LSOA_pf_reference.LSOA_code.isin([row.LSOA_code])].Police_force.tolist()[0]
+
+        descriptions_slice = descriptions_reference[descriptions_reference['Force_Name'].isin([police_force])]
+
+        pivoted_slice = ((descriptions_slice.groupby(['Policeuk_Cat','Offence_Group','Offence_Description'])['Number_of_Offences'].sum() \
+        / descriptions_slice.groupby(['Policeuk_Cat'])['Number_of_Offences'].sum())).reset_index()
+
+        example_narrow = pivoted_slice[pivoted_slice.Policeuk_Cat.str.lower().isin([row['Crime_type'].lower()])]
+
+        if len(example_narrow) > 0:
+
+            list_of_descriptions.append(np.random.choice(example_narrow.Offence_Description.tolist(), 1, p=example_narrow.Number_of_Offences)[0])
+
+        else:
+            # this will prevent an error on anti-social behaviour which is not included
+            # within mapping file
+            list_of_descriptions.append(row['Crime_type'])
+
+    populated_frame = crime_frame.copy()
+
+    populated_frame['Crime_description'] = list_of_descriptions
 
     return populated_frame
