@@ -2,6 +2,7 @@
 #       or a series of class methods that are called sequentially?
 
 # import libraries
+import sys
 import glob
 from calendar import monthrange
 import pandas as pd
@@ -37,7 +38,7 @@ class Initialiser:
 
         self.LSOA_hh_counts = LSOA_counts
 
-    def get_data(self, timeframe='Week'):
+    def get_data(self, directory=None, timeframe='Week'):
         """
         One-caller function that loads and manipulates data ready for use
         """
@@ -47,7 +48,7 @@ class Initialiser:
         print(' ')
 
         # this initialises two class variables
-        self.initialise_data()
+        self.initialise_data(directory=directory)
 
         dated_data = self.random_date_allocate(data=self.report_frame, timeframe=timeframe)
 
@@ -57,32 +58,35 @@ class Initialiser:
 
         return mut_counts_frame
 
-    def initialise_data(self):
+    def initialise_data(self, directory=None):
         """
         Function to initialise dataset
 
         This will load data from the embedded data folder (src) and user passed dataset
 
         Input: src folder
-               data folder: populated with monthly csv files from custom downloads from https://data.police.uk/data/
+               directory: string path to directory with nested month folders with police data
 
         TODO: build some tests
               Does it return data with right columns? Does it match an expected length after concat?
               Can you return certain LSOA household value etc
         """
 
-        # section for pulling in and concatenating police report data
-        # adding if block that will search for data in data folder
-        # if none found default to using test data in tests folder
-        # TODO: restructure data input rather than from internal folder
-        files_list = glob.glob(pkg_resources.resource_filename(resource_package, 'data/policedata/')+'*/*.csv')
+        files_list = glob.glob(str(directory)+'/*/*.csv')
 
         print('Number of data files found: ', str(len(files_list)))
 
-        if len(files_list) == 0:
-            print('No files found in data folder.')
+        if directory == None:
+            print('No directory passed.')
             print('Defaulting to test data.')
             files_list = glob.glob(pkg_resources.resource_filename(resource_package, 'tests/testing_data/test_policedata/')+'*/*.csv')
+
+        else:
+            if len(files_list) == 0:
+
+                print('No files found. Please ensure you have specified the correct path.')
+                print('Glob has searched for '+directory+'/*/*.csv')
+                sys.exit()
 
         files_combo = []
 

@@ -18,7 +18,7 @@ class Test(unittest.TestCase):
 
         self.init = Initialiser.Initialiser(LA_names=['Kirklees','Calderdale','Leeds','Bradford','Wakefield'])
 
-        self.init_data = self.init.initialise_data()
+        self.init_data = self.init.initialise_data(directory=None)
 
     @classmethod
     def setUpClass(cls):
@@ -28,6 +28,21 @@ class Test(unittest.TestCase):
 
         cls.poisson_day = Poisson_sim.Poisson_sim(LA_names=['Kirklees','Calderdale','Leeds','Bradford','Wakefield'], timeframe='Day')
 
+    def test_new_data_load(self):
+        """
+        Test new data load function
+
+        TODO: write a test that checks for SystemExit on bad path
+        """
+
+        self.init = Initialiser.Initialiser(LA_names=['Kirklees','Calderdale','Leeds','Bradford','Wakefield'])
+
+        # pass it the directory to test data
+        self.data = '/home/alex/Code/python/crime_sim_toolkit/crime_sim_toolkit/tests/testing_data/test_policedata'
+
+        self.test = self.init.initialise_data(directory=self.data)
+
+        self.assertTrue(isinstance(self.init.report_frame, pd.DataFrame))
 
     def test_match_LSOA_to_LA(self):
         """

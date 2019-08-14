@@ -18,7 +18,7 @@ class Poisson_sim:
 
     def __init__(self, LA_names, timeframe='Week'):
 
-        self.data = Initialiser(LA_names=LA_names).get_data(timeframe=timeframe)
+        self.data = Initialiser(LA_names=LA_names).get_data(directory=None, timeframe=timeframe)
 
     @classmethod
     def out_of_bag_prep(cls, full_data):
