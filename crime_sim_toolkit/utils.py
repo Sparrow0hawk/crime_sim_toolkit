@@ -94,6 +94,8 @@ def populate_offence(crime_frame):
 
         shortened_frame['Crime_description'] = shortened_frame['Crime_type'].map(lambda x: np.random.choice(pivoted_slice[pivoted_slice.Policeuk_Cat.str.lower().isin([x.lower()])].Offence_Description.tolist(), 1, p = pivoted_slice[pivoted_slice.Policeuk_Cat.str.lower().isin([x.lower()])].Number_of_Offences.tolist())[0] if len(pivoted_slice[pivoted_slice.Policeuk_Cat.str.lower().isin([x.lower()])]) > 0 else x)
 
+        list_of_slices.append(shortened_frame)
+
     populated_frame = pd.concat(list_of_slices)
 
     return populated_frame
