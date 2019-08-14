@@ -59,6 +59,11 @@ def populate_offence(crime_frame):
     """
     Function for adding in more specific offense descriptions based on Police
     Recorded Crime Data tables.
+
+    Profiled run on test data:
+    # ver1
+    CPU times: user 6min 10s, sys: 710 ms, total: 6min 11s
+    Wall time: 6min 13s
     """
 
     # format columns to remove spaces
