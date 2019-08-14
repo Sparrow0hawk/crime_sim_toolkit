@@ -61,9 +61,9 @@ def populate_offence(crime_frame):
     Recorded Crime Data tables.
 
     Profiled run on test data:
-    # ver1
-    CPU times: user 6min 10s, sys: 710 ms, total: 6min 11s
-    Wall time: 6min 13s
+    # ver2
+    CPU times: user 2min 19s, sys: 2.09 s, total: 2min 21s
+    Wall time: 2min 21s
     """
 
     # format columns to remove spaces
@@ -77,30 +77,23 @@ def populate_offence(crime_frame):
                              index_col=0)
 
     # first identify police force
-    list_of_descriptions = []
+    crime_frame['Police_force'] = crime_frame.LSOA_code.map(lambda x: LSOA_pf_reference[LSOA_pf_reference['LSOA Code'].isin([x])].Police_force.tolist()[0])
 
-    for index, row in crime_frame.iterrows():
+    list_of_slices = []
 
-        police_force = LSOA_pf_reference[LSOA_pf_reference['LSOA Code'].isin([row.LSOA_code])].Police_force.tolist()[0]
+    for police_force in crime_frame.Police_force.unique():
 
+        shortened_frame = crime_frame[crime_frame['Police_force'] == police_force].copy()
+
+        # create sliced frame of crime descriptions by police force
         descriptions_slice = descriptions_reference[descriptions_reference['Force_Name'].isin([police_force])]
 
+        # create pivot table for random allocating weighting
         pivoted_slice = ((descriptions_slice.groupby(['Policeuk_Cat','Offence_Group','Offence_Description'])['Number_of_Offences'].sum() \
         / descriptions_slice.groupby(['Policeuk_Cat'])['Number_of_Offences'].sum())).reset_index()
 
-        example_narrow = pivoted_slice[pivoted_slice.Policeuk_Cat.str.lower().isin([row['Crime_type'].lower()])]
+        shortened_frame['Crime_description'] = shortened_frame['Crime_type'].map(lambda x: np.random.choice(pivoted_slice[pivoted_slice.Policeuk_Cat.str.lower().isin([x.lower()])].Offence_Description.tolist(), 1, p = pivoted_slice[pivoted_slice.Policeuk_Cat.str.lower().isin([x.lower()])].Number_of_Offences.tolist())[0] if len(pivoted_slice[pivoted_slice.Policeuk_Cat.str.lower().isin([x.lower()])]) > 0 else x)
 
-        if len(example_narrow) > 0:
-
-            list_of_descriptions.append(np.random.choice(example_narrow.Offence_Description.tolist(), 1, p=example_narrow.Number_of_Offences)[0])
-
-        else:
-            # this will prevent an error on anti-social behaviour which is not included
-            # within mapping file
-            list_of_descriptions.append(row['Crime_type'])
-
-    populated_frame = crime_frame.copy()
-
-    populated_frame['Crime_description'] = list_of_descriptions
+    populated_frame = pd.concat(list_of_slices)
 
     return populated_frame

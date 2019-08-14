@@ -75,59 +75,59 @@
 73,Theft offences,Attempted burglary in a building other than a dwelling (outcome only),Non-domestic burglary,Burglary
 74,Theft offences,Burglary Business and Community,Non-domestic burglary,Burglary
 75,Theft offences,Burglary in a building other than a dwelling (outcome only),Non-domestic burglary,Burglary
-76,Theft offences,Blackmail,Other theft offences,Other Theft
-77,Theft offences,Dishonest use of electricity,Other theft offences,Other Theft
-78,Theft offences,Making off without payment,Other theft offences,Other Theft
-79,Theft offences,Other theft,Other theft offences,Other Theft
-80,Theft offences,Theft by an employee,Other theft offences,Other Theft
-81,Theft offences,Theft from automatic machine or meter,Other theft offences,Other Theft
-82,Theft offences,Theft in a dwelling other than from an automatic machine or meter,Other theft offences,Other Theft
-83,Theft offences,Theft of mail,Other theft offences,Other Theft
-84,Theft offences,Theft from vehicle,Theft from a vehicle,Vehicle Crime
-85,Theft offences,Aggravated vehicle taking,Theft of a motor vehicle,Vehicle Crime
-86,Theft offences,Theft or unauthorised taking of motor vehicle,Theft of a motor vehicle,Vehicle Crime
-87,Theft offences,Interfering with a motor vehicle,Vehicle interference,Vehicle Crime
-88,Theft offences,Theft from the person,Theft from the person,Theft from the Person
-89,Theft offences,Theft or unauthorised taking of a pedal cycle,Bicycle theft,Bicycle Theft
-90,Theft offences,Shoplifting,Shoplifting,Shoplifting
-91,Criminal damage and arson,Arson endangering life,Arson,Criminal Damage and Arson
-92,Criminal damage and arson,Arson not endangering life,Arson,Criminal Damage and Arson
-93,Criminal damage and arson,Criminal damage to a building other than a dwelling,Criminal damage,Criminal Damage and Arson
-94,Criminal damage and arson,Criminal damage to a dwelling,Criminal damage,Criminal Damage and Arson
-95,Criminal damage and arson,Criminal damage to a vehicle,Criminal damage,Criminal Damage and Arson
-96,Criminal damage and arson,Other criminal damage,Criminal damage,Criminal Damage and Arson
-97,Criminal damage and arson,Racially or religiously aggravated criminal damage,Criminal damage,Criminal Damage and Arson
-98,Drug offences,Other drug offences,Possession of drugs,Drugs
-99,Drug offences,Possession of controlled drugs (Cannabis),Possession of drugs,Drugs
-100,Drug offences,Possession of controlled drugs (excl. Cannabis),Possession of drugs,Drugs
-101,Drug offences,Trafficking in controlled drugs,Trafficking of drugs,Drugs
-102,Fraud offences,Fraud offences recorded by CIFAS,Fraud: CIFAS,Other crime
-103,Fraud offences,Fraud offences recorded by Financial Fraud Action UK,Fraud: Financial Fraud Action UK,Other crime
-104,Fraud offences,Fraud offences recorded by UK Finance,Fraud: UK Finance,Other crime
-105,Fraud offences,Fraud offences recorded by Action Fraud,Fraud: action fraud,Other crime
-106,Miscellaneous crimes,Absconding from lawful custody,Miscellaneous crimes,Other crime
-107,Miscellaneous crimes,Aiding suicide,Miscellaneous crimes,Other crime
-108,Miscellaneous crimes,Bail offences,Miscellaneous crimes,Other crime
-109,Miscellaneous crimes,Bigamy,Miscellaneous crimes,Other crime
-110,Miscellaneous crimes,Concealing an infant death close to birth,Miscellaneous crimes,Other crime
-111,Miscellaneous crimes,Dangerous driving,Miscellaneous crimes,Other crime
-112,Miscellaneous crimes,"Disclosure, obstruction, false or misleading statements etc",Miscellaneous crimes,Other crime
-113,Miscellaneous crimes,Exploitation of prostitution,Miscellaneous crimes,Other crime
-114,Miscellaneous crimes,Forgery or use of false drug prescription,Miscellaneous crimes,Other crime
-115,Miscellaneous crimes,"Fraud, forgery etc associated with vehicle or driver records",Miscellaneous crimes,Other crime
-116,Miscellaneous crimes,"Going equipped for stealing, etc",Miscellaneous crimes,Other crime
-117,Miscellaneous crimes,Handling stolen goods,Miscellaneous crimes,Other crime
-118,Miscellaneous crimes,"Making, supplying or possessing articles for use in fraud",Miscellaneous crimes,Other crime
-119,Miscellaneous crimes,Obscene publications etc,Miscellaneous crimes,Other crime
-120,Miscellaneous crimes,Offender Management Act offences,Miscellaneous crimes,Other crime
-121,Miscellaneous crimes,Other forgery,Miscellaneous crimes,Other crime
-122,Miscellaneous crimes,Other notifiable offences,Miscellaneous crimes,Other crime
-123,Miscellaneous crimes,Perjury,Miscellaneous crimes,Other crime
-124,Miscellaneous crimes,Perverting the course of justice,Miscellaneous crimes,Other crime
-125,Miscellaneous crimes,Possession of false documents,Miscellaneous crimes,Other crime
-126,Miscellaneous crimes,Profiting from or concealing knowledge of the proceeds of crime,Miscellaneous crimes,Other crime
-127,Miscellaneous crimes,Soliciting for the purposes of prostitution,Miscellaneous crimes,Other crime
-128,Miscellaneous crimes,Threat or possession with intent to commit criminal damage,Miscellaneous crimes,Other crime
-129,Miscellaneous crimes,Wildlife,Miscellaneous crimes,Other crime
-130,Robbery,Robbery of business property,Robbery of business property,Other crime
-131,Robbery,Robbery of personal property,Robbery of personal property,Other crime
+76,Robbery,Robbery of business property,Robbery of business property,Robbery
+77,Robbery,Robbery of personal property,Robbery of personal property,Robbery
+78,Theft offences,Blackmail,Other theft offences,Other Theft
+79,Theft offences,Dishonest use of electricity,Other theft offences,Other Theft
+80,Theft offences,Making off without payment,Other theft offences,Other Theft
+81,Theft offences,Other theft,Other theft offences,Other Theft
+82,Theft offences,Theft by an employee,Other theft offences,Other Theft
+83,Theft offences,Theft from automatic machine or meter,Other theft offences,Other Theft
+84,Theft offences,Theft in a dwelling other than from an automatic machine or meter,Other theft offences,Other Theft
+85,Theft offences,Theft of mail,Other theft offences,Other Theft
+86,Theft offences,Theft from vehicle,Theft from a vehicle,Vehicle Crime
+87,Theft offences,Aggravated vehicle taking,Theft of a motor vehicle,Vehicle Crime
+88,Theft offences,Theft or unauthorised taking of motor vehicle,Theft of a motor vehicle,Vehicle Crime
+89,Theft offences,Interfering with a motor vehicle,Vehicle interference,Vehicle Crime
+90,Theft offences,Theft from the person,Theft from the person,Theft from the Person
+91,Theft offences,Theft or unauthorised taking of a pedal cycle,Bicycle theft,Bicycle Theft
+92,Theft offences,Shoplifting,Shoplifting,Shoplifting
+93,Criminal damage and arson,Arson endangering life,Arson,Criminal Damage and Arson
+94,Criminal damage and arson,Arson not endangering life,Arson,Criminal Damage and Arson
+95,Criminal damage and arson,Criminal damage to a building other than a dwelling,Criminal damage,Criminal Damage and Arson
+96,Criminal damage and arson,Criminal damage to a dwelling,Criminal damage,Criminal Damage and Arson
+97,Criminal damage and arson,Criminal damage to a vehicle,Criminal damage,Criminal Damage and Arson
+98,Criminal damage and arson,Other criminal damage,Criminal damage,Criminal Damage and Arson
+99,Criminal damage and arson,Racially or religiously aggravated criminal damage,Criminal damage,Criminal Damage and Arson
+100,Drug offences,Other drug offences,Possession of drugs,Drugs
+101,Drug offences,Possession of controlled drugs (Cannabis),Possession of drugs,Drugs
+102,Drug offences,Possession of controlled drugs (excl. Cannabis),Possession of drugs,Drugs
+103,Drug offences,Trafficking in controlled drugs,Trafficking of drugs,Drugs
+104,Fraud offences,Fraud offences recorded by CIFAS,Fraud: CIFAS,Other crime
+105,Fraud offences,Fraud offences recorded by Financial Fraud Action UK,Fraud: Financial Fraud Action UK,Other crime
+106,Fraud offences,Fraud offences recorded by UK Finance,Fraud: UK Finance,Other crime
+107,Fraud offences,Fraud offences recorded by Action Fraud,Fraud: action fraud,Other crime
+108,Miscellaneous crimes,Absconding from lawful custody,Miscellaneous crimes,Other crime
+109,Miscellaneous crimes,Aiding suicide,Miscellaneous crimes,Other crime
+110,Miscellaneous crimes,Bail offences,Miscellaneous crimes,Other crime
+111,Miscellaneous crimes,Bigamy,Miscellaneous crimes,Other crime
+112,Miscellaneous crimes,Concealing an infant death close to birth,Miscellaneous crimes,Other crime
+113,Miscellaneous crimes,Dangerous driving,Miscellaneous crimes,Other crime
+114,Miscellaneous crimes,"Disclosure, obstruction, false or misleading statements etc",Miscellaneous crimes,Other crime
+115,Miscellaneous crimes,Exploitation of prostitution,Miscellaneous crimes,Other crime
+116,Miscellaneous crimes,Forgery or use of false drug prescription,Miscellaneous crimes,Other crime
+117,Miscellaneous crimes,"Fraud, forgery etc associated with vehicle or driver records",Miscellaneous crimes,Other crime
+118,Miscellaneous crimes,"Going equipped for stealing, etc",Miscellaneous crimes,Other crime
+119,Miscellaneous crimes,Handling stolen goods,Miscellaneous crimes,Other crime
+120,Miscellaneous crimes,"Making, supplying or possessing articles for use in fraud",Miscellaneous crimes,Other crime
+121,Miscellaneous crimes,Obscene publications etc,Miscellaneous crimes,Other crime
+122,Miscellaneous crimes,Offender Management Act offences,Miscellaneous crimes,Other crime
+123,Miscellaneous crimes,Other forgery,Miscellaneous crimes,Other crime
+124,Miscellaneous crimes,Other notifiable offences,Miscellaneous crimes,Other crime
+125,Miscellaneous crimes,Perjury,Miscellaneous crimes,Other crime
+126,Miscellaneous crimes,Perverting the course of justice,Miscellaneous crimes,Other crime
+127,Miscellaneous crimes,Possession of false documents,Miscellaneous crimes,Other crime
+128,Miscellaneous crimes,Profiting from or concealing knowledge of the proceeds of crime,Miscellaneous crimes,Other crime
+129,Miscellaneous crimes,Soliciting for the purposes of prostitution,Miscellaneous crimes,Other crime
+130,Miscellaneous crimes,Threat or possession with intent to commit criminal damage,Miscellaneous crimes,Other crime
+131,Miscellaneous crimes,Wildlife,Miscellaneous crimes,Other crime
