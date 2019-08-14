@@ -76,7 +76,7 @@ def populate_offence(crime_frame):
 
     for index, row in crime_frame.iterrows():
 
-        police_force = LSOA_pf_reference[LSOA_pf_reference.LSOA_code.isin([row.LSOA_code])].Police_force.tolist()[0]
+        police_force = LSOA_pf_reference[LSOA_pf_reference['LSOA Code'].isin([row.LSOA_code])].Police_force.tolist()[0]
 
         descriptions_slice = descriptions_reference[descriptions_reference['Force_Name'].isin([police_force])]
 
