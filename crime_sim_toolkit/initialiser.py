@@ -185,7 +185,7 @@ class Initialiser:
             for month in counts_frame.Mon.unique():
 
                 # for either day or week in temp resolution provided
-                for wk in year_frame[time_res].unique():
+                for wk in year_frame[year_frame.Mon == month][time_res].unique():
 
                     wk_frame = year_frame[(year_frame[time_res].values == wk) & (year_frame.Mon.values == month)]
 
