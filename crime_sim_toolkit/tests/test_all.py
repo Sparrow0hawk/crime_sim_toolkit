@@ -9,6 +9,9 @@ import crime_sim_toolkit.initialiser as Initialiser
 import crime_sim_toolkit.poisson_sim as Poisson_sim
 import pkg_resources
 
+# specified for directory passing test
+test_dir = os.path.dirname(os.path.abspath(__file__))
+
 # Could be any dot-separated package/module name or a "Requirement"
 resource_package = 'crime_sim_toolkit'
 
@@ -32,17 +35,23 @@ class Test(unittest.TestCase):
         """
         Test new data load function
 
-        TODO: write a test that checks for SystemExit on bad path
         """
 
-        self.init = Initialiser.Initialiser(LA_names=['Kirklees','Calderdale','Leeds','Bradford','Wakefield'])
-
         # pass it the directory to test data
-        self.data = '/home/alex/Code/python/crime_sim_toolkit/crime_sim_toolkit/tests/testing_data/test_policedata'
+        self.path_good = os.path.abspath(os.path.join(test_dir,'testing_data/test_policedata'))
 
-        self.test = self.init.initialise_data(directory=self.data)
+        self.path_bad = os.path.abspath(os.path.join(test_dir,'testing_data/test_policedata/bad'))
+
+        self.test = self.init.initialise_data(directory=self.path_good)
 
         self.assertTrue(isinstance(self.init.report_frame, pd.DataFrame))
+
+        # test that on passing bad path system exits
+        with self.assertRaises(SystemExit) as cm:
+
+            self.init.initialise_data(directory=self.path_bad)
+
+        self.assertEqual(cm.exception.code, 0)
 
     def test_match_LSOA_to_LA(self):
         """

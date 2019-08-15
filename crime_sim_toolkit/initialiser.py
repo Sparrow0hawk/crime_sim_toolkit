@@ -86,7 +86,7 @@ class Initialiser:
 
                 print('No files found. Please ensure you have specified the correct path.')
                 print('Glob has searched for '+directory+'/*/*.csv')
-                sys.exit()
+                sys.exit(0)
 
         files_combo = []
 

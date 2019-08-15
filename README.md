@@ -22,5 +22,5 @@ For the poisson simulator the package expects a raw dump of folders from [Police
 
 ## TODO
 
-*   Build data access in either via specifying directory (eww) or calling to police API (desired)
+*   Build method for using Police data API
 *   microsimulation
