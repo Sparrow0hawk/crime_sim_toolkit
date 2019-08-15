@@ -4,6 +4,9 @@ Utility functions for general use
 
 import pandas as pd
 import numpy as np
+import pkg_resources
+
+resource_package = 'crime_sim_toolkit'
 
 def counts_to_reports(counts_frame):
     """
@@ -51,3 +54,48 @@ def counts_to_reports(counts_frame):
     reports_frame['UID'] = UID_col
 
     return reports_frame
+
+def populate_offence(crime_frame):
+    """
+    Function for adding in more specific offense descriptions based on Police
+    Recorded Crime Data tables.
+
+    Profiled run on test data:
+    # ver2
+    CPU times: user 2min 19s, sys: 2.09 s, total: 2min 21s
+    Wall time: 2min 21s
+    """
+
+    # format columns to remove spaces
+    crime_frame.columns = crime_frame.columns.str.replace(' ','_')
+
+    # initially load reference tables
+    LSOA_pf_reference = pd.read_csv(pkg_resources.resource_filename(resource_package, 'src/LSOA_data/PoliceforceLSOA.csv'),
+                                    index_col=0)
+
+    descriptions_reference = pd.read_csv(pkg_resources.resource_filename(resource_package, 'src/prc-pfa-201718_new.csv'),
+                             index_col=0)
+
+    # first identify police force
+    crime_frame['Police_force'] = crime_frame.LSOA_code.map(lambda x: LSOA_pf_reference[LSOA_pf_reference['LSOA Code'].isin([x])].Police_force.tolist()[0])
+
+    list_of_slices = []
+
+    for police_force in crime_frame.Police_force.unique():
+
+        shortened_frame = crime_frame[crime_frame['Police_force'] == police_force].copy()
+
+        # create sliced frame of crime descriptions by police force
+        descriptions_slice = descriptions_reference[descriptions_reference['Force_Name'].isin([police_force])]
+
+        # create pivot table for random allocating weighting
+        pivoted_slice = ((descriptions_slice.groupby(['Policeuk_Cat','Offence_Group','Offence_Description'])['Number_of_Offences'].sum() \
+        / descriptions_slice.groupby(['Policeuk_Cat'])['Number_of_Offences'].sum())).reset_index()
+
+        shortened_frame['Crime_description'] = shortened_frame['Crime_type'].map(lambda x: np.random.choice(pivoted_slice[pivoted_slice.Policeuk_Cat.str.lower().isin([x.lower()])].Offence_Description.tolist(), 1, p = pivoted_slice[pivoted_slice.Policeuk_Cat.str.lower().isin([x.lower()])].Number_of_Offences.tolist())[0] if len(pivoted_slice[pivoted_slice.Policeuk_Cat.str.lower().isin([x.lower()])]) > 0 else x)
+
+        list_of_slices.append(shortened_frame)
+
+    populated_frame = pd.concat(list_of_slices)
+
+    return populated_frame

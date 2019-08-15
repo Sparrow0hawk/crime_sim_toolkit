@@ -1,0 +1,133 @@
+,Offence_Group,Offence_Description,Offence_Subgroup,Police.uk_Cat
+0,Sexual offences,Abuse of children through sexual exploitation,Other sexual offences,Violence and Sexual Offences
+1,Sexual offences,Abuse of position of trust of a sexual nature,Other sexual offences,Violence and Sexual Offences
+2,Sexual offences,Causing sexual activity without consent,Other sexual offences,Violence and Sexual Offences
+3,Sexual offences,Exposure and voyeurism,Other sexual offences,Violence and Sexual Offences
+4,Sexual offences,Incest or familial sexual offences,Other sexual offences,Violence and Sexual Offences
+5,Sexual offences,Other miscellaneous sexual offences,Other sexual offences,Violence and Sexual Offences
+6,Sexual offences,Sexual activity etc with a person with a mental disorder,Other sexual offences,Violence and Sexual Offences
+7,Sexual offences,Sexual activity involving a child under 13,Other sexual offences,Violence and Sexual Offences
+8,Sexual offences,Sexual activity involving child under 16,Other sexual offences,Violence and Sexual Offences
+9,Sexual offences,Sexual assault on a female aged 13 and over,Other sexual offences,Violence and Sexual Offences
+10,Sexual offences,Sexual assault on a female child under 13,Other sexual offences,Violence and Sexual Offences
+11,Sexual offences,Sexual assault on a male aged 13 and over,Other sexual offences,Violence and Sexual Offences
+12,Sexual offences,Sexual assault on a male child under 13,Other sexual offences,Violence and Sexual Offences
+13,Sexual offences,Sexual grooming,Other sexual offences,Violence and Sexual Offences
+14,Sexual offences,Trafficking for sexual exploitation,Other sexual offences,Violence and Sexual Offences
+15,Sexual offences,Unnatural sexual offences,Other sexual offences,Violence and Sexual Offences
+16,Sexual offences,Rape of a female aged 16 and over,Rape offences,Violence and Sexual Offences
+17,Sexual offences,Rape of a female child under 13,Rape offences,Violence and Sexual Offences
+18,Sexual offences,Rape of a female child under 16,Rape offences,Violence and Sexual Offences
+19,Sexual offences,Rape of a male aged 16 and over,Rape offences,Violence and Sexual Offences
+20,Sexual offences,Rape of a male child under 13,Rape offences,Violence and Sexual Offences
+21,Sexual offences,Rape of a male child under 16,Rape offences,Violence and Sexual Offences
+22,Violence against the person,Homicide,Homicide,Violence and Sexual Offences
+23,Violence against the person,Harassment,Stalking and harassment,Violence and Sexual Offences
+24,Violence against the person,Malicious Communications,Stalking and harassment,Violence and Sexual Offences
+25,Violence against the person,Racially or religiously aggravated harassment,Stalking and harassment,Violence and Sexual Offences
+26,Violence against the person,Stalking,Stalking and harassment,Violence and Sexual Offences
+27,Violence against the person,Assault with injury,Violence with injury,Violence and Sexual Offences
+28,Violence against the person,Assault with injury on a constable,Violence with injury,Violence and Sexual Offences
+29,Violence against the person,Assault with intent to cause serious harm,Violence with injury,Violence and Sexual Offences
+30,Violence against the person,Attempted murder,Violence with injury,Violence and Sexual Offences
+31,Violence against the person,Causing death by aggravated vehicle taking,Violence with injury,Violence and Sexual Offences
+32,Violence against the person,Causing death by careless driving under influence of drink or drugs,Violence with injury,Violence and Sexual Offences
+33,Violence against the person,Causing death by careless or inconsiderate driving,Violence with injury,Violence and Sexual Offences
+34,Violence against the person,Causing death by driving: unlicensed or disqualified or uninsured drivers,Violence with injury,Violence and Sexual Offences
+35,Violence against the person,Causing death or serious injury by dangerous driving,Violence with injury,Violence and Sexual Offences
+36,Violence against the person,Causing or allowing death of child or vulnerable person,Violence with injury,Violence and Sexual Offences
+37,Violence against the person,Endangering life,Violence with injury,Violence and Sexual Offences
+38,Violence against the person,Intentional destruction of a viable unborn child,Violence with injury,Violence and Sexual Offences
+39,Violence against the person,Racially or religiously aggravated assault with injury,Violence with injury,Violence and Sexual Offences
+40,Violence against the person,Assault without injury,Violence without injury,Violence and Sexual Offences
+41,Violence against the person,Assault without injury on a constable,Violence without injury,Violence and Sexual Offences
+42,Violence against the person,Child abduction,Violence without injury,Violence and Sexual Offences
+43,Violence against the person,Conspiracy to murder,Violence without injury,Violence and Sexual Offences
+44,Violence against the person,Cruelty to children/young persons,Violence without injury,Violence and Sexual Offences
+45,Violence against the person,Kidnapping,Violence without injury,Violence and Sexual Offences
+46,Violence against the person,Modern slavery,Violence without injury,Violence and Sexual Offences
+47,Violence against the person,Procuring illegal abortion,Violence without injury,Violence and Sexual Offences
+48,Violence against the person,Racially or religiously aggravated assault without injury,Violence without injury,Violence and Sexual Offences
+49,Violence against the person,Threats to kill,Violence without injury,Violence and Sexual Offences
+50,Possession of weapons offences,Other firearms offences,Possession of weapons offences,Possession of Weapons
+51,Possession of weapons offences,Other knives offences,Possession of weapons offences,Possession of Weapons
+52,Possession of weapons offences,Possession of article with blade or point,Possession of weapons offences,Possession of Weapons
+53,Possession of weapons offences,Possession of firearms offences,Possession of weapons offences,Possession of Weapons
+54,Possession of weapons offences,Possession of firearms with intent,Possession of weapons offences,Possession of Weapons
+55,Possession of weapons offences,Possession of other weapons,Possession of weapons offences,Possession of Weapons
+56,Public order offences,Other offences against the State or public order,Public order offences,Public Order
+57,Public order offences,"Public fear, alarm or distress",Public order offences,Public Order
+58,Public order offences,"Racially or religiously aggravated public fear, alarm or distress",Public order offences,Public Order
+59,Public order offences,Violent disorder,Public order offences,Public Order
+60,Theft offences,Aggravated Burglary Residential,Domestic burglary,Burglary
+61,Theft offences,Aggravated burglary in a dwelling (outcome only),Domestic burglary,Burglary
+62,Theft offences,Attempted Burglary Residential,Domestic burglary,Burglary
+63,Theft offences,Attempted Distraction Burglary Residential,Domestic burglary,Burglary
+64,Theft offences,Attempted burglary in a dwelling (outcome only),Domestic burglary,Burglary
+65,Theft offences,Attempted distraction burglary in a dwelling (outcome only),Domestic burglary,Burglary
+66,Theft offences,Burglary Residential,Domestic burglary,Burglary
+67,Theft offences,Burglary in a dwelling(outcome only),Domestic burglary,Burglary
+68,Theft offences,Distraction Burglary Residential,Domestic burglary,Burglary
+69,Theft offences,Distraction burglary in a dwelling (outcome only),Domestic burglary,Burglary
+70,Theft offences,Aggravated Burglary Business and Community,Non-domestic burglary,Burglary
+71,Theft offences,Aggravated burglary in a building other than a dwelling(outcome only),Non-domestic burglary,Burglary
+72,Theft offences,Attempted Burglary Business and Community,Non-domestic burglary,Burglary
+73,Theft offences,Attempted burglary in a building other than a dwelling (outcome only),Non-domestic burglary,Burglary
+74,Theft offences,Burglary Business and Community,Non-domestic burglary,Burglary
+75,Theft offences,Burglary in a building other than a dwelling (outcome only),Non-domestic burglary,Burglary
+76,Robbery,Robbery of business property,Robbery of business property,Robbery
+77,Robbery,Robbery of personal property,Robbery of personal property,Robbery
+78,Theft offences,Blackmail,Other theft offences,Other Theft
+79,Theft offences,Dishonest use of electricity,Other theft offences,Other Theft
+80,Theft offences,Making off without payment,Other theft offences,Other Theft
+81,Theft offences,Other theft,Other theft offences,Other Theft
+82,Theft offences,Theft by an employee,Other theft offences,Other Theft
+83,Theft offences,Theft from automatic machine or meter,Other theft offences,Other Theft
+84,Theft offences,Theft in a dwelling other than from an automatic machine or meter,Other theft offences,Other Theft
+85,Theft offences,Theft of mail,Other theft offences,Other Theft
+86,Theft offences,Theft from vehicle,Theft from a vehicle,Vehicle Crime
+87,Theft offences,Aggravated vehicle taking,Theft of a motor vehicle,Vehicle Crime
+88,Theft offences,Theft or unauthorised taking of motor vehicle,Theft of a motor vehicle,Vehicle Crime
+89,Theft offences,Interfering with a motor vehicle,Vehicle interference,Vehicle Crime
+90,Theft offences,Theft from the person,Theft from the person,Theft from the Person
+91,Theft offences,Theft or unauthorised taking of a pedal cycle,Bicycle theft,Bicycle Theft
+92,Theft offences,Shoplifting,Shoplifting,Shoplifting
+93,Criminal damage and arson,Arson endangering life,Arson,Criminal Damage and Arson
+94,Criminal damage and arson,Arson not endangering life,Arson,Criminal Damage and Arson
+95,Criminal damage and arson,Criminal damage to a building other than a dwelling,Criminal damage,Criminal Damage and Arson
+96,Criminal damage and arson,Criminal damage to a dwelling,Criminal damage,Criminal Damage and Arson
+97,Criminal damage and arson,Criminal damage to a vehicle,Criminal damage,Criminal Damage and Arson
+98,Criminal damage and arson,Other criminal damage,Criminal damage,Criminal Damage and Arson
+99,Criminal damage and arson,Racially or religiously aggravated criminal damage,Criminal damage,Criminal Damage and Arson
+100,Drug offences,Other drug offences,Possession of drugs,Drugs
+101,Drug offences,Possession of controlled drugs (Cannabis),Possession of drugs,Drugs
+102,Drug offences,Possession of controlled drugs (excl. Cannabis),Possession of drugs,Drugs
+103,Drug offences,Trafficking in controlled drugs,Trafficking of drugs,Drugs
+104,Fraud offences,Fraud offences recorded by CIFAS,Fraud: CIFAS,Other crime
+105,Fraud offences,Fraud offences recorded by Financial Fraud Action UK,Fraud: Financial Fraud Action UK,Other crime
+106,Fraud offences,Fraud offences recorded by UK Finance,Fraud: UK Finance,Other crime
+107,Fraud offences,Fraud offences recorded by Action Fraud,Fraud: action fraud,Other crime
+108,Miscellaneous crimes,Absconding from lawful custody,Miscellaneous crimes,Other crime
+109,Miscellaneous crimes,Aiding suicide,Miscellaneous crimes,Other crime
+110,Miscellaneous crimes,Bail offences,Miscellaneous crimes,Other crime
+111,Miscellaneous crimes,Bigamy,Miscellaneous crimes,Other crime
+112,Miscellaneous crimes,Concealing an infant death close to birth,Miscellaneous crimes,Other crime
+113,Miscellaneous crimes,Dangerous driving,Miscellaneous crimes,Other crime
+114,Miscellaneous crimes,"Disclosure, obstruction, false or misleading statements etc",Miscellaneous crimes,Other crime
+115,Miscellaneous crimes,Exploitation of prostitution,Miscellaneous crimes,Other crime
+116,Miscellaneous crimes,Forgery or use of false drug prescription,Miscellaneous crimes,Other crime
+117,Miscellaneous crimes,"Fraud, forgery etc associated with vehicle or driver records",Miscellaneous crimes,Other crime
+118,Miscellaneous crimes,"Going equipped for stealing, etc",Miscellaneous crimes,Other crime
+119,Miscellaneous crimes,Handling stolen goods,Miscellaneous crimes,Other crime
+120,Miscellaneous crimes,"Making, supplying or possessing articles for use in fraud",Miscellaneous crimes,Other crime
+121,Miscellaneous crimes,Obscene publications etc,Miscellaneous crimes,Other crime
+122,Miscellaneous crimes,Offender Management Act offences,Miscellaneous crimes,Other crime
+123,Miscellaneous crimes,Other forgery,Miscellaneous crimes,Other crime
+124,Miscellaneous crimes,Other notifiable offences,Miscellaneous crimes,Other crime
+125,Miscellaneous crimes,Perjury,Miscellaneous crimes,Other crime
+126,Miscellaneous crimes,Perverting the course of justice,Miscellaneous crimes,Other crime
+127,Miscellaneous crimes,Possession of false documents,Miscellaneous crimes,Other crime
+128,Miscellaneous crimes,Profiting from or concealing knowledge of the proceeds of crime,Miscellaneous crimes,Other crime
+129,Miscellaneous crimes,Soliciting for the purposes of prostitution,Miscellaneous crimes,Other crime
+130,Miscellaneous crimes,Threat or possession with intent to commit criminal damage,Miscellaneous crimes,Other crime
+131,Miscellaneous crimes,Wildlife,Miscellaneous crimes,Other crime

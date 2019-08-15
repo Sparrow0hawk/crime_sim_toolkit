@@ -9,6 +9,9 @@ import crime_sim_toolkit.initialiser as Initialiser
 import crime_sim_toolkit.poisson_sim as Poisson_sim
 import pkg_resources
 
+# specified for directory passing test
+test_dir = os.path.dirname(os.path.abspath(__file__))
+
 # Could be any dot-separated package/module name or a "Requirement"
 resource_package = 'crime_sim_toolkit'
 
@@ -18,7 +21,7 @@ class Test(unittest.TestCase):
 
         self.init = Initialiser.Initialiser(LA_names=['Kirklees','Calderdale','Leeds','Bradford','Wakefield'])
 
-        self.init_data = self.init.initialise_data()
+        self.init_data = self.init.initialise_data(directory=None)
 
     @classmethod
     def setUpClass(cls):
@@ -28,6 +31,27 @@ class Test(unittest.TestCase):
 
         cls.poisson_day = Poisson_sim.Poisson_sim(LA_names=['Kirklees','Calderdale','Leeds','Bradford','Wakefield'], timeframe='Day')
 
+    def test_new_data_load(self):
+        """
+        Test new data load function
+
+        """
+
+        # pass it the directory to test data
+        self.path_good = os.path.abspath(os.path.join(test_dir,'testing_data/test_policedata'))
+
+        self.path_bad = os.path.abspath(os.path.join(test_dir,'testing_data/test_policedata/bad'))
+
+        self.test = self.init.initialise_data(directory=self.path_good)
+
+        self.assertTrue(isinstance(self.init.report_frame, pd.DataFrame))
+
+        # test that on passing bad path system exits
+        with self.assertRaises(SystemExit) as cm:
+
+            self.init.initialise_data(directory=self.path_bad)
+
+        self.assertEqual(cm.exception.code, 0)
 
     def test_match_LSOA_to_LA(self):
         """
@@ -273,6 +297,22 @@ class Test(unittest.TestCase):
 
         self.assertEqual(self.plot.columns.tolist(), ['Day','Pred_counts','Actual','Difference'])
 
+
+    def test_get_crime_description(self):
+        """
+        Test that crime description generator works as expected
+        """
+
+        # can use the sample crime reports data
+        self.data = pd.read_csv(pkg_resources.resource_filename(resource_package, 'tests/testing_data/report_2_counts.csv'))
+
+        self.descriptions = utils.populate_offence(self.data)
+
+        self.assertTrue(isinstance(self.descriptions, pd.DataFrame))
+
+        self.assertTrue(self.descriptions.Crime_description[0], 'Anti-social behaviour')
+
+        # TODO: write a test to catch actual random choice outputs
 
 
 if __name__ == "__main__":
