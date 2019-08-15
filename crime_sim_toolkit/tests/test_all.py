@@ -27,9 +27,13 @@ class Test(unittest.TestCase):
     def setUpClass(cls):
         super(Test, cls).setUpClass()
 
-        cls.poisson = Poisson_sim.Poisson_sim(LA_names=['Kirklees','Calderdale','Leeds','Bradford','Wakefield'], timeframe='Week')
+        cls.poisson = Poisson_sim.Poisson_sim(LA_names=['Kirklees','Calderdale','Leeds','Bradford','Wakefield'],
+                                              directory=None,
+                                              timeframe='Week')
 
-        cls.poisson_day = Poisson_sim.Poisson_sim(LA_names=['Kirklees','Calderdale','Leeds','Bradford','Wakefield'], timeframe='Day')
+        cls.poisson_day = Poisson_sim.Poisson_sim(LA_names=['Kirklees','Calderdale','Leeds','Bradford','Wakefield'],
+                                                  directory=None,
+                                                  timeframe='Day')
 
     def test_new_data_load(self):
         """
