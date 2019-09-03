@@ -139,9 +139,19 @@ class Poisson_sim:
 
                         if len(frame_OI2) > 0:
 
-                            # create a normal distribution of crime counts on the given day in a given month and randomly select a count number (round it to integer)
-                            # if standard deviation is nan set value for that day at 0
-                            sim_count = scipy.stats.poisson(round(frame_OI2['Counts'].mean(), 0)).rvs()
+                            # remove zeroes or if all zeroes set to zero
+
+                            if frame_OI2['Counts'].mean() == 0:
+
+                                sim_count = 0
+
+                            else:
+                                frame_OI2 = frame_OI2[frame_OI2['Counts'] != 0]
+
+                                # create a normal distribution of crime counts on the given day in a given month
+                                #and randomly select a count number (round it to integer)
+                                # if standard deviation is nan set value for that day at 0
+                                sim_count = scipy.stats.poisson(round(frame_OI2['Counts'].mean(), 0)).rvs()
 
                             # append values to lists that will be merged into dict in final step
                             time_lbl.append(wk)
