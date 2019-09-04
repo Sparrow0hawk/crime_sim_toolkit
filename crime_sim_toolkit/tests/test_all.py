@@ -239,9 +239,11 @@ class Test(unittest.TestCase):
 
         self.assertTrue(isinstance(self.poi_data, pd.DataFrame))
 
-        self.assertEqual(self.poi_data.columns.tolist(), ['Week','Mon','Crime_type','Counts','LSOA_code'])
+        self.assertEqual(self.poi_data.columns.tolist(), ['Week','Mon','Crime_type','Counts','LSOA_code','Year'])
 
         self.assertEqual(self.poi_data.Week.unique().tolist(), [26,27,28,29,30,31])
+
+        self.assertEqual(self.poi_data.Year.unique().tolist(), self.oobdata.Year.unique().tolist())
 
     def test_sampler_day(self):
         """
@@ -257,7 +259,7 @@ class Test(unittest.TestCase):
 
         self.assertTrue(isinstance(self.poi_data, pd.DataFrame))
 
-        self.assertEqual(self.poi_data.columns.tolist(), ['Day','Mon','Crime_type','Counts','LSOA_code'])
+        self.assertEqual(self.poi_data.columns.tolist(), ['Day','Mon','Crime_type','Counts','LSOA_code','Year'])
 
         self.assertEqual(len(self.poi_data.Day.unique()), 31)
 
@@ -315,6 +317,8 @@ class Test(unittest.TestCase):
         self.assertTrue(isinstance(self.descriptions, pd.DataFrame))
 
         self.assertTrue(self.descriptions.Crime_description[0], 'Anti-social behaviour')
+
+        self.assertEqual(self.descriptions.columns.tolist(), ['UID','Year','Mon','Day','Crime_description','Crime_type','LSOA_code','Police_force'])
 
         # TODO: write a test to catch actual random choice outputs
 
