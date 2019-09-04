@@ -235,7 +235,7 @@ class Test(unittest.TestCase):
 
         self.traindata = pd.read_csv(pkg_resources.resource_filename(resource_package, 'tests/testing_data/test_traindata.csv'))
 
-        self.poi_data = self.poisson.SimplePoission(train_data = self.traindata, test_data = self.oobdata)
+        self.poi_data = self.poisson.SimplePoission(train_data = self.traindata, test_data = self.oobdata, method = 'simple')
 
         self.assertTrue(isinstance(self.poi_data, pd.DataFrame))
 
@@ -255,7 +255,7 @@ class Test(unittest.TestCase):
 
         self.traindata = pd.read_csv(pkg_resources.resource_filename(resource_package, 'tests/testing_data/test_trainDay_data.csv'))
 
-        self.poi_data = self.poisson_day.SimplePoission(train_data = self.traindata, test_data = self.oobdata)
+        self.poi_data = self.poisson_day.SimplePoission(train_data = self.traindata, test_data = self.oobdata, method = 'simple')
 
         self.assertTrue(isinstance(self.poi_data, pd.DataFrame))
 
@@ -275,7 +275,7 @@ class Test(unittest.TestCase):
 
         self.traindata = pd.read_csv(pkg_resources.resource_filename(resource_package, 'tests/testing_data/test_traindata.csv'))
 
-        self.poi_data = self.poisson.SimplePoission(train_data = self.traindata, test_data = self.oobdata)
+        self.poi_data = self.poisson.SimplePoission(train_data = self.traindata, test_data = self.oobdata, method = 'simple')
 
         self.plot = self.poisson.error_Reporting(test_data = self.oobdata, simulated_data = self.poi_data)
 
@@ -295,7 +295,7 @@ class Test(unittest.TestCase):
 
         self.traindata = pd.read_csv(pkg_resources.resource_filename(resource_package, 'tests/testing_data/test_trainDay_data.csv'))
 
-        self.poi_data = self.poisson_day.SimplePoission(train_data = self.traindata, test_data = self.oobdata)
+        self.poi_data = self.poisson_day.SimplePoission(train_data = self.traindata, test_data = self.oobdata, method = 'simple')
 
         self.plot = self.poisson.error_Reporting(test_data = self.oobdata, simulated_data = self.poi_data)
 
