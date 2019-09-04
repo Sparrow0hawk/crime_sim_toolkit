@@ -157,6 +157,9 @@ class Poisson_sim:
                                                        'Counts' : count_lbl,
                                                        'LSOA_code' : LSOA_lbl})
 
+        # set simulated data to return the year data is simulated for
+        simulated_year_frame['Year'] = year
+
 
         return simulated_year_frame
 

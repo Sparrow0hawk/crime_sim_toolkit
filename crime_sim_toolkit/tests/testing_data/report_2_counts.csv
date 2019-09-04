@@ -1,4 +1,4 @@
-Crime ID,Month,Reported by,Falls within,Longitude,Latitude,Location,LSOA code,LSOA name,Crime type,Last outcome category,Context,Day,Year,Mon
+UID,Month,Reported by,Falls within,Longitude,Latitude,Location,LSOA code,LSOA name,Crime type,Last outcome category,Context,Day,Year,Mon
 ,2018-10,West Yorkshire Police,West Yorkshire Police,-1.873004,53.941724,On or near Cornerstones Close,E01010646,Bradford 001A,Anti-social behaviour,,,1,2018,3
 51360f9a3bd27f660d08864c0f451cdd0945568749303341cd0f27fd294f1cd8,2018-10,West Yorkshire Police,West Yorkshire Police,-1.863065,53.939035,On or near Low Mill,E01010646,Bradford 001A,Other theft,Unable to prosecute suspect,,4,2018,3
 95a556e280bdd8ad2b8a208e5c11db2d913e7541701940802f50b45d50f84af7,2018-10,West Yorkshire Police,West Yorkshire Police,-1.863065,53.939035,On or near Low Mill,E01010646,Bradford 001A,Public order,Investigation complete; no suspect identified,,6,2018,3
