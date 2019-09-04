@@ -37,7 +37,7 @@ def counts_to_reports(counts_frame):
 
         for count in range(row.Counts):
 
-            concat_stack.append(row.loc[[time_res,'Mon','Crime_type','LSOA_code']].values)
+            concat_stack.append(row.loc[['Year','Mon',time_res,'Crime_type','LSOA_code']].values)
 
             UID = str(row['LSOA_code'][:5]) + str(row[time_res]) + str(row['Mon']) + str(row['Crime_type'][0]) + str(count)
 
@@ -47,11 +47,14 @@ def counts_to_reports(counts_frame):
 
     reports_frame = pd.DataFrame(data=np.stack(concat_stack),
                  index=range(len(concat_stack)),
-                 columns=[time_res,'Mon','Crime_type','LSOA_code']
+                 columns=['Year','Mon',time_res,'Crime_type','LSOA_code']
                  )
 
     # create unique IDs from fragments of data
     reports_frame['UID'] = UID_col
+
+    # reorder columns for ABM
+    reports_frame = reports_frame[['UID','Year','Mon',time_res,'Crime_type','LSOA_code']]
 
     return reports_frame
 
@@ -68,6 +71,11 @@ def populate_offence(crime_frame):
 
     # format columns to remove spaces
     crime_frame.columns = crime_frame.columns.str.replace(' ','_')
+
+    if 'Week' in crime_frame.columns:
+        time_res = 'Week'
+    else:
+        time_res = 'Day'
 
     # initially load reference tables
     LSOA_pf_reference = pd.read_csv(pkg_resources.resource_filename(resource_package, 'src/LSOA_data/PoliceforceLSOA.csv'),
@@ -97,5 +105,9 @@ def populate_offence(crime_frame):
         list_of_slices.append(shortened_frame)
 
     populated_frame = pd.concat(list_of_slices)
+
+    # reorder columns for ABM
+
+    populated_frame = populated_frame[['UID','Year','Mon',time_res,'Crime_description','Crime_type','LSOA_code','Police_force']]
 
     return populated_frame
