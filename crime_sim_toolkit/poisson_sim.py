@@ -208,10 +208,11 @@ class Poisson_sim:
         print('-----------')
         print('Total simulated crime events: ', comparison_frame.Pred_counts.sum())
         print('Total crime events in holdout data: ', comparison_frame.Actual.sum())
-        if comparison_frame.Difference.sum() > 0:
-            print('Oversampling by: ', 1 - round(comparison_frame.Actual.sum() / comparison_frame.Pred_counts.sum(), 1))
+
+        if (comparison_frame.Pred_counts.sum() - comparison_frame.Actual.sum()) > 0:
+            print('Oversampling by: ', 100 *(1 - (round(comparison_frame.Pred_counts.sum() / comparison_frame.Actual.sum(), 1))), '%')
         else:
-            print('Undersampling by: ', round(comparison_frame.Actual.sum() / comparison_frame.Pred_counts.sum(), 1))
+            print('Undersampling by: ', 100 *(1 - (round(comparison_frame.Pred_counts.sum() / comparison_frame.Actual.sum(), 1))), '%')
         print('-------')
 
         comparison_frame[['Pred_counts','Actual']].plot.scatter(x='Actual',y='Pred_counts')
