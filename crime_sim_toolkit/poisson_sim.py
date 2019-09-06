@@ -258,7 +258,7 @@ class Poisson_sim:
             # prep data for linear model
 
             # get years as the X variable
-            x_Years = narrow_frame['Year'].values.reshape(-1,1)
+            x_Years = narrow_frame['Year'].values.reshape(-1, 1)
 
             # get counts as the Y variable
             y_Counts = narrow_frame['Counts'].values
@@ -267,10 +267,10 @@ class Poisson_sim:
             model = linReg().fit(x_Years, y_Counts)
 
             # predict the counts for the next year
-            lin_count = round(np.asscalar(model.predict(np.array([x_Years[-1]+1]))),0)
+            lin_count = round(np.asscalar(model.predict(np.array([x_Years[-1] + 1]))),0)
 
             # calculate the mean of linear and poisson counts
-            mixed_val = round(np.mean(lin_count, poi_count), 0)
+            mixed_val = round(np.mean([lin_count, poi_count]), 0)
 
             return mixed_val
 
