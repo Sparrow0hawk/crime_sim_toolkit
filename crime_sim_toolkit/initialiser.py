@@ -67,9 +67,6 @@ class Initialiser:
         Input: src folder
                directory: string path to directory with nested month folders with police data
 
-        TODO: build some tests
-              Does it return data with right columns? Does it match an expected length after concat?
-              Can you return certain LSOA household value etc
         """
 
         files_list = glob.glob(str(directory)+'/*/*.csv')
@@ -169,7 +166,13 @@ class Initialiser:
         """
         # test if psuedo-Weeks have been allocated
 
-        pile_o_df = []
+        # lists for data to be appended to
+        lsoa_lst = []
+        crime_lst = []
+        counts_lst = []
+        mon_lst = []
+        year_lst = []
+        timeres_lst = []
 
         if 'Week' in counts_frame.columns:
             time_res = 'Week'
@@ -197,23 +200,26 @@ class Initialiser:
 
                         missing_LSOA = self.LSOA_hh_counts.LSOA_code[~self.LSOA_hh_counts.LSOA_code.isin(sliced_frame.LSOA_code)].tolist()
 
-                        new_fram = pd.DataFrame(missing_LSOA, columns=['LSOA_code'], index=range(len(missing_LSOA)))
+                        missing_len = len(missing_LSOA)
 
-                        new_fram['Crime_type'] = crim_typ
-
-                        new_fram['Counts'] = 0
-
-                        new_fram['Mon'] = month
-
-                        new_fram[time_res] = wk
-
-                        new_fram['Year'] = year
-
-                        pile_o_df.append(new_fram)
+                        # add values to lists
+                        # for values with one instance multiple by number of missing_LSOA to get
+                        # correct dimensions
+                        lsoa_lst += missing_LSOA
+                        crime_lst += [crim_typ] * missing_len
+                        counts_lst += [0] * missing_len
+                        mon_lst += [month] * missing_len
+                        year_lst += [year] * missing_len
+                        timeres_lst += [wk] * missing_len
 
 
-        new_tot_counts = pd.concat([counts_frame,pd.concat(pile_o_df)], sort=True)
+        missing_dataf = pd.DataFrame.from_dict({'LSOA_code' : lsoa_lst,
+                                                 'Crime_type': crime_lst,
+                                                 'Year': year_lst,
+                                                 'Mon' : mon_lst,
+                                                 time_res : timeres_lst,
+                                                 'Counts' : counts_lst})
 
-        new_tot_counts.reset_index(drop=True, inplace=True)
+        new_tot_counts = pd.concat([counts_frame, missing_dataf], sort=True)
 
         return new_tot_counts

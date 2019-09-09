@@ -235,13 +235,15 @@ class Test(unittest.TestCase):
 
         self.traindata = pd.read_csv(pkg_resources.resource_filename(resource_package, 'tests/testing_data/test_traindata.csv'))
 
-        self.poi_data = self.poisson.SimplePoission(train_data = self.traindata, test_data = self.oobdata)
+        self.poi_data = self.poisson.SimplePoission(train_data = self.traindata, test_data = self.oobdata, method = 'simple')
 
         self.assertTrue(isinstance(self.poi_data, pd.DataFrame))
 
-        self.assertEqual(self.poi_data.columns.tolist(), ['Week','Mon','Crime_type','Counts','LSOA_code'])
+        self.assertEqual(self.poi_data.columns.tolist(), ['Week','Mon','Crime_type','Counts','LSOA_code','Year'])
 
         self.assertEqual(self.poi_data.Week.unique().tolist(), [26,27,28,29,30,31])
+
+        self.assertEqual(self.poi_data.Year.unique().tolist(), self.oobdata.Year.unique().tolist())
 
     def test_sampler_day(self):
         """
@@ -253,11 +255,47 @@ class Test(unittest.TestCase):
 
         self.traindata = pd.read_csv(pkg_resources.resource_filename(resource_package, 'tests/testing_data/test_trainDay_data.csv'))
 
-        self.poi_data = self.poisson_day.SimplePoission(train_data = self.traindata, test_data = self.oobdata)
+        self.poi_data = self.poisson_day.SimplePoission(train_data = self.traindata, test_data = self.oobdata, method = 'simple')
 
         self.assertTrue(isinstance(self.poi_data, pd.DataFrame))
 
-        self.assertEqual(self.poi_data.columns.tolist(), ['Day','Mon','Crime_type','Counts','LSOA_code'])
+        self.assertEqual(self.poi_data.columns.tolist(), ['Day','Mon','Crime_type','Counts','LSOA_code','Year'])
+
+        self.assertEqual(len(self.poi_data.Day.unique()), 31)
+
+    def test_sampler_day(self):
+        """
+        Test for checking the output of the poisson sampler is as expected
+        when sampling using days
+        """
+
+        self.oobdata = pd.read_csv(pkg_resources.resource_filename(resource_package, 'tests/testing_data/test_oobDay_data.csv'))
+
+        self.traindata = pd.read_csv(pkg_resources.resource_filename(resource_package, 'tests/testing_data/test_trainDay_data.csv'))
+
+        self.poi_data = self.poisson_day.SimplePoission(train_data = self.traindata, test_data = self.oobdata, method = 'zero')
+
+        self.assertTrue(isinstance(self.poi_data, pd.DataFrame))
+
+        self.assertEqual(self.poi_data.columns.tolist(), ['Day','Mon','Crime_type','Counts','LSOA_code','Year'])
+
+        self.assertEqual(len(self.poi_data.Day.unique()), 31)
+
+    def test_sampler_day(self):
+        """
+        Test for checking the output of the poisson sampler is as expected
+        when sampling using days
+        """
+
+        self.oobdata = pd.read_csv(pkg_resources.resource_filename(resource_package, 'tests/testing_data/test_oobDay_data.csv'))
+
+        self.traindata = pd.read_csv(pkg_resources.resource_filename(resource_package, 'tests/testing_data/test_trainDay_data.csv'))
+
+        self.poi_data = self.poisson_day.SimplePoission(train_data = self.traindata, test_data = self.oobdata, method = 'mixed')
+
+        self.assertTrue(isinstance(self.poi_data, pd.DataFrame))
+
+        self.assertEqual(self.poi_data.columns.tolist(), ['Day','Mon','Crime_type','Counts','LSOA_code','Year'])
 
         self.assertEqual(len(self.poi_data.Day.unique()), 31)
 
@@ -273,7 +311,7 @@ class Test(unittest.TestCase):
 
         self.traindata = pd.read_csv(pkg_resources.resource_filename(resource_package, 'tests/testing_data/test_traindata.csv'))
 
-        self.poi_data = self.poisson.SimplePoission(train_data = self.traindata, test_data = self.oobdata)
+        self.poi_data = self.poisson.SimplePoission(train_data = self.traindata, test_data = self.oobdata, method = 'simple')
 
         self.plot = self.poisson.error_Reporting(test_data = self.oobdata, simulated_data = self.poi_data)
 
@@ -293,7 +331,7 @@ class Test(unittest.TestCase):
 
         self.traindata = pd.read_csv(pkg_resources.resource_filename(resource_package, 'tests/testing_data/test_trainDay_data.csv'))
 
-        self.poi_data = self.poisson_day.SimplePoission(train_data = self.traindata, test_data = self.oobdata)
+        self.poi_data = self.poisson_day.SimplePoission(train_data = self.traindata, test_data = self.oobdata, method = 'simple')
 
         self.plot = self.poisson.error_Reporting(test_data = self.oobdata, simulated_data = self.poi_data)
 
@@ -315,6 +353,8 @@ class Test(unittest.TestCase):
         self.assertTrue(isinstance(self.descriptions, pd.DataFrame))
 
         self.assertTrue(self.descriptions.Crime_description[0], 'Anti-social behaviour')
+
+        self.assertEqual(self.descriptions.columns.tolist(), ['UID','Year','Mon','Day','Crime_description','Crime_type','LSOA_code','Police_force'])
 
         # TODO: write a test to catch actual random choice outputs
 

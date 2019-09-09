@@ -1,6 +1,13 @@
 language: python
 python:
   - "3.7"
+  - "3.6"
+
+branches:
+  only:
+    - master
+    - develop
+    - release
 
 install:
   - pip install -r requirements.txt
