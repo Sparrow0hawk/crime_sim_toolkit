@@ -7,6 +7,7 @@ __pycache__
 crime_sim_toolkit/output/*
 crime_sim_toolkit/data/policedata/*
 dist/*
+scrapbook/*
 
 # specific files
 scrapbook.ipynb

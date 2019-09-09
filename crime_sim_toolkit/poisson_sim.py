@@ -105,7 +105,6 @@ class Poisson_sim:
 
         methods_dict = {'simple' : cls.simple_sampler,
                         'mixed' : cls.mixed_sampler,
-                        'mw' : cls.moving_window,
                         'zero' : cls.zero_sampler}
 
         # test if psuedo-Weeks have been allocated
@@ -294,14 +293,3 @@ class Poisson_sim:
                 sim_count = scipy.stats.poisson(round(narrow_frame['Counts'].mean(), 0)).rvs()
 
             return sim_count
-
-    @classmethod
-    def moving_window(cls, narrow_frame):
-            """
-            A moving window sampler function
-            TODO: this actually requires quite a significant refactor
-            As other functions are able to take reduced dataframe whereas this will
-            change behaviours in loops above.
-            """
-
-            return
