@@ -130,24 +130,26 @@ class Initialiser:
 
         dated_data = data.copy()
 
-        # extract year from Month column
-        dated_data['Year'] = dated_data['Month'].map(lambda x: pd.to_datetime(x).year)
+        #### REFACTOR STARTS HERE
 
-        # extract month from Month column
-        dated_data['Mon'] = dated_data['Month'].map(lambda x: pd.to_datetime(x).month)
-
-        # randomly allocate day for crime report
-        # based on np.randint selecting from a range from 1 to the maximum number of days
-        # in the given month in the given year
-        dated_data['Day'] = dated_data['Month'].map(lambda x: np.random.randint(1,monthrange(pd.to_datetime(x).year, pd.to_datetime(x).month)[1] +1))
+        # create a datetime column that captures month, year from Month column
+        # and adds a randomly allocated day based on year+month
+        # adds this as a new datetime column
+        dated_data['datetime'] = dated_data.apply(lambda x: pd.to_datetime(
+                                    [x.Month+'/'+str(
+                                    np.random.randint(1, monthrange(
+                                                    pd.to_datetime([x.Month]).year[0],
+                                                    pd.to_datetime([x.Month]).month[0])[1] +1))
+                                                    ])[0],
+                                                    axis=1)
 
         print('Psuedo days allocated to all reports.')
 
         # are weeks required?
         if timeframe == 'Week':
             # get week of the year based on month, year and psuedo-day allocated above
-            # we're converting all separated columns to datetime format and extract week number
-            dated_data['Week'] = dated_data.apply(lambda x: pd.to_datetime([str(x.Year)+'/'+str(x.Mon)+'/'+str(x.Day)]).week[0], axis=1)
+            # we'll just extract it from the datetime object created above
+            dated_data['Week'] = dated_data.apply(lambda x: x.datetime.week[0], axis=1)
 
             print('Week numbers allocated.')
 
