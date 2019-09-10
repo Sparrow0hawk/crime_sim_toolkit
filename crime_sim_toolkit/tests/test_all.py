@@ -223,7 +223,8 @@ class Test(unittest.TestCase):
         Test for checking out-of-bag sampling works as desired
         """
 
-        self.data = pd.read_csv(pkg_resources.resource_filename(resource_package, 'tests/testing_data/test_data4pois.csv'))
+
+        self.data = pd.read_csv(pkg_resources.resource_filename(resource_package, 'tests/testing_data/test_oobsplit.csv'))
 
         self.output = self.poisson.out_of_bag_prep(self.data)
 
