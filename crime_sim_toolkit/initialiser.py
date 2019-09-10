@@ -8,6 +8,7 @@ from calendar import monthrange
 import pandas as pd
 import numpy as np
 import pkg_resources
+from crime_sim_toolkit import utils
 
 # Could be any dot-separated package/module name or a "Requirement"
 resource_package = 'crime_sim_toolkit'
@@ -122,11 +123,11 @@ class Initialiser:
         # and adds a randomly allocated day based on year+month
         # adds this as a new datetime column
         dated_data['datetime'] = dated_data.apply(lambda x: pd.to_datetime(
-                                    [x.Month+'/'+str(
+                                    x.Month+'/'+str(
                                     np.random.randint(1, monthrange(
                                                     pd.to_datetime([x.Month]).year[0],
                                                     pd.to_datetime([x.Month]).month[0])[1] +1))
-                                                    ])[0],
+                                                    ),
                                                     axis=1)
 
         print('Psuedo days allocated to all reports.')
@@ -135,7 +136,7 @@ class Initialiser:
         if timeframe == 'Week':
             # get week of the year based on month, year and psuedo-day allocated above
             # we'll just extract it from the datetime object created above
-            dated_data['Week'] = dated_data.apply(lambda x: x.datetime.week[0], axis=1)
+            dated_data['Week'] = dated_data.apply(lambda x: x.datetime.week, axis=1)
 
             print('Week numbers allocated.')
 
@@ -148,9 +149,20 @@ class Initialiser:
 
         # right both data sets are ready for the generation of transition probabilities of crime in each LSOA
 
-        counts_frame = pd.DataFrame(reports_frame.groupby(['Year','Mon','Crime type','LSOA code'])[timeframe].value_counts()).reset_index(level=['Mon','Crime type','Year','LSOA code'])
+        # handle timeframe
+        if timeframe == 'Week':
 
-        counts_frame.columns = ['Year', 'Mon', 'Crime_type','LSOA_code', 'Counts']
+            timeframe = 'Week'
+        else:
+
+            timeframe = 'datetime'
+
+        # function to ensure datetime is datetime dtype
+        reports_frame = utils.validate_datetime(reports_frame)
+
+        counts_frame = pd.DataFrame(reports_frame.groupby(['Crime type','LSOA code'])[timeframe].value_counts()).reset_index(level=['Crime type','LSOA code'])
+
+        counts_frame.columns = ['Crime_type','LSOA_code', 'Counts']
 
         counts_frame.reset_index(inplace=True)
 
@@ -172,56 +184,46 @@ class Initialiser:
         lsoa_lst = []
         crime_lst = []
         counts_lst = []
-        mon_lst = []
-        year_lst = []
         timeres_lst = []
+
+        # function to ensure datetime is datetime dtype
+        reports_frame = utils.validate_datetime(counts_frame)
 
         if 'Week' in counts_frame.columns:
             time_res = 'Week'
         else:
-            time_res = 'Day'
+            time_res = 'datetime'
 
-        for year in counts_frame.Year.unique():
+        sliced_frame = counts_frame.copy()
 
-            year_frame = counts_frame.copy()
+        for date in counts_frame[time_res].unique():
 
-            year_frame = year_frame[year_frame.Year == year]
+            narrow_frame = sliced_frame[sliced_frame[time_res].isin([date])]
 
-            for month in counts_frame.Mon.unique():
+            for crim_typ in counts_frame['Crime_type'].unique():
 
-                # for either day or week in temp resolution provided
-                for wk in year_frame[year_frame.Mon == month][time_res].unique():
+                final_nar_frame = narrow_frame[narrow_frame.Crime_type.isin([crim_typ])]
 
-                    wk_frame = year_frame[(year_frame[time_res].values == wk) & (year_frame.Mon.values == month)]
+                missing_LSOA = self.LSOA_hh_counts.LSOA_code[~self.LSOA_hh_counts.LSOA_code.isin(final_nar_frame.LSOA_code)].tolist()
 
-                # only crime types within existing data
+                missing_len = len(missing_LSOA)
 
-                    for crim_typ in counts_frame['Crime_type'].unique():
-
-                        sliced_frame = wk_frame[wk_frame.Crime_type == crim_typ]
-
-                        missing_LSOA = self.LSOA_hh_counts.LSOA_code[~self.LSOA_hh_counts.LSOA_code.isin(sliced_frame.LSOA_code)].tolist()
-
-                        missing_len = len(missing_LSOA)
-
-                        # add values to lists
-                        # for values with one instance multiple by number of missing_LSOA to get
-                        # correct dimensions
-                        lsoa_lst += missing_LSOA
-                        crime_lst += [crim_typ] * missing_len
-                        counts_lst += [0] * missing_len
-                        mon_lst += [month] * missing_len
-                        year_lst += [year] * missing_len
-                        timeres_lst += [wk] * missing_len
+                # add values to lists
+                # for values with one instance multiple by number of missing_LSOA to get
+                # correct dimensions
+                lsoa_lst += missing_LSOA
+                crime_lst += [crim_typ] * missing_len
+                counts_lst += [0] * missing_len
+                timeres_lst += [date] * missing_len
 
 
         missing_dataf = pd.DataFrame.from_dict({'LSOA_code' : lsoa_lst,
                                                  'Crime_type': crime_lst,
-                                                 'Year': year_lst,
-                                                 'Mon' : mon_lst,
                                                  time_res : timeres_lst,
                                                  'Counts' : counts_lst})
 
         new_tot_counts = pd.concat([counts_frame, missing_dataf], sort=True)
+
+        new_tot_counts.reset_index(inplace=True, drop=True)
 
         return new_tot_counts

@@ -111,3 +111,23 @@ def populate_offence(crime_frame):
     populated_frame = populated_frame[['UID','Year','Mon',time_res,'Crime_description','Crime_type','LSOA_code','Police_force']]
 
     return populated_frame
+
+def validate_datetime(passed_dataframe):
+    """
+    Utility function to ensure passed dataframes datetime column is configured as
+    datetime dtype.
+    """
+
+    if np.dtype('datetime64[ns]') not in passed_dataframe.dtypes:
+
+        try:
+            passed_dataframe['datetime'] = passed_dataframe['datetime'].apply(lambda x: pd.to_datetime(x))
+
+            print('Datetime column configured.')
+
+        except:
+            print('No datetime column detected. Dataframe unaltered.')
+
+    validated_date_frame = passed_dataframe.copy()
+
+    return validated_date_frame
