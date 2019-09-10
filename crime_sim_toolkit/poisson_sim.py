@@ -9,6 +9,7 @@ import scipy.stats
 from sklearn.linear_model import LinearRegression as linReg
 from sklearn.metrics import mean_squared_error, median_absolute_error, mean_absolute_error
 from crime_sim_toolkit.initialiser import Initialiser
+from crime_sim_toolkit import utils
 
 
 class Poisson_sim:
@@ -32,20 +33,13 @@ class Poisson_sim:
         Output: Pandas dataframe of crime counts for maximum year in dataset to be held as out of bag test set
         """
 
-        original_frame = full_data
+        original_frame = utils.validate_datetime(full_data)
 
         # identify highest year with complete counts for entire year
-        # this will be used as out-of-bag comparator
-        try:
-            oob_year = original_frame.Year.unique()[original_frame.groupby('Year')['Mon'].unique().map(lambda x: len(x) == 12)].max()
-
-        except ValueError:
-            print('The passed data does not appear to have a full years (Jan-Dec) worth of data.')
-            print('Defaulting to select out-of-bag sample for most recent year.')
-            oob_year = original_frame.Year.unique().max()
+        oob_year = original_frame.datetime.max().year
 
         # slice get dataframe for that year
-        oob_data = original_frame[original_frame.Year == oob_year]
+        oob_data = original_frame[original_frame.datetime == oob_year]
 
         return oob_data
 
@@ -63,9 +57,14 @@ class Poisson_sim:
             train_data = Pandas dataframe of crime counts that are not in test_data
         """
 
-        oob_year = test_data.Year.unique().max()
+        # ensure datetime is configured to datetime dtype
+        test_data = utils.validate_datetime(test_data)
 
-        original_frame = full_data
+
+        oob_year = test_data.datetime.max().year
+
+        # ensure datetime is configured to datetime dtype
+        original_frame = utils.validate_datetime(full_data)
 
         # define data for modelling that removes year being modelled
         train_data = original_frame[(original_frame.Year != oob_year)]
