@@ -138,9 +138,7 @@ class Test(unittest.TestCase):
 
         self.dataFalse = pd.read_csv(pkg_resources.resource_filename(resource_package, 'tests/testing_data/random_date2.csv'))
 
-        self.assertTrue('Mon' in self.init.random_date_allocate(data=self.dataTrue).columns)
-
-        self.assertTrue('Day' in self.init.random_date_allocate(data=self.dataTrue).columns)
+        self.assertTrue('datetime' in self.init.random_date_allocate(data=self.dataTrue).columns)
 
         self.assertTrue('Week' in self.init.random_date_allocate(data=self.dataTrue).columns)
 
@@ -178,9 +176,11 @@ class Test(unittest.TestCase):
 
         test_frame = self.init.reports_to_counts(self.data, timeframe='Day', aggregate=False)
 
-        pd.testing.assert_series_equal(test_frame['Day'].value_counts().sort_index(), pd.Series([3,2,2,4,1,1], index=[1,4,6,20,7,3], name='Day').sort_index())
+        self.assertEqual(test_frame['datetime'].value_counts().sort_index().index.tolist(), ['2017-01-02','2017-01-08','2017-01-11',
+                                                                                    '2017-01-12','2017-01-21','2017-01-22',
+                                                                                    '2017-01-26'])
 
-        pd.testing.assert_series_equal(test_frame['Counts'].sort_index(), pd.Series([1,1,2,1,1,1,1,1,1,1,1,1,2], index=range(0,13), name='Counts').sort_index())
+        self.assertEqual(test_frame['Counts'].sort_index().tolist(), [1, 1, 1, 1, 2, 1, 1, 1, 1])
 
         self.assertFalse('West Yorkshire' in test_frame.LSOA_code.unique().tolist())
 
@@ -211,13 +211,11 @@ class Test(unittest.TestCase):
         """
         self.data = pd.read_csv(pkg_resources.resource_filename(resource_package, 'tests/testing_data/test_counts1.csv'))
 
-        self.init = Initialiser.Initialiser(LA_names=['Kirklees','Calderdale','Leeds','Bradford','Wakefield'])
-
         self.test = self.init.add_zero_counts(self.data)
 
         self.assertTrue(isinstance(self.test, pd.DataFrame))
 
-        self.assertEqual(len(self.test[self.test.Day == 3].LSOA_code.unique()), 1388)
+        self.assertEqual(len(self.test[self.test.datetime == '2017-01-07'].LSOA_code.unique()), 1388)
 
 
     def test_oob(self):
@@ -381,6 +379,24 @@ class Test(unittest.TestCase):
         self.assertEqual(self.descriptions.columns.tolist(), ['UID','Year','Mon','Day','Crime_description','Crime_type','LSOA_code','Police_force'])
 
         # TODO: write a test to catch actual random choice outputs
+
+    def test_validate_datetime(self):
+        """
+        Test that adding zero function works
+        """
+        self.datatrue = pd.read_csv(pkg_resources.resource_filename(resource_package, 'tests/testing_data/report_2_counts.csv'))
+
+        self.datafalse = pd.read_csv(pkg_resources.resource_filename(resource_package, 'tests/testing_data/test_counts1.csv'))
+
+        self.test1 = utils.validate_datetime(self.datatrue)
+
+        self.test2 = utils.validate_datetime(self.datafalse)
+
+        self.assertTrue(isinstance(self.test1, pd.DataFrame))
+
+        self.assertTrue(np.dtype('datetime64[ns]') in self.test1.dtypes.tolist())
+
+        self.assertFalse(np.dtype('datetime64[ns]') in self.test2.dtypes.tolist())
 
     def test_sampler_day_agg(self):
         """
