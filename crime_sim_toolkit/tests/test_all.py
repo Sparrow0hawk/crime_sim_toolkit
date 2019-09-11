@@ -141,9 +141,7 @@ class Test(unittest.TestCase):
 
         self.assertTrue('datetime' in self.init.random_date_allocate(data=self.dataTrue).columns)
 
-        self.assertTrue('Week' in self.init.random_date_allocate(data=self.dataTrue).columns)
-
-        self.assertFalse('Week' in self.init.random_date_allocate(data=self.dataTrue, timeframe='Day').columns)
+        self.assertFalse('Week' in self.init.random_date_allocate(data=self.dataTrue).columns)
 
         self.assertFalse(self.init.random_date_allocate(data=self.dataFalse))
 
@@ -175,7 +173,7 @@ class Test(unittest.TestCase):
 
         self.data = pd.read_csv(pkg_resources.resource_filename(resource_package, 'tests/testing_data/report_2_counts.csv'))
 
-        test_frame = self.init.reports_to_counts(self.data, timeframe='Day', aggregate=False)
+        test_frame = self.init.reports_to_counts(self.data)
 
         self.assertEqual(test_frame['datetime'].value_counts().sort_index().index.tolist(),
                          pd.to_datetime(['2017-01-03','2017-01-07','2017-01-08',
@@ -213,7 +211,7 @@ class Test(unittest.TestCase):
         """
         self.data = pd.read_csv(pkg_resources.resource_filename(resource_package, 'tests/testing_data/test_counts1.csv'))
 
-        self.test = self.init.add_zero_counts(self.data)
+        self.test = self.init.add_zero_counts(self.data, timeframe='Day')
 
         self.assertTrue(isinstance(self.test, pd.DataFrame))
 
@@ -270,7 +268,7 @@ class Test(unittest.TestCase):
 
         self.assertEqual(self.poi_data.Year.unique().tolist(), self.oobdata.Year.unique().tolist())
 
-    def test_sampler_day(self):
+    def test_sampler_day_func_simp(self):
         """
         Test for checking the output of the poisson sampler is as expected
         when sampling using days
@@ -288,7 +286,7 @@ class Test(unittest.TestCase):
 
         self.assertEqual(len(self.poi_data.Day.unique()), 31)
 
-    def test_sampler_day(self):
+    def test_sampler_day_func_zero(self):
         """
         Test for checking the output of the poisson sampler is as expected
         when sampling using days
