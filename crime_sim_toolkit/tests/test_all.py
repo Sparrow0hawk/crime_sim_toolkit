@@ -230,7 +230,7 @@ class Test(unittest.TestCase):
 
         self.assertTrue(isinstance(self.output, pd.DataFrame))
 
-        self.assertEqual(self.output.Year.unique().max(), 2018)
+        self.assertEqual(self.output.datetime.dt.year.max(), 2018)
 
     def test_oob_split(self):
         """
@@ -239,7 +239,7 @@ class Test(unittest.TestCase):
 
         self.oobdata = pd.read_csv(pkg_resources.resource_filename(resource_package, 'tests/testing_data/test_oobdata.csv'))
 
-        self.data = pd.read_csv(pkg_resources.resource_filename(resource_package, 'tests/testing_data/test_data4pois.csv'))
+        self.data = pd.read_csv(pkg_resources.resource_filename(resource_package, 'tests/testing_data/test_oobsplit.csv'))
 
         self.train_output = self.poisson.oob_train_split(full_data=self.data, test_data=self.oobdata)
 
@@ -262,7 +262,7 @@ class Test(unittest.TestCase):
 
         self.assertTrue(isinstance(self.poi_data, pd.DataFrame))
 
-        self.assertEqual(self.poi_data.columns.tolist(), ['Week','Mon','Crime_type','Counts','LSOA_code','Year'])
+        self.assertEqual(self.poi_data.columns.tolist(), ['Week','datetime','Crime_type','Counts','LSOA_code'])
 
         self.assertEqual(self.poi_data.Week.unique().tolist(), [26,27,28,29,30,31])
 
@@ -282,7 +282,7 @@ class Test(unittest.TestCase):
 
         self.assertTrue(isinstance(self.poi_data, pd.DataFrame))
 
-        self.assertEqual(self.poi_data.columns.tolist(), ['Day','Mon','Crime_type','Counts','LSOA_code','Year'])
+        self.assertEqual(self.poi_data.columns.tolist(), ['datetime','Crime_type','Counts','LSOA_code'])
 
         self.assertEqual(len(self.poi_data.Day.unique()), 31)
 
@@ -300,7 +300,7 @@ class Test(unittest.TestCase):
 
         self.assertTrue(isinstance(self.poi_data, pd.DataFrame))
 
-        self.assertEqual(self.poi_data.columns.tolist(), ['Day','Mon','Crime_type','Counts','LSOA_code','Year'])
+        self.assertEqual(self.poi_data.columns.tolist(), ['datetime','Crime_type','Counts','LSOA_code'])
 
         self.assertEqual(len(self.poi_data.Day.unique()), 31)
 
@@ -318,7 +318,7 @@ class Test(unittest.TestCase):
 
         self.assertTrue(isinstance(self.poi_data, pd.DataFrame))
 
-        self.assertEqual(self.poi_data.columns.tolist(), ['Day','Mon','Crime_type','Counts','LSOA_code','Year'])
+        self.assertEqual(self.poi_data.columns.tolist(), ['datetime','Crime_type','Counts','LSOA_code'])
 
         self.assertEqual(len(self.poi_data.Day.unique()), 31)
 
