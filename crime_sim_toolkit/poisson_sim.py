@@ -41,7 +41,7 @@ class Poisson_sim:
         oob_year = original_frame.datetime.max().year
 
         # slice get dataframe for that year
-        oob_data = original_frame[original_frame.datetime == oob_year]
+        oob_data = original_frame[original_frame.datetime.dt.year == oob_year]
 
         return oob_data
 
@@ -69,7 +69,7 @@ class Poisson_sim:
         original_frame = utils.validate_datetime(full_data)
 
         # define data for modelling that removes year being modelled
-        train_data = original_frame[(original_frame.Year != oob_year)]
+        train_data = original_frame[(original_frame.datetime.dt.year != oob_year)]
 
         return train_data
 
@@ -91,12 +91,15 @@ class Poisson_sim:
             Could this be performed before the psuedo day/week allocation?
         """
 
+        # validate datetime columns within input data
+        oob_data = utils.validate_datetime(test_data)
+
+        historic_data = utils.validate_datetime(train_data)
+
+
         # building a model that incorporates these local populations
-        year = test_data.Year.unique().max()
+        year = test_data.datetime.max().year
 
-        oob_data = test_data
-
-        historic_data = train_data
 
         # method dict for sampling approaches
         # simple : fits a poisson based on all data passed
@@ -112,7 +115,7 @@ class Poisson_sim:
         if 'Week' in historic_data.columns:
             time_res = 'Week'
         else:
-            time_res = 'Day'
+            time_res = 'datetime'
 
 
         # a list for all rows of data frame produced
@@ -127,48 +130,51 @@ class Poisson_sim:
         crime_types_lst = historic_data['Crime_type'].unique()
 
         # for each month in the range of months in oob data
-        for mon in range(oob_data.Mon.unique().min(), (oob_data.Mon.unique().max() + 1)):
+        for date in np.sort(oob_data[time_res].unique()):
 
-            # use week range for oob year
-            accepted_wk_range = oob_data[(oob_data.Year.values == year) & (oob_data.Mon.values == mon)][time_res].unique()
+            print('Simulating '+time_res+': '+str(date))
 
-            # for each week
-            for wk in np.sort(accepted_wk_range):
+            # for each crime type
+            for crim_typ in crime_types_lst:
 
-                print('Month: '+str(mon)+' '+time_res+': '+str(wk))
+                frame_OI = historic_data[(historic_data[time_res].isin([date])) &
+                                         (historic_data['Crime_type'].isin([crim_typ]))]
+
+                for LSOA in frame_OI['LSOA_code'].unique():
+
+                    frame_OI2 = frame_OI[(frame_OI['LSOA_code'].isin([LSOA]))]
+
+                    if len(frame_OI2) > 0:
+
+                        sim_count = methods_dict[method](narrow_frame=frame_OI2)
+
+                        # append values to lists that will be merged into dict in final step
+                        time_lbl.append(date)
+                        # section to capture datetime for week sim
+                        if times_res == 'Week':
+                            mon_lbl.append(str(year) + '-' + str(frame_OI2.datetime[0].month))
+
+                        crime_lbl.append(crim_typ)
+                        count_lbl.append(sim_count)
+                        LSOA_lbl.append(LSOA)
 
 
-                # for each crime type
-                for crim_typ in crime_types_lst:
+        if time_res != 'Week':
 
-                    frame_OI = historic_data[(historic_data['Mon'].isin([mon])) &
-                                             (historic_data[time_res].isin([wk])) &
-                                             (historic_data['Crime_type'].isin([crim_typ]))]
+            results_dict = {time_res : time_lbl,
+                         'datetime' : mon_lbl,
+                         'Crime_type' : crime_lbl,
+                         'Counts' : count_lbl,
+                         'LSOA_code' : LSOA_lbl}
+        else:
 
-                    for LSOA in frame_OI['LSOA_code'].unique():
-
-                        frame_OI2 = frame_OI[(frame_OI['LSOA_code'].isin([LSOA]))]
-
-                        if len(frame_OI2) > 0:
-
-                            sim_count = methods_dict[method](narrow_frame=frame_OI2)
-
-                            # append values to lists that will be merged into dict in final step
-                            time_lbl.append(wk)
-                            mon_lbl.append(mon)
-                            crime_lbl.append(crim_typ)
-                            count_lbl.append(sim_count)
-                            LSOA_lbl.append(LSOA)
+            results_dict = {time_res : time_lbl,
+                         'Crime_type' : crime_lbl,
+                         'Counts' : count_lbl,
+                         'LSOA_code' : LSOA_lbl}
 
         # concatenate all these compiled dataframe rows into one large dataframe
-        simulated_year_frame = pd.DataFrame.from_dict({time_res : time_lbl,
-                                                       'Mon' : mon_lbl,
-                                                       'Crime_type' : crime_lbl,
-                                                       'Counts' : count_lbl,
-                                                       'LSOA_code' : LSOA_lbl})
-
-        # set simulated data to return the year data is simulated for
-        simulated_year_frame['Year'] = year
+        simulated_year_frame = pd.DataFrame.from_dict(results_dict)
 
 
         return simulated_year_frame
