@@ -2,6 +2,7 @@ import os
 import json
 import unittest
 from unittest.mock import patch
+import numpy as np
 import pandas as pd
 import folium
 from crime_sim_toolkit import vis_utils, utils
