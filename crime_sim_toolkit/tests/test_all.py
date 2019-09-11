@@ -171,16 +171,16 @@ class Test(unittest.TestCase):
         """
         Test to check the reports to counts converter works
         """
-        self.data = pd.read_csv(pkg_resources.resource_filename(resource_package, 'tests/testing_data/report_2_counts.csv'),
-                                parse_dates=['datetime'])
+        self.data = pd.read_csv(pkg_resources.resource_filename(resource_package, 'tests/testing_data/report_2_counts.csv'))
 
         test_frame = self.init.reports_to_counts(self.data, timeframe='Day')
 
-        self.assertEqual(test_frame['datetime'].value_counts().sort_index().index.tolist(), ['2017-01-02','2017-01-08','2017-01-11',
-                                                                                    '2017-01-12','2017-01-21','2017-01-22',
-                                                                                    '2017-01-26'])
+        self.assertEqual(test_frame['datetime'].value_counts().sort_index().index.tolist(),
+                         pd.to_datetime(['2017-01-03','2017-01-07','2017-01-08',
+                                         '2017-01-09','2017-01-12','2017-01-13',
+                                         '2017-01-24','2017-01-26','2017-01-31']).tolist())
 
-        self.assertEqual(test_frame['Counts'].sort_index().tolist(), [1, 1, 1, 1, 2, 1, 1, 1, 1])
+        self.assertEqual(test_frame['Counts'].sort_index().tolist(), [1, 1, 1, 1, 1, 1, 1, 1, 1, 1])
 
     def test_add_zero_counts(self):
         """
@@ -364,7 +364,7 @@ class Test(unittest.TestCase):
         """
         self.datatrue = pd.read_csv(pkg_resources.resource_filename(resource_package, 'tests/testing_data/report_2_counts.csv'))
 
-        self.datafalse = pd.read_csv(pkg_resources.resource_filename(resource_package, 'tests/testing_data/test_counts1.csv'))
+        self.datafalse = pd.read_csv(pkg_resources.resource_filename(resource_package, 'tests/testing_data/random_date1.csv'))
 
         self.test1 = utils.validate_datetime(self.datatrue)
 
