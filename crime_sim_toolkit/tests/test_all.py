@@ -85,7 +85,7 @@ class Test(unittest.TestCase):
         Test the counts_to_reports util function
         """
 
-        self.data = pd.read_csv(pkg_resources.resource_filename(resource_package, 'tests/testing_data/test_data4pois.csv'))
+        self.data = pd.read_csv(pkg_resources.resource_filename(resource_package, 'tests/testing_data/test_oobsplit.csv'))
 
         self.output = utils.counts_to_reports(self.data)
 
