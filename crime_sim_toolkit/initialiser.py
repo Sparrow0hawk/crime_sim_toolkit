@@ -44,6 +44,7 @@ class Initialiser:
         One-caller function that loads and manipulates data ready for use
         """
 
+        print(' ')
         print('Fetching count data from police reports.')
         print('Sit back and have a brew, this may take sometime.')
         print(' ')
@@ -51,11 +52,11 @@ class Initialiser:
         # this initialises two class variables
         self.initialise_data(directory=directory)
 
-        dated_data = self.random_date_allocate(data=self.report_frame, timeframe=timeframe)
+        dated_data = self.random_date_allocate(data=self.report_frame)
 
-        mut_counts_frame = self.reports_to_counts(dated_data, timeframe=timeframe)
+        mut_counts_frame = self.reports_to_counts(dated_data)
 
-        mut_counts_frame = self.add_zero_counts(mut_counts_frame)
+        mut_counts_frame = self.add_zero_counts(mut_counts_frame, timeframe=timeframe)
 
         return mut_counts_frame
 
@@ -103,7 +104,7 @@ class Initialiser:
         return 'Data Loaded.'
 
     @classmethod
-    def random_date_allocate(cls, data, timeframe='Week'):
+    def random_date_allocate(cls, data):
         """
         function for randomly allocating Days or weeks to police data
         """
@@ -132,47 +133,23 @@ class Initialiser:
 
         print('Psuedo days allocated to all reports.')
 
-        # are weeks required?
-        if timeframe == 'Week':
-            # get week of the year based on month, year and psuedo-day allocated above
-            # we'll just extract it from the datetime object created above
-            dated_data['Week'] = dated_data.apply(lambda x: x.datetime.week, axis=1)
-
-            dated_data['datetime'] = dated_data.datetime.apply(lambda x: x.strftime('%Y-%m'))
-
-            print('Week numbers allocated.')
-
         return dated_data
 
-    def reports_to_counts(self, reports_frame, timeframe='Week'):
+    def reports_to_counts(self, reports_frame):
         """
         function to convert policedata from individal reports level to aggregate counts at time scale, LSOA, crime type
         """
 
         # right both data sets are ready for the generation of transition probabilities of crime in each LSOA
 
-        # handle timeframe
-        if timeframe == 'Week':
-
-            timeframe = 'Week'
-        else:
-
-            timeframe = 'datetime'
-
         # function to ensure datetime is datetime dtype
         reports_frame = utils.validate_datetime(reports_frame)
 
-        if timeframe != 'Week':
-
-            counts_frame = pd.DataFrame(reports_frame.groupby(['Crime type','LSOA code'])[timeframe].value_counts()).reset_index(level=['Crime type','LSOA code'])
-
-        else:
-
-            counts_frame = pd.DataFrame(reports_frame.groupby(['Crime type','LSOA code','datetime'])[timeframe].value_counts()).reset_index(level=['Crime type','LSOA code'])
-
+        counts_frame = pd.DataFrame(reports_frame.groupby(['Crime type','LSOA code'])['datetime'].value_counts()).reset_index(level=['Crime type','LSOA code'])
 
         counts_frame.columns = ['Crime_type','LSOA_code', 'Counts']
 
+        # get datetime out of index
         counts_frame.reset_index(inplace=True)
 
         # filter for just WY LSOA
@@ -183,7 +160,7 @@ class Initialiser:
 
         return counts_frame
 
-    def add_zero_counts(self, counts_frame):
+    def add_zero_counts(self, counts_frame, timeframe='Week'):
         """
         Function to include of zero crime to date-allocated crime counts dataframe
         """
@@ -194,20 +171,17 @@ class Initialiser:
         crime_lst = []
         counts_lst = []
         timeres_lst = []
+        # list for datetime to go with Week
+        mon_lst = []
 
         # function to ensure datetime is datetime dtype
         reports_frame = utils.validate_datetime(counts_frame)
 
-        if 'Week' in counts_frame.columns:
-            time_res = 'Week'
-        else:
-            time_res = 'datetime'
-
         sliced_frame = counts_frame.copy()
 
-        for date in counts_frame[time_res].unique():
+        for date in counts_frame['datetime'].unique():
 
-            narrow_frame = sliced_frame[sliced_frame[time_res].isin([date])]
+            narrow_frame = sliced_frame[sliced_frame['datetime'].isin([date])]
 
             for crim_typ in counts_frame['Crime_type'].unique():
 
@@ -228,11 +202,30 @@ class Initialiser:
 
         missing_dataf = pd.DataFrame.from_dict({'LSOA_code' : lsoa_lst,
                                                  'Crime_type': crime_lst,
-                                                 time_res : timeres_lst,
+                                                 'datetime' : timeres_lst,
                                                  'Counts' : counts_lst})
 
         new_tot_counts = pd.concat([counts_frame, missing_dataf], sort=True)
 
-        new_tot_counts.reset_index(inplace=True, drop=True)
+        ## new section for adding Weeks
+
+        if timeframe == 'Week':
+        # get week of the year based on month, year and psuedo-day allocated above
+        # we'll just extract it from the datetime object created above
+            new_tot_counts['Week'] = new_tot_counts.apply(lambda x: x.datetime.week, axis=1)
+
+            new_tot_counts['datetime'] = new_tot_counts.datetime.apply(lambda x: x.strftime('%Y-%m'))
+
+            counts_frame = pd.DataFrame(new_tot_counts.groupby(['datetime','Crime_type','LSOA_code'])['Week'].value_counts()).reset_index(level=['datetime','Crime_type','LSOA_code'])
+
+            counts_frame.columns = ['datetime','Crime_type','LSOA_code', 'Counts']
+
+            # get datetime out of index
+            counts_frame.reset_index(inplace=True)
+
+            print('Week numbers allocated.')
+
+
+        counts_frame.reset_index(inplace=True, drop=True)
 
         return new_tot_counts
