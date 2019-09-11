@@ -152,6 +152,8 @@ class Initialiser:
             # we'll just extract it from the datetime object created above
             dated_data['Week'] = dated_data.apply(lambda x: x.datetime.week, axis=1)
 
+            dated_data['datetime'] = dated_data.datetime.apply(lambda x: x.strftime('%Y-%m'))
+
             print('Week numbers allocated.')
 
         return dated_data
@@ -174,7 +176,14 @@ class Initialiser:
         # function to ensure datetime is datetime dtype
         reports_frame = utils.validate_datetime(reports_frame)
 
-        counts_frame = pd.DataFrame(reports_frame.groupby(['Crime type','LSOA code'])[timeframe].value_counts()).reset_index(level=['Crime type','LSOA code'])
+        if timeframe != 'Week':
+
+            counts_frame = pd.DataFrame(reports_frame.groupby(['Crime type','LSOA code'])[timeframe].value_counts()).reset_index(level=['Crime type','LSOA code'])
+
+        else:
+
+            counts_frame = pd.DataFrame(reports_frame.groupby(['Crime type','LSOA code','datetime'])[timeframe].value_counts()).reset_index(level=['Crime type','LSOA code'])
+
 
         counts_frame.columns = ['Crime_type','LSOA_code', 'Counts']
 
