@@ -90,13 +90,9 @@ class Poisson_sim:
         """
 
         # validate datetime columns within input data
-        oob_data = utils.validate_datetime(test_data)
+        oob_data = test_data.copy()
 
-        historic_data = utils.validate_datetime(train_data)
-
-
-        # building a model that incorporates these local populations
-        year = test_data.datetime.max().year
+        historic_data = train_data.copy()
 
 
         # method dict for sampling approaches
@@ -112,6 +108,9 @@ class Poisson_sim:
         # test if psuedo-Weeks have been allocated
         if 'Week' in historic_data.columns:
             time_res = 'Week'
+
+            # select the year from the oob_data
+            year = oob_data.datetime[0].split('-')[0]
         else:
             time_res = 'datetime'
 
@@ -128,15 +127,27 @@ class Poisson_sim:
         crime_types_lst = historic_data['Crime_type'].unique()
 
         # for each month in the range of months in oob data
-        for date in np.sort(oob_data[time_res].unique()):
+        for date in oob_data[time_res].unique():
 
             print('Simulating '+time_res+': '+str(date))
+
+            # is Weeks are not being used split the date string to search by mon-day
+            if time_res != 'Week':
+
+                month_day = '-'.join(date.split('-')[1:])
 
             # for each crime type
             for crim_typ in crime_types_lst:
 
-                frame_OI = historic_data[(historic_data[time_res].isin([date])) &
-                                         (historic_data['Crime_type'].isin([crim_typ]))]
+                # include if-else block to catch different handling of week/day
+                if time_res == 'Week':
+
+                    frame_OI = historic_data[(historic_data[time_res].isin([date])) &
+                                             (historic_data['Crime_type'].isin([crim_typ]))]
+
+                else:
+                    frame_OI = historic_data[(historic_data[time_res].apply(lambda x: '-'.join(x.split('-')[1:])).isin([month_day])) &
+                                             (historic_data['Crime_type'].isin([crim_typ]))]
 
                 for LSOA in frame_OI['LSOA_code'].unique():
 
@@ -149,7 +160,7 @@ class Poisson_sim:
                         # append values to lists that will be merged into dict in final step
                         time_lbl.append(date)
                         # section to capture datetime for week sim
-                        if times_res == 'Week':
+                        if time_res == 'Week':
                             mon_lbl.append(str(year) + '-' + str(frame_OI2.datetime[0].month))
 
                         crime_lbl.append(crim_typ)
@@ -157,7 +168,7 @@ class Poisson_sim:
                         LSOA_lbl.append(LSOA)
 
 
-        if time_res != 'Week':
+        if time_res == 'Week':
 
             results_dict = {time_res : time_lbl,
                          'datetime' : mon_lbl,
@@ -198,7 +209,7 @@ class Poisson_sim:
         if 'Week' in simulated_data.columns:
             time_res = 'Week'
         else:
-            time_res = 'Day'
+            time_res = 'datetime'
 
         comparison_frame = pd.concat([simulated_data.groupby([time_res,'LSOA_code'])['Counts'].sum(), test_data.groupby([time_res,'LSOA_code'])['Counts'].sum()],axis=1)
 
@@ -262,7 +273,8 @@ class Poisson_sim:
             # prep data for linear model
 
             # get years as the X variable
-            x_Years = narrow_frame['Year'].values.reshape(-1, 1)
+            # TODO: correct this to account for new datetime column
+            x_Years = narrow_frame['datetime'].apply(lambda x: int(x.split('-')[0])).values.reshape(-1, 1)
 
             # get counts as the Y variable
             y_Counts = narrow_frame['Counts'].values
