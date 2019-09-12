@@ -92,9 +92,9 @@ class Poisson_sim:
         """
 
         # validate datetime columns within input data
-        oob_data = test_data.copy()
+        oob_data = utils.validate_datetime(test_data.copy())
 
-        historic_data = train_data.copy()
+        historic_data = utils.validate_datetime(train_data.copy())
 
 
         # method dict for sampling approaches
@@ -112,7 +112,7 @@ class Poisson_sim:
             time_res = 'Week'
 
             # select the year from the oob_data
-            year = oob_data.datetime[0].split('-')[0]
+            year = oob_data.datetime.max().year
         else:
             time_res = 'datetime'
 
@@ -129,14 +129,9 @@ class Poisson_sim:
         crime_types_lst = historic_data['Crime_type'].unique()
 
         # for each month in the range of months in oob data
-        for date in oob_data[time_res].unique():
+        for date in np.sort(np.unique(oob_data[time_res].tolist())):
 
             print('Simulating '+time_res+': '+str(date))
-
-            # is Weeks are not being used split the date string to search by mon-day
-            if time_res != 'Week':
-
-                month_day = '-'.join(date.split('-')[1:])
 
             # for each crime type
             for crim_typ in crime_types_lst:
@@ -148,7 +143,8 @@ class Poisson_sim:
                                              (historic_data['Crime_type'].isin([crim_typ]))]
 
                 else:
-                    frame_OI = historic_data[(historic_data[time_res].apply(lambda x: '-'.join(x.split('-')[1:])).isin([month_day])) &
+                    frame_OI = historic_data[(historic_data[time_res].dt.day.isin([date.day])) &
+                                             (historic_data[time_res].dt.month.isin([date.month])) &
                                              (historic_data['Crime_type'].isin([crim_typ]))]
 
                 for LSOA in frame_OI['LSOA_code'].unique():
