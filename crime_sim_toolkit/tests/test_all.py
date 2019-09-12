@@ -337,7 +337,7 @@ class Test(unittest.TestCase):
 
         self.assertTrue(isinstance(self.plot, pd.DataFrame))
 
-        self.assertEqual(self.plot.columns.tolist(), ['Day','Pred_counts','Actual','Difference'])
+        self.assertEqual(self.plot.columns.tolist(), ['datetime','Pred_counts','Actual','Difference'])
 
 
     def test_get_crime_description(self):
