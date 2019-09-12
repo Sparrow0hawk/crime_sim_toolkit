@@ -96,7 +96,6 @@ class Poisson_sim:
 
         historic_data = utils.validate_datetime(train_data.copy())
 
-
         # method dict for sampling approaches
         # simple : fits a poisson based on all data passed
         # mixed : fits a poisson and linear model and calulates mean counts from both models
@@ -116,6 +115,7 @@ class Poisson_sim:
         else:
             time_res = 'datetime'
 
+        print('Time resolution set to: ', time_res)
 
         # a list for all rows of data frame produced
         print('Beginning sampling.')
@@ -151,20 +151,37 @@ class Poisson_sim:
 
                     frame_OI2 = frame_OI[(frame_OI['LSOA_code'].isin([LSOA]))]
 
+                    print(frame_OI2.head())
+
                     if len(frame_OI2) > 0:
 
-                        sim_count = methods_dict[method](narrow_frame=frame_OI2)
-
+                        print('if')
                         # append values to lists that will be merged into dict in final step
                         time_lbl.append(date)
                         # section to capture datetime for week sim
                         if time_res == 'Week':
-                            mon_lbl.append(str(year) + '-' + str(frame_OI2.datetime.month[0]))
+
+                            mon_lbl.append(str(year) + '-' + str(frame_OI2.datetime.dt.month.tolist()[0]))
 
                         crime_lbl.append(crim_typ)
-                        count_lbl.append(sim_count)
+                        count_lbl.append(methods_dict[method](narrow_frame=frame_OI2))
                         LSOA_lbl.append(LSOA)
 
+                    # need else catch here incase data is missing
+                    # becase order of lists is messed up if absent
+                    elif len(frame_OI2) == 0:
+
+                        print('elif')
+                        # append values to lists that will be merged into dict in final step
+                        time_lbl.append(date)
+                        # section to capture datetime for week sim
+                        if time_res == 'Week':
+
+                            mon_lbl.append(str(year) + '-' + str(frame_OI2.datetime.dt.month.tolist()[0]))
+
+                        crime_lbl.append(crim_typ)
+                        count_lbl.append(0)
+                        LSOA_lbl.append(LSOA)
 
         if time_res == 'Week':
 
@@ -272,7 +289,7 @@ class Poisson_sim:
 
             # get years as the X variable
             # TODO: correct this to account for new datetime column
-            x_Years = narrow_frame['datetime'].dt.years.values.reshape(-1, 1)
+            x_Years = narrow_frame['datetime'].dt.year.values.reshape(-1, 1)
 
             # get counts as the Y variable
             y_Counts = narrow_frame['Counts'].values
@@ -281,7 +298,7 @@ class Poisson_sim:
             model = linReg().fit(x_Years, y_Counts)
 
             # predict the counts for the next year
-            lin_count = round(np.asscalar(model.predict(np.array([x_Years[-1] + 1]))),0)
+            lin_count = round(model.predict(np.array([x_Years[-1] + 1])).item(),0)
 
             # calculate the mean of linear and poisson counts
             mixed_val = round(np.mean([lin_count, poi_count]), 0)
