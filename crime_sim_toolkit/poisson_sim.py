@@ -151,11 +151,8 @@ class Poisson_sim:
 
                     frame_OI2 = frame_OI[(frame_OI['LSOA_code'].isin([LSOA]))]
 
-                    print(frame_OI2.head())
-
                     if len(frame_OI2) > 0:
 
-                        print('if')
                         # append values to lists that will be merged into dict in final step
                         time_lbl.append(date)
                         # section to capture datetime for week sim
@@ -170,8 +167,7 @@ class Poisson_sim:
                     # need else catch here incase data is missing
                     # becase order of lists is messed up if absent
                     elif len(frame_OI2) == 0:
-
-                        print('elif')
+                        
                         # append values to lists that will be merged into dict in final step
                         time_lbl.append(date)
                         # section to capture datetime for week sim
