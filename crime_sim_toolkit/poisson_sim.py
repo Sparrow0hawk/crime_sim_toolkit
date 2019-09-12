@@ -167,7 +167,7 @@ class Poisson_sim:
                     # need else catch here incase data is missing
                     # becase order of lists is messed up if absent
                     elif len(frame_OI2) == 0:
-                        
+
                         # append values to lists that will be merged into dict in final step
                         time_lbl.append(date)
                         # section to capture datetime for week sim
@@ -214,6 +214,10 @@ class Poisson_sim:
                                with error scores printed and plot
         """
 
+
+        test_data = utils.validate_datetime(test_data)
+
+        simulated_data = utils.validate_datetime(simulated_data)
         # test for days or Weeks
         # TODO: improve this somehow??
         # specify value as class attribute earlier?
