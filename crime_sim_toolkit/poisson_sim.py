@@ -157,7 +157,7 @@ class Poisson_sim:
                         time_lbl.append(date)
                         # section to capture datetime for week sim
                         if time_res == 'Week':
-                            mon_lbl.append(str(year) + '-' + str(frame_OI2.datetime[0].month))
+                            mon_lbl.append(str(year) + '-' + str(frame_OI2.datetime.month[0]))
 
                         crime_lbl.append(crim_typ)
                         count_lbl.append(sim_count)
@@ -270,7 +270,7 @@ class Poisson_sim:
 
             # get years as the X variable
             # TODO: correct this to account for new datetime column
-            x_Years = narrow_frame['datetime'].apply(lambda x: int(x.split('-')[0])).values.reshape(-1, 1)
+            x_Years = narrow_frame['datetime'].dt.years.values.reshape(-1, 1)
 
             # get counts as the Y variable
             y_Counts = narrow_frame['Counts'].values
