@@ -217,7 +217,6 @@ class Test(unittest.TestCase):
 
         self.assertEqual(len(self.test[self.test.datetime == '2017-01-07'].LSOA_code.unique()), 1388)
 
-
     def test_oob(self):
         """
         Test for checking out-of-bag sampling works as desired
@@ -245,9 +244,9 @@ class Test(unittest.TestCase):
 
         self.assertTrue(isinstance(self.train_output, pd.DataFrame))
 
-        self.assertTrue(2017 in self.train_output.Year.unique())
+        self.assertEqual(2017, self.train_output.datetime.max().year)
 
-        self.assertFalse(2018 in self.train_output.Year.unique())
+        self.assertEqual(2018, self.train_output.datetime.max().year)
 
     def test_sampler(self):
         """
@@ -266,7 +265,8 @@ class Test(unittest.TestCase):
 
         self.assertEqual(self.poi_data.Week.unique().tolist(), [26,27,28,29,30,31])
 
-        self.assertEqual(self.poi_data.Year.unique().tolist(), self.oobdata.Year.unique().tolist())
+        self.assertEqual(self.poi_data.datetime.apply(lambda x: x.split('-')[0]).unique().tolist(),
+                         self.oobdata.datetime.apply(lambda x: x.split('-')[0]).unique().tolist())
 
     def test_sampler_day_func_simp(self):
         """
@@ -284,7 +284,7 @@ class Test(unittest.TestCase):
 
         self.assertEqual(self.poi_data.columns.tolist(), ['datetime','Crime_type','Counts','LSOA_code'])
 
-        self.assertEqual(len(self.poi_data.Day.unique()), 31)
+        self.assertEqual(len(self.poi_data.datetime.dt.day.unique()), 31)
 
     def test_sampler_day_func_zero(self):
         """
@@ -302,7 +302,7 @@ class Test(unittest.TestCase):
 
         self.assertEqual(self.poi_data.columns.tolist(), ['datetime','Crime_type','Counts','LSOA_code'])
 
-        self.assertEqual(len(self.poi_data.Day.unique()), 31)
+        self.assertEqual(len(self.poi_data.datetime.dt.day.unique()), 31)
 
     def test_sampler_day(self):
         """
