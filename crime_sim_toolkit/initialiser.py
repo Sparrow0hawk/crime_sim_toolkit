@@ -216,16 +216,16 @@ class Initialiser:
 
             new_tot_counts['datetime'] = new_tot_counts.datetime.apply(lambda x: x.strftime('%Y-%m'))
 
-            counts_frame = pd.DataFrame(new_tot_counts.groupby(['datetime','Crime_type','LSOA_code'])['Week'].value_counts()).reset_index(level=['datetime','Crime_type','LSOA_code'])
+            new_tot_counts = pd.DataFrame(new_tot_counts.groupby(['datetime','Crime_type','LSOA_code'])['Week'].value_counts()).reset_index(level=['datetime','Crime_type','LSOA_code'])
 
-            counts_frame.columns = ['datetime','Crime_type','LSOA_code', 'Counts']
+            new_tot_counts.columns = ['datetime','Crime_type','LSOA_code', 'Counts']
 
             # get datetime out of index
-            counts_frame.reset_index(inplace=True)
+            new_tot_counts.reset_index(inplace=True)
 
             print('Week numbers allocated.')
 
 
-        counts_frame.reset_index(inplace=True, drop=True)
+        new_tot_counts.reset_index(inplace=True, drop=True)
 
         return new_tot_counts
