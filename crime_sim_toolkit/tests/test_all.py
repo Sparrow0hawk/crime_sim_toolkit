@@ -221,7 +221,9 @@ class Test(unittest.TestCase):
 
         self.assertEqual(2017, self.train_output.datetime.max().year)
 
-        self.assertEqual(2018, self.train_output.datetime.max().year)
+        self.assertEqual(2016, self.train_output.datetime.min().year)
+
+        self.assertFalse(2018 in self.train_output.datetime.dt.year.unique().tolist())
 
     def test_sampler(self):
         """
@@ -295,7 +297,7 @@ class Test(unittest.TestCase):
 
         self.assertEqual(self.poi_data.columns.tolist(), ['datetime','Crime_type','Counts','LSOA_code'])
 
-        self.assertEqual(len(self.poi_data.Day.unique()), 31)
+        self.assertEqual(len(self.poi_data.datetime.dt.day.unique()), 31)
 
     @patch('matplotlib.pyplot.show')
     def test_sampler_error(self, mock_show):
