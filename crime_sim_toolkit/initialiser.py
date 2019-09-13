@@ -64,7 +64,7 @@ class Initialiser:
 
         dated_data = self.random_date_allocate(data=self.report_frame)
 
-        mut_counts_frame = self.reports_to_counts(dated_data)
+        mut_counts_frame = self.reports_to_counts(dated_data, aggregate=aggregate)
 
         mut_counts_frame = self.add_zero_counts(mut_counts_frame, timeframe=timeframe)
 
@@ -145,7 +145,7 @@ class Initialiser:
 
         return dated_data
 
-    def reports_to_counts(self, reports_frame):
+    def reports_to_counts(self, reports_frame, aggregate=False):
         """
         function to convert policedata from individal reports level to aggregate counts at time scale, LSOA, crime type
         """
