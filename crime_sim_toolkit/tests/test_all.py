@@ -168,17 +168,38 @@ class Test(unittest.TestCase):
         self.assertEqual(self.init.LSOA_hh_counts.columns.tolist(), col_head2)
 
     def test_reports_2_counts(self):
-
         """
         Test to check the reports to counts converter works
+
+        Aggregate set to false
         """
+
         self.data = pd.read_csv(pkg_resources.resource_filename(resource_package, 'tests/testing_data/report_2_counts.csv'))
 
-        test_frame = self.init.reports_to_counts(self.data, timeframe='Day')
+        test_frame = self.init.reports_to_counts(self.data, timeframe='Day', aggregate=False)
 
         pd.testing.assert_series_equal(test_frame['Day'].value_counts().sort_index(), pd.Series([3,2,2,4,1,1], index=[1,4,6,20,7,3], name='Day').sort_index())
 
         pd.testing.assert_series_equal(test_frame['Counts'].sort_index(), pd.Series([1,1,2,1,1,1,1,1,1,1,1,1,2], index=range(0,13), name='Counts').sort_index())
+
+        self.assertFalse('West Yorkshire' in test_frame.LSOA_code.unique().tolist())
+
+    def test_reports_2_counts_agg(self):
+        """
+        Test to check the reports to counts converter works
+
+        Includes test of aggregate function
+
+        """
+        self.data = pd.read_csv(pkg_resources.resource_filename(resource_package, 'tests/testing_data/report_2_counts.csv'))
+
+        test_frame = self.init.reports_to_counts(self.data, timeframe='Day', aggregate=True)
+
+        pd.testing.assert_series_equal(test_frame['Day'].value_counts().sort_index(), pd.Series([3,2,2,4,1,1], index=[1,4,6,20,7,3], name='Day').sort_index())
+
+        pd.testing.assert_series_equal(test_frame['Counts'].sort_index(), pd.Series([1,1,2,1,1,1,1,1,1,1,1,1,2], index=range(0,13), name='Counts').sort_index())
+
+        self.assertTrue(test_frame.LSOA_code.unique().tolist()[0], 'West Yorkshire')
 
     def test_add_zero_counts(self):
         """

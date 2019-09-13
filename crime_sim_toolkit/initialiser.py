@@ -38,9 +38,19 @@ class Initialiser:
 
         self.LSOA_hh_counts = LSOA_counts
 
-    def get_data(self, directory=None, timeframe='Week'):
+        self.PolForce_LSOA_map = pd.read_csv(pkg_resources.resource_filename(resource_package, 'src/LSOA_data/PoliceforceLSOA.csv'),
+                                        index_col=0)
+
+    def get_data(self, directory=None, timeframe='Week', aggregate=False):
         """
         One-caller function that loads and manipulates data ready for use
+
+        arguments:
+          directory = directory containing folders for each month of crime data. Default None (passes test_dir)
+
+          timeframe = the desired timeframe of data. Either Week or Day. Default Week.
+
+          aggregate = boolean: do you wish to aggregate data to police force area. Default false.
         """
 
         print('Fetching count data from police reports.')
@@ -52,9 +62,13 @@ class Initialiser:
 
         dated_data = self.random_date_allocate(data=self.report_frame, timeframe=timeframe)
 
-        mut_counts_frame = self.reports_to_counts(dated_data, timeframe=timeframe)
+        mut_counts_frame = self.reports_to_counts(dated_data, timeframe=timeframe, aggregate=aggregate)
 
-        mut_counts_frame = self.add_zero_counts(mut_counts_frame)
+        # if no aggregation specified add zero counts to data for
+        # all LSOAs
+        if aggregate == False:
+
+            mut_counts_frame = self.add_zero_counts(mut_counts_frame)
 
         return mut_counts_frame
 
@@ -139,7 +153,7 @@ class Initialiser:
 
         return dated_data
 
-    def reports_to_counts(self, reports_frame, timeframe='Week'):
+    def reports_to_counts(self, reports_frame, timeframe='Week', aggregate=False):
         """
         function to convert policedata from individal reports level to aggregate counts at time scale, LSOA, crime type
         """
@@ -152,9 +166,12 @@ class Initialiser:
 
         counts_frame.reset_index(inplace=True)
 
-        # filter for just WY LSOA
-
         counts_frame = counts_frame[counts_frame.LSOA_code.isin(self.LSOA_hh_counts.LSOA_code)]
+
+        # if aggregate is true convert LSOA_code column to police force area name
+        if aggregate == True:
+
+            counts_frame['LSOA_code'] = counts_frame.LSOA_code.map(lambda x: self.PolForce_LSOA_map[self.PolForce_LSOA_map['LSOA Code'].isin([x])].Police_force.tolist()[0])
 
         counts_frame.reset_index(inplace=True, drop=True)
 
