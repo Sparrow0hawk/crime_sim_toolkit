@@ -141,9 +141,7 @@ class Test(unittest.TestCase):
 
         self.assertTrue('datetime' in self.init.random_date_allocate(data=self.dataTrue).columns)
 
-        self.assertTrue('Week' in self.init.random_date_allocate(data=self.dataTrue).columns)
-
-        self.assertFalse('Week' in self.init.random_date_allocate(data=self.dataTrue, timeframe='Day').columns)
+        self.assertFalse('Week' in self.init.random_date_allocate(data=self.dataTrue).columns)
 
         self.assertFalse(self.init.random_date_allocate(data=self.dataFalse))
 
@@ -171,16 +169,16 @@ class Test(unittest.TestCase):
         """
         Test to check the reports to counts converter works
         """
-        self.data = pd.read_csv(pkg_resources.resource_filename(resource_package, 'tests/testing_data/report_2_counts.csv'),
-                                parse_dates=['datetime'])
+        self.data = pd.read_csv(pkg_resources.resource_filename(resource_package, 'tests/testing_data/report_2_counts.csv'))
 
-        test_frame = self.init.reports_to_counts(self.data, timeframe='Day')
+        test_frame = self.init.reports_to_counts(self.data)
 
-        self.assertEqual(test_frame['datetime'].value_counts().sort_index().index.tolist(), ['2017-01-02','2017-01-08','2017-01-11',
-                                                                                    '2017-01-12','2017-01-21','2017-01-22',
-                                                                                    '2017-01-26'])
+        self.assertEqual(test_frame['datetime'].value_counts().sort_index().index.tolist(),
+                         pd.to_datetime(['2017-01-03','2017-01-07','2017-01-08',
+                                         '2017-01-09','2017-01-12','2017-01-13',
+                                         '2017-01-24','2017-01-26','2017-01-31']).tolist())
 
-        self.assertEqual(test_frame['Counts'].sort_index().tolist(), [1, 1, 1, 1, 2, 1, 1, 1, 1])
+        self.assertEqual(test_frame['Counts'].sort_index().tolist(), [1, 1, 1, 1, 1, 1, 1, 1, 1, 1])
 
     def test_add_zero_counts(self):
         """
@@ -188,12 +186,11 @@ class Test(unittest.TestCase):
         """
         self.data = pd.read_csv(pkg_resources.resource_filename(resource_package, 'tests/testing_data/test_counts1.csv'))
 
-        self.test = self.init.add_zero_counts(self.data)
+        self.test = self.init.add_zero_counts(self.data, timeframe='Day')
 
         self.assertTrue(isinstance(self.test, pd.DataFrame))
 
         self.assertEqual(len(self.test[self.test.datetime == '2017-01-07'].LSOA_code.unique()), 1388)
-
 
     def test_oob(self):
         """
@@ -207,7 +204,7 @@ class Test(unittest.TestCase):
 
         self.assertTrue(isinstance(self.output, pd.DataFrame))
 
-        self.assertEqual(self.output.Year.unique().max(), 2018)
+        self.assertEqual(self.output.datetime.dt.year.max(), 2018)
 
     def test_oob_split(self):
         """
@@ -216,15 +213,17 @@ class Test(unittest.TestCase):
 
         self.oobdata = pd.read_csv(pkg_resources.resource_filename(resource_package, 'tests/testing_data/test_oobdata.csv'))
 
-        self.data = pd.read_csv(pkg_resources.resource_filename(resource_package, 'tests/testing_data/test_data4pois.csv'))
+        self.data = pd.read_csv(pkg_resources.resource_filename(resource_package, 'tests/testing_data/test_oobsplit.csv'))
 
         self.train_output = self.poisson.oob_train_split(full_data=self.data, test_data=self.oobdata)
 
         self.assertTrue(isinstance(self.train_output, pd.DataFrame))
 
-        self.assertTrue(2017 in self.train_output.Year.unique())
+        self.assertEqual(2017, self.train_output.datetime.max().year)
 
-        self.assertFalse(2018 in self.train_output.Year.unique())
+        self.assertEqual(2016, self.train_output.datetime.min().year)
+
+        self.assertFalse(2018 in self.train_output.datetime.dt.year.unique().tolist())
 
     def test_sampler(self):
         """
@@ -239,13 +238,14 @@ class Test(unittest.TestCase):
 
         self.assertTrue(isinstance(self.poi_data, pd.DataFrame))
 
-        self.assertEqual(self.poi_data.columns.tolist(), ['Week','Mon','Crime_type','Counts','LSOA_code','Year'])
+        self.assertEqual(self.poi_data.columns.tolist(), ['Week','datetime','Crime_type','Counts','LSOA_code'])
 
         self.assertEqual(self.poi_data.Week.unique().tolist(), [26,27,28,29,30,31])
 
-        self.assertEqual(self.poi_data.Year.unique().tolist(), self.oobdata.Year.unique().tolist())
+        self.assertEqual(self.poi_data.datetime.apply(lambda x: x.split('-')[0]).unique().tolist(),
+                         self.oobdata.datetime.apply(lambda x: x.split('-')[0]).unique().tolist())
 
-    def test_sampler_day(self):
+    def test_sampler_day_func_simp(self):
         """
         Test for checking the output of the poisson sampler is as expected
         when sampling using days
@@ -259,11 +259,11 @@ class Test(unittest.TestCase):
 
         self.assertTrue(isinstance(self.poi_data, pd.DataFrame))
 
-        self.assertEqual(self.poi_data.columns.tolist(), ['Day','Mon','Crime_type','Counts','LSOA_code','Year'])
+        self.assertEqual(self.poi_data.columns.tolist(), ['datetime','Crime_type','Counts','LSOA_code'])
 
-        self.assertEqual(len(self.poi_data.Day.unique()), 31)
+        self.assertEqual(len(self.poi_data.datetime.dt.day.unique()), 31)
 
-    def test_sampler_day(self):
+    def test_sampler_day_func_zero(self):
         """
         Test for checking the output of the poisson sampler is as expected
         when sampling using days
@@ -277,9 +277,9 @@ class Test(unittest.TestCase):
 
         self.assertTrue(isinstance(self.poi_data, pd.DataFrame))
 
-        self.assertEqual(self.poi_data.columns.tolist(), ['Day','Mon','Crime_type','Counts','LSOA_code','Year'])
+        self.assertEqual(self.poi_data.columns.tolist(), ['datetime','Crime_type','Counts','LSOA_code'])
 
-        self.assertEqual(len(self.poi_data.Day.unique()), 31)
+        self.assertEqual(len(self.poi_data.datetime.dt.day.unique()), 31)
 
     def test_sampler_day(self):
         """
@@ -295,9 +295,9 @@ class Test(unittest.TestCase):
 
         self.assertTrue(isinstance(self.poi_data, pd.DataFrame))
 
-        self.assertEqual(self.poi_data.columns.tolist(), ['Day','Mon','Crime_type','Counts','LSOA_code','Year'])
+        self.assertEqual(self.poi_data.columns.tolist(), ['datetime','Crime_type','Counts','LSOA_code'])
 
-        self.assertEqual(len(self.poi_data.Day.unique()), 31)
+        self.assertEqual(len(self.poi_data.datetime.dt.day.unique()), 31)
 
     @patch('matplotlib.pyplot.show')
     def test_sampler_error(self, mock_show):
@@ -337,7 +337,7 @@ class Test(unittest.TestCase):
 
         self.assertTrue(isinstance(self.plot, pd.DataFrame))
 
-        self.assertEqual(self.plot.columns.tolist(), ['Day','Pred_counts','Actual','Difference'])
+        self.assertEqual(self.plot.columns.tolist(), ['datetime','Pred_counts','Actual','Difference'])
 
 
     def test_get_crime_description(self):
@@ -364,7 +364,7 @@ class Test(unittest.TestCase):
         """
         self.datatrue = pd.read_csv(pkg_resources.resource_filename(resource_package, 'tests/testing_data/report_2_counts.csv'))
 
-        self.datafalse = pd.read_csv(pkg_resources.resource_filename(resource_package, 'tests/testing_data/test_counts1.csv'))
+        self.datafalse = pd.read_csv(pkg_resources.resource_filename(resource_package, 'tests/testing_data/random_date1.csv'))
 
         self.test1 = utils.validate_datetime(self.datatrue)
 
