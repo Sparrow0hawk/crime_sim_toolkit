@@ -193,17 +193,16 @@ class Test(unittest.TestCase):
         """
         self.data = pd.read_csv(pkg_resources.resource_filename(resource_package, 'tests/testing_data/report_2_counts.csv'))
 
-        test_frame = self.init.reports_to_counts(self.data, timeframe='Day', aggregate=True)
+        test_frame = self.init.reports_to_counts(self.data, aggregate=True)
 
-        # difference here between non-agg test is two burg instances on same day in different LSOAs
-        # are aggregated to the same Day in big crime area
-        # important to note counting Days here not counts!
-        pd.testing.assert_series_equal(test_frame['Day'].value_counts().sort_index(), pd.Series([3,2,2,3,1,1], index=[1,4,6,20,7,3], name='Day').sort_index())
+        self.assertEqual(test_frame['datetime'].value_counts().sort_index().index.tolist(),
+                         pd.to_datetime(['2017-01-03','2017-01-07','2017-01-08',
+                                         '2017-01-09','2017-01-12','2017-01-13',
+                                         '2017-01-24','2017-01-26','2017-01-31']).tolist())
 
-        pd.testing.assert_series_equal(test_frame['Counts'].sort_index(), pd.Series([1, 1, 1, 2, 1, 2, 1, 1, 1, 2, 1, 1], index=range(0,12), name='Counts').sort_index())
+        self.assertEqual(test_frame['Counts'].sort_index().tolist(), [1, 1, 1, 1, 1, 1, 1, 1, 1, 1])
 
         self.assertTrue(test_frame.LSOA_code.unique().tolist()[0], 'West Yorkshire')
-
 
     def test_add_zero_counts(self):
         """
@@ -415,9 +414,9 @@ class Test(unittest.TestCase):
 
         self.assertTrue(isinstance(self.poi_data, pd.DataFrame))
 
-        self.assertEqual(self.poi_data.columns.tolist(), ['Day','Mon','Crime_type','Counts','LSOA_code','Year'])
+        self.assertEqual(self.poi_data.columns.tolist(), ['datetime','Crime_type','Counts','LSOA_code','Year'])
 
-        self.assertEqual(len(self.poi_data.Day.unique()), 31)
+        self.assertEqual(len(self.poi_data.datetime.dt.day.unique()), 31)
 
         self.assertEqual(self.poi_data.shape[0], 14 * 31)
 
@@ -434,11 +433,11 @@ class Test(unittest.TestCase):
 
         self.assertTrue(isinstance(self.poi_data, pd.DataFrame))
 
-        self.assertEqual(self.poi_data.columns.tolist(), ['Week','Mon','Crime_type','Counts','LSOA_code','Year'])
+        self.assertEqual(self.poi_data.columns.tolist(), ['Week','datetime','Crime_type','Counts','LSOA_code','Year'])
 
         self.assertEqual(self.poi_data.Week.unique().tolist(), [26,27,28,29,30,31])
 
-        self.assertEqual(self.poi_data.Year.unique().tolist(), self.oobdata.Year.unique().tolist())
+        self.assertEqual(self.poi_data.datetime.dt.year.unique().tolist(), self.oobdata.datetime.dt.year.unique().tolist())
 
         self.assertEqual(self.poi_data.shape[0], 14 * 6)
 
