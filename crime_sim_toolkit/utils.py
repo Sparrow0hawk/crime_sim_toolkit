@@ -39,7 +39,7 @@ def counts_to_reports(counts_frame):
 
             concat_stack.append(row.loc[['Year','Mon',time_res,'Crime_type','LSOA_code']].values)
 
-            UID = str(row['LSOA_code'][:5]) + str(row[time_res]) + str(row['Mon']) + str(row['Crime_type'][0]) + str(count)
+            UID = str(row['LSOA_code'][:5]).strip() + str(row[time_res]).strip() + str(row['Mon']).strip() + str(row['Crime_type'][:2]).strip().upper() + str(count).strip()
 
             UID_col.append(UID)
 
@@ -84,8 +84,17 @@ def populate_offence(crime_frame):
     descriptions_reference = pd.read_csv(pkg_resources.resource_filename(resource_package, 'src/prc-pfa-201718_new.csv'),
                              index_col=0)
 
-    # first identify police force
-    crime_frame['Police_force'] = crime_frame.LSOA_code.map(lambda x: LSOA_pf_reference[LSOA_pf_reference['LSOA Code'].isin([x])].Police_force.tolist()[0])
+    # test if the first instance in LSOA code is within police force frame?
+    # if value is not in the list of police forces from reference frame
+    # add police force column
+    if crime_frame['LSOA_code'].unique().tolist()[0] not in LSOA_pf_reference.Police_force.tolist():
+
+        crime_frame['Police_force'] = crime_frame.LSOA_code.map(lambda x: LSOA_pf_reference[LSOA_pf_reference['LSOA Code'].isin([x])].Police_force.tolist()[0])
+
+    # else convert LSOA_code to Police_force column
+    else:
+
+        crime_frame['Police_force'] = crime_frame['LSOA_code']
 
     list_of_slices = []
 

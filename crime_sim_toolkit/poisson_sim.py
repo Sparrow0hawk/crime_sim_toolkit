@@ -17,9 +17,11 @@ class Poisson_sim:
     Requires data from https://data.police.uk/ in data folder
     """
 
-    def __init__(self, LA_names, directory=None, timeframe='Week'):
+    def __init__(self, LA_names, directory=None, timeframe='Week', aggregate=False):
 
-        self.data = Initialiser(LA_names=LA_names).get_data(directory=directory, timeframe=timeframe)
+        self.data = Initialiser(LA_names=LA_names).get_data(directory=directory,
+                                                            timeframe=timeframe,
+                                                            aggregate=aggregate)
 
     @classmethod
     def out_of_bag_prep(cls, full_data):
@@ -229,7 +231,7 @@ class Poisson_sim:
         print('-------')
 
         comparison_frame[['Pred_counts','Actual']].plot.scatter(x='Actual',y='Pred_counts')
-        plt.plot([0,175],[0,175], 'k--')
+        plt.plot([0,comparison_frame.max().max() + 25 ],[0,comparison_frame.max().max() + 25 ], 'k--')
 
         plt.show()
 

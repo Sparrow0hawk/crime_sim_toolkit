@@ -95,7 +95,7 @@ class Test(unittest.TestCase):
         self.assertTrue(isinstance(self.output, pd.DataFrame))
 
         # test unique IDs are produced as expected
-        self.assertEqual(self.output.UID[0], 'E0101277A0')
+        self.assertEqual(self.output.UID[0], 'E0101277AN0')
 
     def test_get_Geojson(self):
         """
@@ -168,17 +168,42 @@ class Test(unittest.TestCase):
         self.assertEqual(self.init.LSOA_hh_counts.columns.tolist(), col_head2)
 
     def test_reports_2_counts(self):
-
         """
         Test to check the reports to counts converter works
+
+        Aggregate set to false
         """
+
         self.data = pd.read_csv(pkg_resources.resource_filename(resource_package, 'tests/testing_data/report_2_counts.csv'))
 
-        test_frame = self.init.reports_to_counts(self.data, timeframe='Day')
+        test_frame = self.init.reports_to_counts(self.data, timeframe='Day', aggregate=False)
 
         pd.testing.assert_series_equal(test_frame['Day'].value_counts().sort_index(), pd.Series([3,2,2,4,1,1], index=[1,4,6,20,7,3], name='Day').sort_index())
 
         pd.testing.assert_series_equal(test_frame['Counts'].sort_index(), pd.Series([1,1,2,1,1,1,1,1,1,1,1,1,2], index=range(0,13), name='Counts').sort_index())
+
+        self.assertFalse('West Yorkshire' in test_frame.LSOA_code.unique().tolist())
+
+    def test_reports_2_counts_agg(self):
+        """
+        Test to check the reports to counts converter works
+
+        Includes test of aggregate function
+
+        """
+        self.data = pd.read_csv(pkg_resources.resource_filename(resource_package, 'tests/testing_data/report_2_counts.csv'))
+
+        test_frame = self.init.reports_to_counts(self.data, timeframe='Day', aggregate=True)
+
+        # difference here between non-agg test is two burg instances on same day in different LSOAs
+        # are aggregated to the same Day in big crime area
+        # important to note counting Days here not counts!
+        pd.testing.assert_series_equal(test_frame['Day'].value_counts().sort_index(), pd.Series([3,2,2,3,1,1], index=[1,4,6,20,7,3], name='Day').sort_index())
+
+        pd.testing.assert_series_equal(test_frame['Counts'].sort_index(), pd.Series([1, 1, 1, 2, 1, 2, 1, 1, 1, 2, 1, 1], index=range(0,12), name='Counts').sort_index())
+
+        self.assertTrue(test_frame.LSOA_code.unique().tolist()[0], 'West Yorkshire')
+
 
     def test_add_zero_counts(self):
         """
@@ -199,7 +224,6 @@ class Test(unittest.TestCase):
         """
         Test for checking out-of-bag sampling works as desired
         """
-
 
         self.data = pd.read_csv(pkg_resources.resource_filename(resource_package, 'tests/testing_data/test_data4pois.csv'))
 
@@ -358,6 +382,46 @@ class Test(unittest.TestCase):
 
         # TODO: write a test to catch actual random choice outputs
 
+    def test_sampler_day_agg(self):
+        """
+        Test for checking the output of the poisson sampler is as expected
+        when sampling using days
+        """
+
+        self.oobdata = pd.read_csv(pkg_resources.resource_filename(resource_package, 'tests/testing_data/test_aggoobDay_data.csv'))
+
+        self.traindata = pd.read_csv(pkg_resources.resource_filename(resource_package, 'tests/testing_data/test_aggtrainDay_data.csv'))
+
+        self.poi_data = self.poisson_day.SimplePoission(train_data = self.traindata, test_data = self.oobdata, method = 'simple')
+
+        self.assertTrue(isinstance(self.poi_data, pd.DataFrame))
+
+        self.assertEqual(self.poi_data.columns.tolist(), ['Day','Mon','Crime_type','Counts','LSOA_code','Year'])
+
+        self.assertEqual(len(self.poi_data.Day.unique()), 31)
+
+        self.assertEqual(self.poi_data.shape[0], 14 * 31)
+
+    def test_sampler_week_agg(self):
+        """
+        Test for checking the output of the poisson sampler is as expected
+        """
+
+        self.oobdata = pd.read_csv(pkg_resources.resource_filename(resource_package, 'tests/testing_data/test_aggoobdata.csv'))
+
+        self.traindata = pd.read_csv(pkg_resources.resource_filename(resource_package, 'tests/testing_data/test_aggtraindata.csv'))
+
+        self.poi_data = self.poisson.SimplePoission(train_data = self.traindata, test_data = self.oobdata, method = 'simple')
+
+        self.assertTrue(isinstance(self.poi_data, pd.DataFrame))
+
+        self.assertEqual(self.poi_data.columns.tolist(), ['Week','Mon','Crime_type','Counts','LSOA_code','Year'])
+
+        self.assertEqual(self.poi_data.Week.unique().tolist(), [26,27,28,29,30,31])
+
+        self.assertEqual(self.poi_data.Year.unique().tolist(), self.oobdata.Year.unique().tolist())
+
+        self.assertEqual(self.poi_data.shape[0], 14 * 6)
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)
