@@ -17,11 +17,11 @@ class Poisson_sim:
     Requires data from https://data.police.uk/ in data folder
     """
 
-    def __init__(self, LA_names, directory=None, timeframe='Week'):
+    def __init__(self, LA_names, directory=None, timeframe='Week', aggregate=False):
 
         self.data = Initialiser(LA_names=LA_names).get_data(directory=directory,
                                                             timeframe=timeframe,
-                                                            aggregate=False)
+                                                            aggregate=aggregate)
 
     @classmethod
     def out_of_bag_prep(cls, full_data):

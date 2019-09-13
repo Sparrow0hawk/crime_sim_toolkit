@@ -195,11 +195,15 @@ class Test(unittest.TestCase):
 
         test_frame = self.init.reports_to_counts(self.data, timeframe='Day', aggregate=True)
 
-        pd.testing.assert_series_equal(test_frame['Day'].value_counts().sort_index(), pd.Series([3,2,2,4,1,1], index=[1,4,6,20,7,3], name='Day').sort_index())
+        # difference here between non-agg test is two burg instances on same day in different LSOAs
+        # are aggregated to the same Day in big crime area
+        # important to note counting Days here not counts!
+        pd.testing.assert_series_equal(test_frame['Day'].value_counts().sort_index(), pd.Series([3,2,2,3,1,1], index=[1,4,6,20,7,3], name='Day').sort_index())
 
-        pd.testing.assert_series_equal(test_frame['Counts'].sort_index(), pd.Series([1,1,2,1,1,1,1,1,1,1,1,1,2], index=range(0,13), name='Counts').sort_index())
+        pd.testing.assert_series_equal(test_frame['Counts'].sort_index(), pd.Series([1, 1, 1, 2, 1, 2, 1, 1, 1, 2, 1, 1], index=range(0,12), name='Counts').sort_index())
 
         self.assertTrue(test_frame.LSOA_code.unique().tolist()[0], 'West Yorkshire')
+
 
     def test_add_zero_counts(self):
         """

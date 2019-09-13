@@ -171,7 +171,12 @@ class Initialiser:
         # if aggregate is true convert LSOA_code column to police force area name
         if aggregate == True:
 
+            # map LSOAs to police force area
             counts_frame['LSOA_code'] = counts_frame.LSOA_code.map(lambda x: self.PolForce_LSOA_map[self.PolForce_LSOA_map['LSOA Code'].isin([x])].Police_force.tolist()[0])
+
+            # group columns by Police force for crime type and date and sum the counts column
+            # thus aggregating data into the new police force category
+            counts_frame = counts_frame.groupby(['Day','Mon','Year','Crime_type','LSOA_code'])['Counts'].sum().reset_index(['Day','Mon','Year','Crime_type','LSOA_code'])
 
         counts_frame.reset_index(inplace=True, drop=True)
 
