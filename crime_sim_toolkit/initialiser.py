@@ -175,7 +175,7 @@ class Initialiser:
 
             # group columns by Police force for crime type and date and sum the counts column
             # thus aggregating data into the new police force category
-            counts_frame = counts_frame.groupby(['Day','Mon','Year','Crime_type','LSOA_code'])['Counts'].sum().reset_index(['Day','Mon','Year','Crime_type','LSOA_code'])
+            counts_frame = counts_frame.groupby(['datetime','Crime_type','LSOA_code'])['Counts'].sum().reset_index(['datetime','Crime_type','LSOA_code'])
 
         counts_frame.reset_index(inplace=True, drop=True)
 

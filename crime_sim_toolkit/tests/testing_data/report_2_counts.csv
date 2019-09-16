@@ -1,4 +1,4 @@
-Crime ID,Month,Reported by,Falls within,Longitude,Latitude,Location,LSOA code,LSOA name,Crime type,Last outcome category,Context,datetime
+UID,Month,Reported by,Falls within,Longitude,Latitude,Location,LSOA code,LSOA name,Crime type,Last outcome category,Context,datetime
 ,2017-01,West Yorkshire Police,West Yorkshire Police,-1.862742,53.940068000000004,On or near Smithy Greaves,E01010646,Bradford 001A,Anti-social behaviour,,,2017-01-26
 ,2017-01,West Yorkshire Police,West Yorkshire Police,-1.879359,53.946225,On or near The Acres,E01010646,Bradford 001A,Anti-social behaviour,,,2017-01-07
 61b98a137d42a70531013bd41f29bbe397de79bdf9b458d697f397a1c961ea25,2017-01,West Yorkshire Police,West Yorkshire Police,-1.8790310000000001,53.94380699999999,On or near Cross End Fold,E01010646,Bradford 001A,Shoplifting,Court result unavailable,,2017-01-13

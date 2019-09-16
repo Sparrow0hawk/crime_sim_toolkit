@@ -14,12 +14,12 @@ def counts_to_reports(counts_frame):
     per LSOA per crime type into a pandas dataframe of individual reports
     """
 
-    pri_data = counts_frame
+    pri_data = validate_datetime(counts_frame)
 
     if 'Week' in pri_data.columns:
         time_res = 'Week'
     else:
-        time_res = 'Day'
+        time_res = 'datetime'
 
     # first drop all instances where Counts == 0
 
@@ -37,24 +37,41 @@ def counts_to_reports(counts_frame):
 
         for count in range(row.Counts):
 
-            concat_stack.append(row.loc[['Year','Mon',time_res,'Crime_type','LSOA_code']].values)
+            if time_res == 'Week':
 
-            UID = str(row['LSOA_code'][:5]).strip() + str(row[time_res]).strip() + str(row['Mon']).strip() + str(row['Crime_type'][:2]).strip().upper() + str(count).strip()
+                concat_stack.append(row.loc[['datetime',time_res,'Crime_type','LSOA_code']].values)
 
-            UID_col.append(UID)
+                UID = str(row['LSOA_code'][:5]).strip() +\
+                      str(row['datetime'].day).strip() +\
+                      str(row['datetime'].month).strip() +\
+                      str(row['Crime_type'][:2]).strip().upper() +\
+                      str(count).strip()
 
+                UID_col.append(UID)
+
+            else:
+
+                concat_stack.append(row.loc[['datetime','Crime_type','LSOA_code']].values)
+
+                UID = str(row['LSOA_code'][:5]).strip() +\
+                      str(row['datetime'].day).strip() +\
+                      str(row['datetime'].month).strip() +\
+                      str(row['Crime_type'][:2]).strip().upper() +\
+                      str(count).strip()
+
+                UID_col.append(UID)
 
 
     reports_frame = pd.DataFrame(data=np.stack(concat_stack),
                  index=range(len(concat_stack)),
-                 columns=['Year','Mon',time_res,'Crime_type','LSOA_code']
+                 columns=pri_data.columns
                  )
 
     # create unique IDs from fragments of data
     reports_frame['UID'] = UID_col
 
     # reorder columns for ABM
-    reports_frame = reports_frame[['UID','Year','Mon',time_res,'Crime_type','LSOA_code']]
+    reports_frame = reports_frame[['UID'] + pri_data.columns]
 
     return reports_frame
 
@@ -75,7 +92,7 @@ def populate_offence(crime_frame):
     if 'Week' in crime_frame.columns:
         time_res = 'Week'
     else:
-        time_res = 'Day'
+        time_res = 'datetime'
 
     # initially load reference tables
     LSOA_pf_reference = pd.read_csv(pkg_resources.resource_filename(resource_package, 'src/LSOA_data/PoliceforceLSOA.csv'),
@@ -117,7 +134,13 @@ def populate_offence(crime_frame):
 
     # reorder columns for ABM
 
-    populated_frame = populated_frame[['UID','Year','Mon',time_res,'Crime_description','Crime_type','LSOA_code','Police_force']]
+    if time_res == 'Week':
+
+        populated_frame = populated_frame[['UID','datetime',time_res,'Crime_description','Crime_type','LSOA_code','Police_force']]
+
+    else:
+
+        populated_frame = populated_frame[['UID','datetime','Crime_description','Crime_type','LSOA_code','Police_force']]
 
     return populated_frame
 

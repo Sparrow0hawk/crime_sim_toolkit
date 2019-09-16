@@ -259,7 +259,7 @@ class Poisson_sim:
         print('-------')
 
         comparison_frame[['Pred_counts','Actual']].plot.scatter(x='Actual',y='Pred_counts')
-        plt.plot([0,comparison_frame.max().max() + 25 ],[0,comparison_frame.max().max() + 25 ], 'k--')
+        plt.plot([0,comparison_frame[['Pred_counts','Actual']].max().max() + 25 ],[0,comparison_frame[['Pred_counts','Actual']].max().max() + 25 ], 'k--')
 
         plt.show()
 
