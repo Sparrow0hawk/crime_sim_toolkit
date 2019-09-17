@@ -96,7 +96,7 @@ class Test(unittest.TestCase):
         self.assertTrue(isinstance(self.output, pd.DataFrame))
 
         # test unique IDs are produced as expected
-        self.assertEqual(self.output.UID[0], 'E0101277AN0')
+        self.assertEqual(self.output.UID[0], 'E010117AN0')
 
     def test_get_Geojson(self):
         """

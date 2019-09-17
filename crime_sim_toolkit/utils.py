@@ -41,6 +41,8 @@ def counts_to_reports(counts_frame):
 
                 concat_stack.append(row.loc[['datetime',time_res,'Crime_type','LSOA_code']].values)
 
+                col_names = ['datetime',time_res,'Crime_type','LSOA_code']
+
                 UID = str(row['LSOA_code'][:5]).strip() +\
                       str(row['datetime'].day).strip() +\
                       str(row['datetime'].month).strip() +\
@@ -53,6 +55,8 @@ def counts_to_reports(counts_frame):
 
                 concat_stack.append(row.loc[['datetime','Crime_type','LSOA_code']].values)
 
+                col_names = ['datetime','Crime_type','LSOA_code']
+
                 UID = str(row['LSOA_code'][:5]).strip() +\
                       str(row['datetime'].day).strip() +\
                       str(row['datetime'].month).strip() +\
@@ -64,14 +68,14 @@ def counts_to_reports(counts_frame):
 
     reports_frame = pd.DataFrame(data=np.stack(concat_stack),
                  index=range(len(concat_stack)),
-                 columns=pri_data.columns
+                 columns=col_names
                  )
 
     # create unique IDs from fragments of data
     reports_frame['UID'] = UID_col
 
     # reorder columns for ABM
-    reports_frame = reports_frame[['UID'] + pri_data.columns]
+    reports_frame = reports_frame[['UID'] + col_names]
 
     return reports_frame
 
