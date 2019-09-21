@@ -74,7 +74,7 @@ class Poisson_sim:
         return train_data
 
     @classmethod
-    def SimplePoission(cls, train_data, test_data, method='simple'):
+    def SimplePoission(cls, train_data, test_data, method='simple', mv_window=0):
         """
         Function for generating synthetic crime count data at LSOA at timescale resolution
         based on historic data loaded from the initialiser.
@@ -133,6 +133,17 @@ class Poisson_sim:
 
             print('Simulating '+time_res+': '+str(date))
 
+            # create a loop for creating a date list based on
+            # moving window arguement
+            if time_res == 'Day':
+                date_lst = [date]
+
+                for window in range(1,mv_window+1):
+
+                    date_lst.append(date + pd.DateOffset(days=window))
+
+                    date_lst.append(date - pd.DateOffset(days=window))
+
             # for each crime type
             for crim_typ in crime_types_lst:
 
@@ -143,8 +154,8 @@ class Poisson_sim:
                                              (historic_data['Crime_type'].isin([crim_typ]))]
 
                 else:
-                    frame_OI = historic_data[(historic_data[time_res].dt.day.isin([date.day])) &
-                                             (historic_data[time_res].dt.month.isin([date.month])) &
+                    frame_OI = historic_data[(historic_data[time_res].dt.day.isin([date.day for date in date_lst])) &
+                                             (historic_data[time_res].dt.month.isin([date.month for date in date_lst])) &
                                              (historic_data['Crime_type'].isin([crim_typ]))]
 
                 for LSOA in frame_OI['LSOA_code'].unique():
