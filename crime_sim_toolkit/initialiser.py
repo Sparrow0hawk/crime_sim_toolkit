@@ -66,7 +66,11 @@ class Initialiser:
 
         mut_counts_frame = self.reports_to_counts(dated_data, aggregate=aggregate)
 
-        mut_counts_frame = self.add_zero_counts(mut_counts_frame, timeframe=timeframe)
+        # is aggregate is not true then LSOA codes will be used by default
+        # therefore add_zero_counts should be used 
+        if aggregate != True:
+
+            mut_counts_frame = self.add_zero_counts(mut_counts_frame, timeframe=timeframe)
 
         return mut_counts_frame
 
