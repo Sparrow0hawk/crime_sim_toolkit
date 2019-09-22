@@ -67,7 +67,7 @@ class Initialiser:
         mut_counts_frame = self.reports_to_counts(dated_data, aggregate=aggregate)
 
         # is aggregate is not true then LSOA codes will be used by default
-        # therefore add_zero_counts should be used 
+        # therefore add_zero_counts should be used
         if aggregate != True:
 
             mut_counts_frame = self.add_zero_counts(mut_counts_frame, timeframe=timeframe)
@@ -196,13 +196,9 @@ class Initialiser:
         crime_lst = []
         counts_lst = []
         timeres_lst = []
-        # list for datetime to go with Week
-        mon_lst = []
 
         # function to ensure datetime is datetime dtype
-        reports_frame = utils.validate_datetime(counts_frame)
-
-        sliced_frame = counts_frame.copy()
+        sliced_frame = utils.validate_datetime(counts_frame.copy())
 
         for date in counts_frame['datetime'].unique():
 
