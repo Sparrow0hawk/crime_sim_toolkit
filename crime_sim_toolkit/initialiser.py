@@ -67,7 +67,7 @@ class Initialiser:
         mut_counts_frame = self.reports_to_counts(dated_data, aggregate=aggregate)
 
         # is aggregate is not true then LSOA codes will be used by default
-        # therefore add_zero_counts should be used 
+        # therefore add_zero_counts should be used
         if aggregate != True:
 
             mut_counts_frame = self.add_zero_counts(mut_counts_frame, timeframe=timeframe)
@@ -162,9 +162,6 @@ class Initialiser:
         counts_frame = pd.DataFrame(reports_frame.groupby(['Crime type','LSOA code'])['datetime'].value_counts()).reset_index(level=['Crime type','LSOA code'])
 
         counts_frame.columns = ['Crime_type','LSOA_code', 'Counts']
-
-        # get datetime out of index
-        counts_frame.reset_index(inplace=True)
 
         # get datetime out of index
         counts_frame.reset_index(inplace=True)
