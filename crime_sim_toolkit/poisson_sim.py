@@ -135,7 +135,8 @@ class Poisson_sim:
 
             # create a loop for creating a date list based on
             # moving window arguement
-            if time_res == 'Day':
+            if time_res != 'Week':
+
                 date_lst = [date]
 
                 for window in range(1,mv_window+1):
