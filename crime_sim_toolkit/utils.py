@@ -202,6 +202,10 @@ def sample_perturb(counts_frame, crime_type, pct_change):
 
     new_counts_frame = counts_frame.copy()
 
-    new_counts_frame = new_counts_frame.apply(lambda x: round(x.Counts * pct_change,0) if x.Crime_type.isin([crime_type]))
+    mask = (new_counts_frame.Crime_type == crime_type)
+
+    mask_frame = new_counts_frame[mask]
+
+    new_counts_frame.loc[mask,'Counts'] = round(mask_frame.Counts * pct_change, 0)
 
     return new_counts_frame
