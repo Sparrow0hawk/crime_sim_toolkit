@@ -186,3 +186,19 @@ def validate_datetime(passed_dataframe):
     validated_date_frame = passed_dataframe.copy()
 
     return validated_date_frame
+
+def sample_perturb(counts_frame, crime_type, pct_change):
+    """
+    Utility function to increase the counts of specific crime types
+    after sampling by a given percentage.
+    Inputs : counts_frame, the counts of crime dataframe produced by sampler
+             crime_type, string of crime type that we want to increase
+                         counts for
+             pct_change, the percentage change (negative or positive) of crime
+                         counts desired.
+    Outputs: new_counts_frame, identical dataframe passed but with increased
+                               crime counts for specific crime type
+    """
+
+
+    return
