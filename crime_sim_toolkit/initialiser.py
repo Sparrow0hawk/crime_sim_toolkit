@@ -166,9 +166,6 @@ class Initialiser:
         # get datetime out of index
         counts_frame.reset_index(inplace=True)
 
-        # get datetime out of index
-        counts_frame.reset_index(inplace=True)
-
         counts_frame = counts_frame[counts_frame.LSOA_code.isin(self.LSOA_hh_counts.LSOA_code)]
 
         # if aggregate is true convert LSOA_code column to police force area name
