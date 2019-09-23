@@ -1,0 +1,571 @@
+Counts,Crime_type,LSOA_code,datetime
+1,Anti-social behaviour,E01010568,2016-07-01
+2,Violence and sexual offences,E01033011,2016-07-01
+1,Violence and sexual offences,E01011792,2016-07-01
+1,Vehicle crime,E01011792,2016-07-01
+1,Public order,E01033011,2016-07-01
+1,Public order,E01011792,2016-07-01
+1,Other theft,E01033011,2016-07-01
+1,Other theft,E01011038,2016-07-01
+1,Other crime,E01010609,2016-07-01
+1,Criminal damage and arson,E01033011,2016-07-01
+1,Burglary,E01011306,2016-07-01
+1,Burglary,E01010609,2016-07-01
+2,Anti-social behaviour,E01033011,2016-07-01
+1,Possession of weapons,E01011792,2016-07-01
+1,Violence and sexual offences,E01011306,2016-07-02
+1,Other crime,E01011038,2016-07-02
+1,Anti-social behaviour,E01033011,2016-07-02
+1,Other theft,E01011792,2016-07-02
+1,Violence and sexual offences,E01010609,2016-07-02
+1,Anti-social behaviour,E01010609,2016-07-02
+1,Theft from the person,E01033011,2016-07-03
+1,Burglary,E01033011,2016-07-03
+1,Criminal damage and arson,E01033011,2016-07-03
+2,Anti-social behaviour,E01033011,2016-07-03
+1,Violence and sexual offences,E01011038,2016-07-03
+1,Violence and sexual offences,E01010568,2016-07-04
+2,Anti-social behaviour,E01033011,2016-07-04
+1,Theft from the person,E01033011,2016-07-04
+2,Public order,E01033011,2016-07-04
+1,Violence and sexual offences,E01011038,2016-07-04
+1,Violence and sexual offences,E01033011,2016-07-04
+1,Violence and sexual offences,E01011792,2016-07-04
+1,Criminal damage and arson,E01011792,2016-07-04
+1,Robbery,E01033011,2016-07-05
+1,Shoplifting,E01033011,2016-07-05
+1,Violence and sexual offences,E01033011,2016-07-05
+1,Vehicle crime,E01033011,2016-07-06
+2,Anti-social behaviour,E01011792,2016-07-06
+1,Robbery,E01033011,2016-07-06
+1,Burglary,E01010609,2016-07-06
+1,Anti-social behaviour,E01010609,2016-07-06
+1,Possession of weapons,E01033011,2016-07-06
+1,Violence and sexual offences,E01033011,2016-07-06
+1,Theft from the person,E01033011,2016-07-07
+1,Other theft,E01010568,2016-07-07
+2,Anti-social behaviour,E01033011,2016-07-07
+1,Criminal damage and arson,E01033011,2016-07-07
+1,Other theft,E01010609,2016-07-07
+1,Anti-social behaviour,E01011792,2016-07-07
+2,Anti-social behaviour,E01033011,2016-07-08
+1,Burglary,E01033011,2016-07-08
+1,Anti-social behaviour,E01033011,2016-07-09
+1,Bicycle theft,E01033011,2016-07-09
+1,Criminal damage and arson,E01033011,2016-07-09
+1,Other theft,E01033011,2016-07-09
+1,Other theft,E01011038,2016-07-09
+1,Other theft,E01010609,2016-07-09
+1,Bicycle theft,E01010609,2016-07-09
+1,Violence and sexual offences,E01011792,2016-07-10
+1,Violence and sexual offences,E01011306,2016-07-10
+1,Anti-social behaviour,E01033011,2016-07-10
+1,Anti-social behaviour,E01011792,2016-07-10
+1,Shoplifting,E01033011,2016-07-10
+1,Theft from the person,E01033011,2016-07-11
+1,Robbery,E01033011,2016-07-11
+1,Other theft,E01033011,2016-07-11
+2,Violence and sexual offences,E01033011,2016-07-11
+1,Bicycle theft,E01033011,2016-07-12
+2,Theft from the person,E01033011,2016-07-12
+1,Anti-social behaviour,E01010609,2016-07-12
+1,Other theft,E01010568,2016-07-12
+1,Violence and sexual offences,E01033011,2016-07-13
+1,Shoplifting,E01033011,2016-07-13
+1,Public order,E01033011,2016-07-13
+2,Other theft,E01033011,2016-07-13
+1,Anti-social behaviour,E01011792,2016-07-14
+1,Anti-social behaviour,E01033011,2016-07-14
+1,Public order,E01011038,2016-07-15
+1,Vehicle crime,E01010609,2016-07-15
+1,Anti-social behaviour,E01011792,2016-07-15
+1,Public order,E01011792,2016-07-15
+1,Other theft,E01033011,2016-07-15
+1,Violence and sexual offences,E01011038,2016-07-15
+1,Violence and sexual offences,E01010609,2016-07-15
+1,Drugs,E01011792,2016-07-15
+1,Theft from the person,E01033011,2016-07-15
+1,Anti-social behaviour,E01010609,2016-07-16
+1,Anti-social behaviour,E01011792,2016-07-16
+2,Violence and sexual offences,E01011038,2016-07-16
+2,Anti-social behaviour,E01033011,2016-07-16
+1,Other theft,E01033011,2016-07-16
+1,Burglary,E01033011,2016-07-16
+2,Violence and sexual offences,E01033011,2016-07-16
+1,Violence and sexual offences,E01011038,2016-07-17
+1,Anti-social behaviour,E01010609,2016-07-17
+2,Anti-social behaviour,E01033011,2016-07-17
+1,Bicycle theft,E01033011,2016-07-17
+2,Public order,E01010568,2016-07-17
+2,Theft from the person,E01033011,2016-07-17
+1,Criminal damage and arson,E01011792,2016-07-17
+1,Violence and sexual offences,E01033011,2016-07-18
+2,Violence and sexual offences,E01010609,2016-07-18
+3,Violence and sexual offences,E01011038,2016-07-18
+1,Anti-social behaviour,E01010609,2016-07-18
+1,Anti-social behaviour,E01011792,2016-07-19
+1,Other theft,E01033011,2016-07-19
+1,Public order,E01033011,2016-07-19
+1,Anti-social behaviour,E01033011,2016-07-19
+1,Other theft,E01010609,2016-07-19
+1,Violence and sexual offences,E01011792,2016-07-19
+1,Criminal damage and arson,E01011038,2016-07-19
+1,Violence and sexual offences,E01033011,2016-07-19
+1,Bicycle theft,E01033011,2016-07-20
+1,Burglary,E01011792,2016-07-20
+1,Anti-social behaviour,E01011792,2016-07-20
+1,Other theft,E01033011,2016-07-20
+1,Anti-social behaviour,E01033011,2016-07-20
+1,Violence and sexual offences,E01033011,2016-07-20
+1,Violence and sexual offences,E01011306,2016-07-21
+1,Burglary,E01011306,2016-07-21
+1,Drugs,E01033011,2016-07-21
+1,Bicycle theft,E01033011,2016-07-21
+3,Anti-social behaviour,E01033011,2016-07-21
+2,Violence and sexual offences,E01033011,2016-07-21
+1,Anti-social behaviour,E01011792,2016-07-21
+1,Violence and sexual offences,E01011792,2016-07-22
+1,Other theft,E01011038,2016-07-22
+1,Criminal damage and arson,E01033011,2016-07-22
+1,Vehicle crime,E01033011,2016-07-22
+1,Criminal damage and arson,E01011792,2016-07-22
+1,Anti-social behaviour,E01011038,2016-07-22
+1,Public order,E01033011,2016-07-22
+1,Violence and sexual offences,E01011038,2016-07-23
+1,Other theft,E01033011,2016-07-23
+1,Anti-social behaviour,E01010609,2016-07-23
+1,Violence and sexual offences,E01033011,2016-07-23
+1,Public order,E01011792,2016-07-24
+2,Violence and sexual offences,E01033011,2016-07-24
+2,Anti-social behaviour,E01011792,2016-07-24
+1,Other crime,E01011792,2016-07-24
+1,Drugs,E01033011,2016-07-24
+1,Violence and sexual offences,E01033011,2016-07-25
+2,Anti-social behaviour,E01011792,2016-07-25
+1,Other theft,E01033011,2016-07-25
+1,Vehicle crime,E01011792,2016-07-25
+1,Criminal damage and arson,E01033011,2016-07-25
+1,Anti-social behaviour,E01010609,2016-07-26
+1,Anti-social behaviour,E01011038,2016-07-26
+1,Violence and sexual offences,E01010609,2016-07-26
+1,Other theft,E01033011,2016-07-26
+1,Violence and sexual offences,E01010609,2016-07-27
+1,Violence and sexual offences,E01033011,2016-07-27
+1,Criminal damage and arson,E01033011,2016-07-27
+1,Theft from the person,E01033011,2016-07-27
+1,Violence and sexual offences,E01033011,2016-07-28
+2,Anti-social behaviour,E01033011,2016-07-28
+1,Burglary,E01011038,2016-07-28
+1,Vehicle crime,E01011038,2016-07-28
+1,Other theft,E01011038,2016-07-28
+2,Possession of weapons,E01033011,2016-07-29
+1,Anti-social behaviour,E01010609,2016-07-29
+1,Criminal damage and arson,E01033011,2016-07-29
+1,Criminal damage and arson,E01011792,2016-07-30
+1,Violence and sexual offences,E01011792,2016-07-30
+1,Theft from the person,E01033011,2016-07-30
+1,Public order,E01033011,2016-07-30
+1,Anti-social behaviour,E01011038,2016-07-30
+1,Burglary,E01010609,2016-07-30
+1,Other theft,E01033011,2016-07-30
+2,Violence and sexual offences,E01033011,2016-07-30
+1,Vehicle crime,E01010609,2016-07-30
+1,Other theft,E01033011,2016-07-31
+1,Anti-social behaviour,E01011038,2016-07-31
+1,Violence and sexual offences,E01033011,2016-07-31
+1,Other theft,E01033011,2017-07-01
+1,Violence and sexual offences,E01011792,2017-07-01
+1,Vehicle crime,E01010568,2017-07-01
+2,Anti-social behaviour,E01010609,2017-07-01
+1,Anti-social behaviour,E01011038,2017-07-02
+1,Anti-social behaviour,E01033011,2017-07-02
+1,Violence and sexual offences,E01033011,2017-07-02
+1,Shoplifting,E01033011,2017-07-02
+2,Theft from the person,E01033011,2017-07-03
+1,Violence and sexual offences,E01010609,2017-07-03
+2,Criminal damage and arson,E01010609,2017-07-03
+1,Violence and sexual offences,E01033011,2017-07-03
+1,Anti-social behaviour,E01033011,2017-07-03
+1,Violence and sexual offences,E01010568,2017-07-03
+1,Vehicle crime,E01033011,2017-07-03
+1,Burglary,E01010609,2017-07-04
+2,Anti-social behaviour,E01010609,2017-07-04
+1,Burglary,E01011038,2017-07-04
+1,Shoplifting,E01033011,2017-07-04
+1,Public order,E01011792,2017-07-04
+1,Violence and sexual offences,E01011038,2017-07-04
+1,Vehicle crime,E01011038,2017-07-05
+1,Burglary,E01011306,2017-07-06
+1,Burglary,E01010568,2017-07-06
+2,Anti-social behaviour,E01010609,2017-07-06
+1,Shoplifting,E01033011,2017-07-06
+2,Other theft,E01033011,2017-07-07
+1,Public order,E01011306,2017-07-07
+1,Burglary,E01033011,2017-07-07
+1,Violence and sexual offences,E01010568,2017-07-07
+1,Burglary,E01010609,2017-07-07
+1,Anti-social behaviour,E01033011,2017-07-07
+1,Violence and sexual offences,E01010609,2017-07-08
+2,Violence and sexual offences,E01033011,2017-07-08
+1,Public order,E01033011,2017-07-08
+1,Violence and sexual offences,E01011038,2017-07-08
+1,Drugs,E01033011,2017-07-08
+1,Theft from the person,E01033011,2017-07-08
+1,Violence and sexual offences,E01011792,2017-07-09
+2,Violence and sexual offences,E01033011,2017-07-09
+1,Burglary,E01010568,2017-07-09
+1,Public order,E01033011,2017-07-09
+1,Other theft,E01033011,2017-07-09
+1,Criminal damage and arson,E01011792,2017-07-09
+2,Violence and sexual offences,E01033011,2017-07-10
+1,Robbery,E01033011,2017-07-10
+1,Public order,E01033011,2017-07-10
+1,Other theft,E01033011,2017-07-10
+1,Theft from the person,E01033011,2017-07-10
+1,Robbery,E01033011,2017-07-11
+1,Other theft,E01010609,2017-07-11
+2,Theft from the person,E01033011,2017-07-11
+2,Other theft,E01033011,2017-07-11
+1,Violence and sexual offences,E01033011,2017-07-11
+1,Vehicle crime,E01010568,2017-07-11
+1,Public order,E01010609,2017-07-11
+1,Criminal damage and arson,E01010609,2017-07-11
+1,Anti-social behaviour,E01010609,2017-07-11
+1,Violence and sexual offences,E01011038,2017-07-12
+1,Robbery,E01033011,2017-07-12
+1,Violence and sexual offences,E01011792,2017-07-12
+1,Burglary,E01010568,2017-07-12
+1,Anti-social behaviour,E01010609,2017-07-12
+1,Theft from the person,E01033011,2017-07-12
+1,Violence and sexual offences,E01033011,2017-07-13
+1,Criminal damage and arson,E01033011,2017-07-13
+1,Violence and sexual offences,E01011792,2017-07-13
+1,Anti-social behaviour,E01010609,2017-07-13
+1,Other theft,E01033011,2017-07-13
+1,Anti-social behaviour,E01033011,2017-07-13
+1,Vehicle crime,E01033011,2017-07-13
+1,Anti-social behaviour,E01010568,2017-07-13
+1,Public order,E01011792,2017-07-13
+1,Violence and sexual offences,E01011792,2017-07-14
+1,Anti-social behaviour,E01033011,2017-07-14
+1,Anti-social behaviour,E01010609,2017-07-15
+1,Other theft,E01011306,2017-07-15
+3,Violence and sexual offences,E01033011,2017-07-15
+1,Robbery,E01033011,2017-07-15
+1,Anti-social behaviour,E01011038,2017-07-15
+2,Other theft,E01033011,2017-07-15
+1,Anti-social behaviour,E01033011,2017-07-15
+1,Violence and sexual offences,E01011792,2017-07-16
+1,Other crime,E01033011,2017-07-16
+3,Anti-social behaviour,E01033011,2017-07-16
+1,Violence and sexual offences,E01011038,2017-07-16
+1,Violence and sexual offences,E01010609,2017-07-16
+1,Other theft,E01033011,2017-07-16
+1,Criminal damage and arson,E01010609,2017-07-17
+1,Anti-social behaviour,E01010568,2017-07-17
+1,Anti-social behaviour,E01011038,2017-07-17
+1,Public order,E01033011,2017-07-17
+1,Anti-social behaviour,E01033011,2017-07-17
+1,Bicycle theft,E01033011,2017-07-17
+1,Violence and sexual offences,E01010609,2017-07-17
+2,Robbery,E01033011,2017-07-18
+1,Criminal damage and arson,E01010568,2017-07-18
+1,Theft from the person,E01033011,2017-07-18
+1,Burglary,E01010609,2017-07-19
+1,Violence and sexual offences,E01010609,2017-07-19
+1,Violence and sexual offences,E01010568,2017-07-19
+1,Anti-social behaviour,E01011038,2017-07-19
+1,Anti-social behaviour,E01033011,2017-07-19
+1,Violence and sexual offences,E01011038,2017-07-19
+1,Violence and sexual offences,E01011306,2017-07-19
+1,Violence and sexual offences,E01033011,2017-07-19
+2,Anti-social behaviour,E01010609,2017-07-19
+1,Public order,E01033011,2017-07-19
+1,Violence and sexual offences,E01011792,2017-07-19
+2,Other theft,E01033011,2017-07-20
+1,Violence and sexual offences,E01033011,2017-07-20
+1,Anti-social behaviour,E01010568,2017-07-20
+1,Criminal damage and arson,E01011792,2017-07-20
+1,Bicycle theft,E01033011,2017-07-20
+1,Public order,E01010609,2017-07-20
+1,Bicycle theft,E01033011,2017-07-21
+1,Public order,E01011038,2017-07-21
+1,Violence and sexual offences,E01010609,2017-07-21
+1,Anti-social behaviour,E01033011,2017-07-21
+1,Anti-social behaviour,E01011038,2017-07-21
+1,Violence and sexual offences,E01011792,2017-07-21
+2,Other theft,E01033011,2017-07-21
+1,Theft from the person,E01033011,2017-07-21
+2,Public order,E01033011,2017-07-21
+1,Other theft,E01033011,2017-07-22
+1,Theft from the person,E01033011,2017-07-22
+1,Anti-social behaviour,E01033011,2017-07-22
+1,Shoplifting,E01033011,2017-07-22
+1,Violence and sexual offences,E01010609,2017-07-23
+1,Public order,E01033011,2017-07-23
+1,Anti-social behaviour,E01033011,2017-07-23
+2,Violence and sexual offences,E01033011,2017-07-23
+1,Other theft,E01033011,2017-07-23
+1,Violence and sexual offences,E01011792,2017-07-24
+1,Anti-social behaviour,E01033011,2017-07-24
+2,Theft from the person,E01033011,2017-07-24
+1,Burglary,E01033011,2017-07-25
+1,Criminal damage and arson,E01033011,2017-07-25
+1,Violence and sexual offences,E01011038,2017-07-25
+1,Theft from the person,E01033011,2017-07-25
+1,Criminal damage and arson,E01033011,2017-07-26
+1,Other theft,E01033011,2017-07-26
+1,Violence and sexual offences,E01011038,2017-07-26
+1,Shoplifting,E01033011,2017-07-26
+1,Violence and sexual offences,E01010609,2017-07-26
+2,Criminal damage and arson,E01011038,2017-07-26
+1,Public order,E01011792,2017-07-26
+1,Violence and sexual offences,E01033011,2017-07-26
+2,Burglary,E01010568,2017-07-26
+1,Other theft,E01011038,2017-07-27
+1,Theft from the person,E01033011,2017-07-27
+2,Violence and sexual offences,E01011792,2017-07-27
+1,Criminal damage and arson,E01011792,2017-07-27
+1,Burglary,E01010609,2017-07-28
+1,Theft from the person,E01033011,2017-07-28
+2,Violence and sexual offences,E01033011,2017-07-28
+1,Robbery,E01033011,2017-07-28
+2,Anti-social behaviour,E01033011,2017-07-28
+1,Bicycle theft,E01033011,2017-07-28
+1,Violence and sexual offences,E01011038,2017-07-28
+1,Criminal damage and arson,E01011038,2017-07-28
+1,Anti-social behaviour,E01033011,2017-07-29
+1,Shoplifting,E01033011,2017-07-29
+3,Other theft,E01033011,2017-07-29
+1,Violence and sexual offences,E01033011,2017-07-29
+1,Bicycle theft,E01033011,2017-07-29
+1,Theft from the person,E01033011,2017-07-29
+1,Anti-social behaviour,E01011038,2017-07-29
+1,Public order,E01033011,2017-07-29
+1,Violence and sexual offences,E01033011,2017-07-30
+1,Theft from the person,E01033011,2017-07-30
+1,Anti-social behaviour,E01010609,2017-07-30
+1,Violence and sexual offences,E01010568,2017-07-30
+1,Burglary,E01011038,2017-07-30
+1,Public order,E01033011,2017-07-30
+1,Drugs,E01010609,2017-07-31
+1,Burglary,E01033011,2017-07-31
+1,Theft from the person,E01033011,2017-07-31
+2,Anti-social behaviour,E01033011,2018-07-01
+1,Criminal damage and arson,E01010609,2018-07-01
+1,Theft from the person,E01033011,2018-07-01
+1,Anti-social behaviour,E01011038,2018-07-01
+1,Anti-social behaviour,E01010609,2018-07-01
+1,Bicycle theft,E01033011,2018-07-01
+1,Drugs,E01011038,2018-07-01
+3,Violence and sexual offences,E01033011,2018-07-01
+1,Public order,E01033011,2018-07-02
+1,Bicycle theft,E01033011,2018-07-02
+1,Violence and sexual offences,E01011792,2018-07-02
+2,Drugs,E01033011,2018-07-02
+1,Violence and sexual offences,E01011038,2018-07-02
+1,Vehicle crime,E01010609,2018-07-02
+1,Anti-social behaviour,E01033011,2018-07-02
+1,Violence and sexual offences,E01010568,2018-07-03
+1,Public order,E01033011,2018-07-03
+1,Vehicle crime,E01010609,2018-07-03
+1,Other crime,E01010609,2018-07-03
+1,Other theft,E01033011,2018-07-03
+2,Anti-social behaviour,E01033011,2018-07-03
+1,Public order,E01033011,2018-07-04
+1,Other crime,E01010609,2018-07-04
+1,Anti-social behaviour,E01033011,2018-07-04
+2,Theft from the person,E01033011,2018-07-04
+1,Burglary,E01011038,2018-07-05
+2,Public order,E01033011,2018-07-05
+1,Vehicle crime,E01010609,2018-07-05
+4,Other theft,E01033011,2018-07-05
+1,Violence and sexual offences,E01010609,2018-07-05
+1,Anti-social behaviour,E01033011,2018-07-05
+1,Violence and sexual offences,E01033011,2018-07-05
+1,Violence and sexual offences,E01010568,2018-07-06
+1,Anti-social behaviour,E01033011,2018-07-06
+1,Anti-social behaviour,E01011306,2018-07-06
+1,Violence and sexual offences,E01010609,2018-07-06
+2,Violence and sexual offences,E01033011,2018-07-06
+1,Burglary,E01011038,2018-07-06
+1,Public order,E01033011,2018-07-06
+1,Possession of weapons,E01033011,2018-07-07
+1,Anti-social behaviour,E01011792,2018-07-07
+1,Other theft,E01033011,2018-07-07
+1,Violence and sexual offences,E01033011,2018-07-07
+1,Public order,E01011792,2018-07-07
+1,Burglary,E01033011,2018-07-07
+1,Theft from the person,E01033011,2018-07-07
+2,Anti-social behaviour,E01033011,2018-07-07
+1,Violence and sexual offences,E01010609,2018-07-07
+1,Vehicle crime,E01010609,2018-07-08
+1,Anti-social behaviour,E01011038,2018-07-08
+1,Public order,E01011792,2018-07-08
+2,Public order,E01011306,2018-07-08
+1,Anti-social behaviour,E01010609,2018-07-08
+5,Violence and sexual offences,E01033011,2018-07-08
+2,Other theft,E01033011,2018-07-08
+1,Violence and sexual offences,E01010568,2018-07-08
+2,Theft from the person,E01033011,2018-07-09
+1,Violence and sexual offences,E01033011,2018-07-09
+1,Other theft,E01033011,2018-07-09
+1,Burglary,E01011038,2018-07-09
+2,Public order,E01033011,2018-07-09
+1,Violence and sexual offences,E01011038,2018-07-09
+1,Criminal damage and arson,E01011038,2018-07-09
+1,Other theft,E01033011,2018-07-10
+1,Public order,E01011038,2018-07-10
+1,Anti-social behaviour,E01033011,2018-07-10
+3,Violence and sexual offences,E01033011,2018-07-10
+1,Shoplifting,E01033011,2018-07-10
+1,Anti-social behaviour,E01011038,2018-07-10
+1,Criminal damage and arson,E01010609,2018-07-10
+1,Violence and sexual offences,E01011038,2018-07-11
+2,Violence and sexual offences,E01033011,2018-07-11
+1,Anti-social behaviour,E01011792,2018-07-11
+1,Anti-social behaviour,E01033011,2018-07-11
+1,Bicycle theft,E01033011,2018-07-11
+1,Public order,E01033011,2018-07-11
+2,Theft from the person,E01033011,2018-07-11
+1,Violence and sexual offences,E01010568,2018-07-12
+1,Violence and sexual offences,E01010609,2018-07-12
+1,Bicycle theft,E01033011,2018-07-12
+1,Other theft,E01033011,2018-07-12
+3,Theft from the person,E01033011,2018-07-12
+1,Burglary,E01010568,2018-07-12
+1,Public order,E01033011,2018-07-12
+1,Vehicle crime,E01011792,2018-07-12
+1,Other theft,E01010609,2018-07-13
+1,Criminal damage and arson,E01033011,2018-07-13
+1,Criminal damage and arson,E01011792,2018-07-13
+1,Violence and sexual offences,E01010609,2018-07-13
+1,Anti-social behaviour,E01011038,2018-07-13
+3,Other theft,E01033011,2018-07-13
+1,Criminal damage and arson,E01033011,2018-07-14
+1,Anti-social behaviour,E01010568,2018-07-14
+1,Public order,E01010568,2018-07-14
+1,Violence and sexual offences,E01011038,2018-07-14
+1,Public order,E01033011,2018-07-14
+1,Theft from the person,E01033011,2018-07-14
+1,Violence and sexual offences,E01010609,2018-07-14
+2,Violence and sexual offences,E01033011,2018-07-15
+1,Bicycle theft,E01033011,2018-07-15
+2,Public order,E01033011,2018-07-15
+1,Violence and sexual offences,E01011038,2018-07-15
+1,Criminal damage and arson,E01033011,2018-07-15
+1,Theft from the person,E01033011,2018-07-15
+1,Public order,E01011038,2018-07-16
+1,Robbery,E01033011,2018-07-16
+1,Anti-social behaviour,E01011792,2018-07-16
+2,Violence and sexual offences,E01033011,2018-07-16
+2,Public order,E01033011,2018-07-16
+1,Anti-social behaviour,E01011038,2018-07-16
+1,Vehicle crime,E01010609,2018-07-16
+1,Shoplifting,E01033011,2018-07-16
+1,Criminal damage and arson,E01033011,2018-07-17
+2,Theft from the person,E01033011,2018-07-17
+1,Violence and sexual offences,E01010609,2018-07-17
+1,Anti-social behaviour,E01011792,2018-07-17
+1,Violence and sexual offences,E01033011,2018-07-17
+1,Anti-social behaviour,E01010609,2018-07-17
+1,Other theft,E01011792,2018-07-17
+1,Drugs,E01033011,2018-07-17
+1,Theft from the person,E01033011,2018-07-18
+1,Vehicle crime,E01011306,2018-07-18
+1,Other theft,E01011792,2018-07-18
+1,Possession of weapons,E01010609,2018-07-18
+1,Drugs,E01033011,2018-07-18
+1,Violence and sexual offences,E01011792,2018-07-18
+1,Violence and sexual offences,E01010609,2018-07-18
+1,Violence and sexual offences,E01011306,2018-07-18
+1,Burglary,E01010568,2018-07-18
+1,Anti-social behaviour,E01033011,2018-07-19
+2,Violence and sexual offences,E01033011,2018-07-19
+1,Anti-social behaviour,E01011792,2018-07-19
+1,Violence and sexual offences,E01010609,2018-07-19
+1,Burglary,E01033011,2018-07-19
+1,Theft from the person,E01033011,2018-07-19
+1,Anti-social behaviour,E01033011,2018-07-20
+2,Violence and sexual offences,E01033011,2018-07-20
+1,Violence and sexual offences,E01010568,2018-07-20
+1,Bicycle theft,E01033011,2018-07-20
+1,Burglary,E01033011,2018-07-20
+1,Robbery,E01033011,2018-07-20
+1,Anti-social behaviour,E01011306,2018-07-21
+1,Other theft,E01010609,2018-07-21
+1,Violence and sexual offences,E01010609,2018-07-21
+1,Anti-social behaviour,E01010568,2018-07-21
+1,Criminal damage and arson,E01011038,2018-07-21
+1,Anti-social behaviour,E01011792,2018-07-21
+1,Vehicle crime,E01011306,2018-07-22
+1,Anti-social behaviour,E01033011,2018-07-22
+1,Other theft,E01033011,2018-07-22
+1,Public order,E01010609,2018-07-22
+1,Burglary,E01011792,2018-07-22
+1,Anti-social behaviour,E01011792,2018-07-22
+1,Violence and sexual offences,E01033011,2018-07-22
+1,Other theft,E01011038,2018-07-23
+1,Anti-social behaviour,E01010568,2018-07-23
+1,Drugs,E01033011,2018-07-23
+2,Violence and sexual offences,E01033011,2018-07-23
+1,Public order,E01033011,2018-07-23
+1,Violence and sexual offences,E01011038,2018-07-23
+1,Shoplifting,E01033011,2018-07-23
+2,Violence and sexual offences,E01011306,2018-07-23
+2,Violence and sexual offences,E01010609,2018-07-23
+3,Anti-social behaviour,E01033011,2018-07-23
+1,Violence and sexual offences,E01011792,2018-07-24
+1,Other theft,E01033011,2018-07-24
+1,Anti-social behaviour,E01010568,2018-07-25
+3,Violence and sexual offences,E01033011,2018-07-25
+1,Robbery,E01033011,2018-07-25
+1,Violence and sexual offences,E01011792,2018-07-25
+1,Bicycle theft,E01033011,2018-07-25
+2,Shoplifting,E01033011,2018-07-25
+1,Anti-social behaviour,E01033011,2018-07-25
+1,Violence and sexual offences,E01010609,2018-07-26
+1,Violence and sexual offences,E01011792,2018-07-26
+1,Anti-social behaviour,E01033011,2018-07-26
+1,Theft from the person,E01033011,2018-07-26
+1,Violence and sexual offences,E01033011,2018-07-27
+1,Other crime,E01011792,2018-07-27
+1,Vehicle crime,E01033011,2018-07-27
+1,Anti-social behaviour,E01011792,2018-07-27
+1,Public order,E01033011,2018-07-27
+1,Anti-social behaviour,E01011038,2018-07-27
+1,Criminal damage and arson,E01033011,2018-07-27
+1,Anti-social behaviour,E01033011,2018-07-27
+2,Violence and sexual offences,E01010609,2018-07-27
+1,Anti-social behaviour,E01033011,2018-07-28
+1,Violence and sexual offences,E01033011,2018-07-28
+1,Burglary,E01011306,2018-07-28
+1,Other theft,E01033011,2018-07-28
+1,Anti-social behaviour,E01011792,2018-07-28
+1,Vehicle crime,E01033011,2018-07-29
+1,Burglary,E01011038,2018-07-29
+1,Public order,E01011038,2018-07-29
+1,Public order,E01011306,2018-07-29
+3,Public order,E01033011,2018-07-29
+3,Anti-social behaviour,E01033011,2018-07-29
+1,Violence and sexual offences,E01010609,2018-07-29
+1,Violence and sexual offences,E01033011,2018-07-29
+1,Criminal damage and arson,E01010609,2018-07-30
+1,Criminal damage and arson,E01033011,2018-07-30
+2,Public order,E01033011,2018-07-30
+4,Violence and sexual offences,E01033011,2018-07-30
+2,Theft from the person,E01033011,2018-07-30
+2,Bicycle theft,E01033011,2018-07-30
+1,Vehicle crime,E01010568,2018-07-30
+1,Vehicle crime,E01033011,2018-07-30
+2,Anti-social behaviour,E01033011,2018-07-30
+1,Violence and sexual offences,E01011038,2018-07-30
+1,Robbery,E01033011,2018-07-30
+1,Public order,E01011306,2018-07-31
+1,Theft from the person,E01033011,2018-07-31
+1,Public order,E01011038,2018-07-31
+1,Possession of weapons,E01033011,2018-07-31
+1,Violence and sexual offences,E01010609,2018-07-31
+1,Criminal damage and arson,E01011792,2018-07-31
+1,Criminal damage and arson,E01033011,2018-07-31
+1,Bicycle theft,E01033011,2018-07-31
