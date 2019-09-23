@@ -154,13 +154,15 @@ def validate_datetime(passed_dataframe):
     datetime dtype.
     """
 
-    if np.dtype('datetime64[ns]') not in passed_dataframe.dtypes:
+    try:
 
-        passed_dataframe['datetime'] = passed_dataframe['datetime'].apply(pd.to_datetime(x))
+        if np.dtype('datetime64[ns]') not in passed_dataframe.dtypes:
 
-        print('Datetime column configured.')
+            passed_dataframe['datetime'] = passed_dataframe['datetime'].apply(pd.to_datetime)
 
-    else:
+            print('Datetime column configured.')
+
+    except KeyError:
         print('No datetime column detected. Dataframe unaltered.')
 
     validated_date_frame = passed_dataframe.copy()
