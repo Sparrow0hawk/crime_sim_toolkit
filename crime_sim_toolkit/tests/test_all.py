@@ -442,5 +442,20 @@ class Test(unittest.TestCase):
 
         self.assertEqual(self.poi_data.shape[0], 14 * 6)
 
+    def test_sample_perturb(self):
+        """
+        Test that adding zero function works
+        """
+        self.data = pd.read_csv(pkg_resources.resource_filename(resource_package, 'tests/testing_data/test_sample_perturb.csv'),
+                                    index_col=False)
+
+        self.testpos = utils.sample_perturb(self.data, crime_type='Anti-social behaviour', pct_change=1.1)
+
+        self.testneg = utils.sample_perturb(self.data, crime_type='Violence and sexual offences', pct_change=0.666)
+
+        self.assertEqual(self.testpos.loc[0,'Counts'], 11)
+
+        self.assertEqual(self.testneg.loc[4,'Counts'], 10)
+
 if __name__ == "__main__":
     unittest.main(verbosity=2)
