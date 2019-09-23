@@ -182,5 +182,8 @@ def sample_perturb(counts_frame, crime_type, pct_change):
                                crime counts for specific crime type
     """
 
+    new_counts_frame = counts_frame.copy()
 
-    return
+    new_counts_frame = new_counts_frame.apply(lambda x: round(x.Counts * pct_change,0) if x.Crime_type.isin([crime_type]))
+
+    return new_counts_frame
