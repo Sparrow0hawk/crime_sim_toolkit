@@ -151,7 +151,16 @@ class Poisson_sim:
                 # include if-else block to catch different handling of week/day
                 if time_res == 'Week':
 
-                    frame_OI = historic_data[(historic_data[time_res].isin([date])) &
+                    # moving window for weeks
+                    date_lst = []
+
+                    for win in range(1, mv_window):
+
+                        date_lst += moving_window_week(week=date,
+                                                       window=win)
+
+
+                    frame_OI = historic_data[(historic_data[time_res].isin([week for week in date_lst])) &
                                              (historic_data['Crime_type'].isin([crim_typ]))]
 
                 else:
@@ -337,3 +346,25 @@ class Poisson_sim:
                 sim_count = scipy.stats.poisson(round(narrow_frame['Counts'].mean(), 0)).rvs()
 
             return sim_count
+
+    @staticmethod
+    def moving_window_week(week, window=0):
+        """
+        Simple method for getting week numbers adjacent to
+        a given week value
+        """
+
+        # get list of week numbers
+        week_lst = [x for x in range(1,53)]
+
+        # get the index of given week
+        date_idx = week_lst.index(week)
+
+        # get the index ahead
+        jInd = (date_idx - window) % len(week_lst)
+
+        kInd = (date_idx + window) % len(week_lst)
+
+        window_lst = [date, week_lst[jInd]), week_lst[kInd])]
+
+        return window_lst
