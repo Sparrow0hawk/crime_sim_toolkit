@@ -365,6 +365,6 @@ class Poisson_sim:
 
         kInd = (date_idx + window) % len(week_lst)
 
-        window_lst = [date, week_lst[jInd]), week_lst[kInd])]
+        window_lst = [week, week_lst[jInd], week_lst[kInd]]
 
         return window_lst

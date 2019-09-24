@@ -442,5 +442,18 @@ class Test(unittest.TestCase):
 
         self.assertEqual(self.poi_data.shape[0], 14 * 6)
 
+    def test_moving_window_week(self):
+
+        self.week = 4
+
+        self.test1 = Poisson_sim.Poisson_sim.moving_window_week(self.week, window=1)
+
+        self.test2 = Poisson_sim.Poisson_sim.moving_window_week(self.week, window=0)
+
+        self.assertEqual(self.test1, [4, 3, 5])
+
+        self.assertEqual(self.test2, [4, 4, 4])
+
+
 if __name__ == "__main__":
     unittest.main(verbosity=2)
