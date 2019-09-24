@@ -139,7 +139,7 @@ class Poisson_sim:
 
                 date_lst = []
 
-                date_lst += moving_window_datetime(datetime=date,
+                date_lst += cls.moving_window_datetime(datetime=date,
                                                    window=mv_window)
 
             # for each crime type
@@ -151,7 +151,7 @@ class Poisson_sim:
                     # moving window for weeks
                     date_lst = []
 
-                    date_lst += moving_window_week(week=date,
+                    date_lst += cls.moving_window_week(week=date,
                                                    window=mv_window)
 
 
