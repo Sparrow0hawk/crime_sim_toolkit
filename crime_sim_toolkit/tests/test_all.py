@@ -450,9 +450,13 @@ class Test(unittest.TestCase):
 
         self.test2 = Poisson_sim.Poisson_sim.moving_window_week(self.week, window=0)
 
+        self.test3 = Poisson_sim.Poisson_sim.moving_window_week(self.week, window=2)
+
         self.assertEqual(self.test1, [4, 3, 5])
 
-        self.assertEqual(self.test2, [4, 4, 4])
+        self.assertEqual(self.test2, [4])
+
+        self.assertEqual(self.test3, [4, 3, 5, 2, 6])
 
 
 if __name__ == "__main__":

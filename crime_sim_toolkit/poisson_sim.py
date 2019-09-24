@@ -154,10 +154,8 @@ class Poisson_sim:
                     # moving window for weeks
                     date_lst = []
 
-                    for win in range(1, mv_window):
-
-                        date_lst += moving_window_week(week=date,
-                                                       window=win)
+                    date_lst += moving_window_week(week=date,
+                                                   window=win)
 
 
                     frame_OI = historic_data[(historic_data[time_res].isin([week for week in date_lst])) &
@@ -360,11 +358,17 @@ class Poisson_sim:
         # get the index of given week
         date_idx = week_lst.index(week)
 
-        # get the index ahead
-        jInd = (date_idx - window) % len(week_lst)
+        window_lst = [week]
 
-        kInd = (date_idx + window) % len(week_lst)
+        for win in range(1, window+1):
 
-        window_lst = [week, week_lst[jInd], week_lst[kInd]]
+            # get the index ahead
+            jInd = (date_idx - win) % len(week_lst)
+
+            kInd = (date_idx + win) % len(week_lst)
+
+            window_lst.append(week_lst[jInd])
+
+            window_lst.append(week_lst[kInd])
 
         return window_lst
