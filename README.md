@@ -17,7 +17,7 @@ The data_manipulation folder contains notebooks highlighting how some data sourc
 
 This package is now available via PyPi.
 
-```
+```{bash}
 pip install crime_sim_toolkit
 ```
 
@@ -28,7 +28,32 @@ the census_2011_population_hh.csv file is derived from [ONS data](https://www.on
 
 ## To use
 
-For the poisson simulator the package expects a raw dump of folders from [Police data](https://data.police.uk/) into data/policedata. If it can't find data there it will default to test data.
+The expected input data for this package is from [Police data UK](https://data.police.uk/). If it can't find data there it will default to test data.
+
+```{python}
+import crime_sim_toolkit.poisson_sim as Poisson_sim
+
+
+sim_week = Poisson_sim.Poisson_sim(
+                               # specify the local authorities to look at (all five for West Yorkshire here)
+                               LA_names=['Kirklees','Calderdale','Leeds','Bradford','Wakefield'],
+                               # specify the path to the top level directory containing PoliceUK data
+                               directory='/root/crime_sim_toolkit/sample_data',
+                               # this can either be Day or Week
+                               timeframe='Day',
+                               # do you want to aggregate data to Police Force
+                               aggregate=True)
+
+# view the head of the generated pandas dataframe
+sim_week.data.head()
+
+datetime 	Crime_type 	LSOA_code 	Counts
+0 	2017-01-01 	Anti-social behaviour 	West Yorkshire 	147
+1 	2017-01-01 	Bicycle theft 	West Yorkshire 	7
+2 	2017-01-01 	Burglary 	West Yorkshire 	65
+```
+
+This will create an object that contains the PoliceUK data formated into counts by crime type, by LSOA (or Police force) by timeframe. Forecasts can be generated using this transformed past data as shown in the [example notebooks](https://github.com/Sparrow0hawk/crime_sim_toolkit/tree/master/examples).
 
 ## TODO
 
