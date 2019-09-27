@@ -376,11 +376,49 @@ class Test(unittest.TestCase):
 
         self.assertTrue(isinstance(self.descriptions, pd.DataFrame))
 
-        self.assertTrue(self.descriptions.Crime_description[0], 'Anti-social behaviour')
+        # check anti-social behaviour match is anti-social behaviour and is lowercase
+        self.assertEqual(self.descriptions.Crime_description[0], 'anti-social behaviour')
+
+        # check value is contained in list of crime descriptions for Violence and sexual offences
+        self.assertTrue(self.descriptions.Crime_description[7] in ['abuse of children through sexual exploitation',
+                                                                   'abuse of position of trust of a sexual nature',
+                                                                   'assault with injury', 'assault with injury on a constable',
+                                                                   'assault with intent to cause serious harm',
+                                                                   'assault without injury', 'assault without injury on a constable',
+                                                                   'attempted murder', 'causing death by aggravated vehicle taking',
+                                                                   'causing death by careless driving under influence of drink or drugs',
+                                                                   'causing death by careless or inconsiderate driving',
+                                                                   'causing death by driving: unlicensed or disqualified or uninsured drivers',
+                                                                   'causing death or serious injury by dangerous driving',
+                                                                   'causing or allowing death of child or vulnerable person',
+                                                                   'causing sexual activity without consent', 'child abduction',
+                                                                   'conspiracy to murder', 'cruelty to children/young persons',
+                                                                   'endangering life', 'exposure and voyeurism', 'harassment',
+                                                                   'homicide', 'incest or familial sexual offences',
+                                                                   'intentional destruction of a viable unborn child', 'kidnapping',
+                                                                   'malicious communications', 'modern slavery',
+                                                                   'other miscellaneous sexual offences',
+                                                                   'procuring illegal abortion',
+                                                                   'racially or religiously aggravated assault with injury',
+                                                                   'racially or religiously aggravated assault without injury',
+                                                                   'racially or religiously aggravated harassment',
+                                                                   'rape of a female aged 16 and over',
+                                                                   'rape of a female child under 13',
+                                                                   'rape of a female child under 16',
+                                                                   'rape of a male aged 16 and over', 'rape of a male child under 13',
+                                                                   'rape of a male child under 16',
+                                                                   'sexual activity etc with a person with a mental disorder',
+                                                                   'sexual activity involving a child under 13',
+                                                                   'sexual activity involving child under 16',
+                                                                   'sexual assault on a female aged 13 and over',
+                                                                   'sexual assault on a female child under 13',
+                                                                   'sexual assault on a male aged 13 and over',
+                                                                   'sexual assault on a male child under 13', 'sexual grooming',
+                                                                   'stalking', 'threats to kill',
+                                                                   'trafficking for sexual exploitation', 'unnatural sexual offences']
+       )
 
         self.assertEqual(self.descriptions.columns.tolist(), ['UID','datetime','Crime_description','Crime_type','LSOA_code','Police_force'])
-
-        # TODO: write a test to catch actual random choice outputs
 
     def test_validate_datetime(self):
         """
