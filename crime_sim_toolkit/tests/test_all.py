@@ -480,6 +480,7 @@ class Test(unittest.TestCase):
 
         self.assertEqual(self.poi_data.shape[0], 14 * 6)
 
+<<<<<<< HEAD
     def test_moving_window_week(self):
 
         self.week = 4
@@ -519,6 +520,8 @@ class Test(unittest.TestCase):
                                       "2016-12-30"]
                                       )
 
+=======
+>>>>>>> 8122df2d303d161d34b88de91fa95d158de8d556
     def test_sample_perturb(self):
         """
         Test that adding zero function works
@@ -534,6 +537,9 @@ class Test(unittest.TestCase):
 
         self.assertEqual(self.testneg.loc[4,'Counts'], 10)
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 8122df2d303d161d34b88de91fa95d158de8d556
 if __name__ == "__main__":
     unittest.main(verbosity=2)
