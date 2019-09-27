@@ -137,13 +137,10 @@ class Poisson_sim:
             # moving window arguement
             if time_res != 'Week':
 
-                date_lst = [date]
+                date_lst = []
 
-                for window in range(1,mv_window+1):
-
-                    date_lst.append(date + pd.DateOffset(days=window))
-
-                    date_lst.append(date - pd.DateOffset(days=window))
+                date_lst += cls.moving_window_datetime(datetime=date,
+                                                   window=mv_window)
 
             # for each crime type
             for crim_typ in crime_types_lst:
@@ -151,7 +148,14 @@ class Poisson_sim:
                 # include if-else block to catch different handling of week/day
                 if time_res == 'Week':
 
-                    frame_OI = historic_data[(historic_data[time_res].isin([date])) &
+                    # moving window for weeks
+                    date_lst = []
+
+                    date_lst += cls.moving_window_week(week=date,
+                                                   window=mv_window)
+
+
+                    frame_OI = historic_data[(historic_data[time_res].isin([week for week in date_lst])) &
                                              (historic_data['Crime_type'].isin([crim_typ]))]
 
                 else:
@@ -337,3 +341,48 @@ class Poisson_sim:
                 sim_count = scipy.stats.poisson(round(narrow_frame['Counts'].mean(), 0)).rvs()
 
             return sim_count
+
+    @staticmethod
+    def moving_window_week(week, window=0):
+        """
+        Simple method for getting week numbers adjacent to
+        a given week value
+        """
+
+        # get list of week numbers
+        week_lst = [x for x in range(1,53)]
+
+        # get the index of given week
+        date_idx = week_lst.index(week)
+
+        window_lst = [week]
+
+        for win in range(1, window+1):
+
+            # get the index ahead
+            jInd = (date_idx - win) % len(week_lst)
+
+            kInd = (date_idx + win) % len(week_lst)
+
+            window_lst.append(week_lst[jInd])
+
+            window_lst.append(week_lst[kInd])
+
+        return window_lst
+
+    @staticmethod
+    def moving_window_datetime(datetime, window=0):
+        """
+        Simple method for getting week numbers adjacent to
+        a given week value
+        """
+
+        window_lst = [datetime]
+
+        for window in range(1,window+1):
+
+            window_lst.append(datetime + pd.DateOffset(days=window))
+
+            window_lst.append(datetime - pd.DateOffset(days=window))
+
+        return window_lst
