@@ -148,7 +148,7 @@ def populate_offence(crime_frame):
                                                                                  p = pivoted_slice[pivoted_slice.Policeuk_Cat.str.lower().isin([x.lower()])].Number_of_Offences.tolist())[0] if len(pivoted_slice[pivoted_slice.Policeuk_Cat.str.lower().isin([x.lower()])]) > 0 else x)
 
         shortened_frame.Crime_description = shortened_frame.Crime_description.str.lower()
-        
+
         list_of_slices.append(shortened_frame)
 
     populated_frame = pd.concat(list_of_slices)
