@@ -1,0 +1,869 @@
+Counts,Crime_type,LSOA_code,datetime
+2,Anti-social behaviour,West Yorkshire,2016-7-10
+2,Anti-social behaviour,West Yorkshire,2016-7-12
+2,Anti-social behaviour,West Yorkshire,2016-7-20
+1,Anti-social behaviour,West Yorkshire,2016-7-2
+1,Anti-social behaviour,West Yorkshire,2016-7-5
+1,Anti-social behaviour,West Yorkshire,2016-7-6
+1,Anti-social behaviour,West Yorkshire,2016-7-7
+1,Anti-social behaviour,West Yorkshire,2016-7-14
+1,Anti-social behaviour,West Yorkshire,2016-7-15
+1,Anti-social behaviour,West Yorkshire,2016-7-22
+1,Anti-social behaviour,West Yorkshire,2016-7-31
+1,Burglary,West Yorkshire,2016-7-31
+1,Criminal damage and arson,West Yorkshire,2016-7-10
+1,Criminal damage and arson,West Yorkshire,2016-7-24
+1,Criminal damage and arson,West Yorkshire,2016-7-28
+1,Criminal damage and arson,West Yorkshire,2016-7-31
+1,Other theft,West Yorkshire,2016-7-3
+1,Other theft,West Yorkshire,2016-7-23
+1,Other theft,West Yorkshire,2016-7-27
+1,Other theft,West Yorkshire,2016-7-30
+1,Vehicle crime,West Yorkshire,2016-7-17
+1,Vehicle crime,West Yorkshire,2016-7-22
+1,Violence and sexual offences,West Yorkshire,2016-7-6
+1,Violence and sexual offences,West Yorkshire,2016-7-30
+1,Anti-social behaviour,West Yorkshire,2017-7-1
+1,Anti-social behaviour,West Yorkshire,2017-7-16
+1,Anti-social behaviour,West Yorkshire,2017-7-18
+1,Anti-social behaviour,West Yorkshire,2017-7-28
+1,Anti-social behaviour,West Yorkshire,2017-7-31
+2,Burglary,West Yorkshire,2017-7-8
+1,Burglary,West Yorkshire,2017-7-2
+1,Burglary,West Yorkshire,2017-7-31
+1,Criminal damage and arson,West Yorkshire,2017-7-5
+1,Other crime,West Yorkshire,2017-7-3
+1,Other theft,West Yorkshire,2017-7-14
+1,Other theft,West Yorkshire,2017-7-19
+2,Public order,West Yorkshire,2017-7-4
+1,Public order,West Yorkshire,2017-7-20
+1,Public order,West Yorkshire,2017-7-22
+1,Public order,West Yorkshire,2017-7-30
+1,Vehicle crime,West Yorkshire,2017-7-9
+1,Vehicle crime,West Yorkshire,2017-7-25
+1,Violence and sexual offences,West Yorkshire,2017-7-1
+1,Violence and sexual offences,West Yorkshire,2017-7-5
+1,Violence and sexual offences,West Yorkshire,2017-7-15
+1,Violence and sexual offences,West Yorkshire,2017-7-31
+0,Bicycle theft,West Yorkshire,2016-7-31
+0,Drugs,West Yorkshire,2016-7-31
+0,Other crime,West Yorkshire,2016-7-31
+0,Other theft,West Yorkshire,2016-7-31
+0,Possession of weapons,West Yorkshire,2016-7-31
+0,Public order,West Yorkshire,2016-7-31
+0,Robbery,West Yorkshire,2016-7-31
+0,Shoplifting,West Yorkshire,2016-7-31
+0,Theft from the person,West Yorkshire,2016-7-31
+0,Vehicle crime,West Yorkshire,2016-7-31
+0,Violence and sexual offences,West Yorkshire,2016-7-31
+0,Bicycle theft,West Yorkshire,2016-7-10
+0,Burglary,West Yorkshire,2016-7-10
+0,Drugs,West Yorkshire,2016-7-10
+0,Other crime,West Yorkshire,2016-7-10
+0,Other theft,West Yorkshire,2016-7-10
+0,Possession of weapons,West Yorkshire,2016-7-10
+0,Public order,West Yorkshire,2016-7-10
+0,Robbery,West Yorkshire,2016-7-10
+0,Shoplifting,West Yorkshire,2016-7-10
+0,Theft from the person,West Yorkshire,2016-7-10
+0,Vehicle crime,West Yorkshire,2016-7-10
+0,Violence and sexual offences,West Yorkshire,2016-7-10
+0,Bicycle theft,West Yorkshire,2016-7-12
+0,Burglary,West Yorkshire,2016-7-12
+0,Criminal damage and arson,West Yorkshire,2016-7-12
+0,Drugs,West Yorkshire,2016-7-12
+0,Other crime,West Yorkshire,2016-7-12
+0,Other theft,West Yorkshire,2016-7-12
+0,Possession of weapons,West Yorkshire,2016-7-12
+0,Public order,West Yorkshire,2016-7-12
+0,Robbery,West Yorkshire,2016-7-12
+0,Shoplifting,West Yorkshire,2016-7-12
+0,Theft from the person,West Yorkshire,2016-7-12
+0,Vehicle crime,West Yorkshire,2016-7-12
+0,Violence and sexual offences,West Yorkshire,2016-7-12
+0,Bicycle theft,West Yorkshire,2016-7-20
+0,Burglary,West Yorkshire,2016-7-20
+0,Criminal damage and arson,West Yorkshire,2016-7-20
+0,Drugs,West Yorkshire,2016-7-20
+0,Other crime,West Yorkshire,2016-7-20
+0,Other theft,West Yorkshire,2016-7-20
+0,Possession of weapons,West Yorkshire,2016-7-20
+0,Public order,West Yorkshire,2016-7-20
+0,Robbery,West Yorkshire,2016-7-20
+0,Shoplifting,West Yorkshire,2016-7-20
+0,Theft from the person,West Yorkshire,2016-7-20
+0,Vehicle crime,West Yorkshire,2016-7-20
+0,Violence and sexual offences,West Yorkshire,2016-7-20
+0,Bicycle theft,West Yorkshire,2016-7-2
+0,Burglary,West Yorkshire,2016-7-2
+0,Criminal damage and arson,West Yorkshire,2016-7-2
+0,Drugs,West Yorkshire,2016-7-2
+0,Other crime,West Yorkshire,2016-7-2
+0,Other theft,West Yorkshire,2016-7-2
+0,Possession of weapons,West Yorkshire,2016-7-2
+0,Public order,West Yorkshire,2016-7-2
+0,Robbery,West Yorkshire,2016-7-2
+0,Shoplifting,West Yorkshire,2016-7-2
+0,Theft from the person,West Yorkshire,2016-7-2
+0,Vehicle crime,West Yorkshire,2016-7-2
+0,Violence and sexual offences,West Yorkshire,2016-7-2
+0,Bicycle theft,West Yorkshire,2016-7-5
+0,Burglary,West Yorkshire,2016-7-5
+0,Criminal damage and arson,West Yorkshire,2016-7-5
+0,Drugs,West Yorkshire,2016-7-5
+0,Other crime,West Yorkshire,2016-7-5
+0,Other theft,West Yorkshire,2016-7-5
+0,Possession of weapons,West Yorkshire,2016-7-5
+0,Public order,West Yorkshire,2016-7-5
+0,Robbery,West Yorkshire,2016-7-5
+0,Shoplifting,West Yorkshire,2016-7-5
+0,Theft from the person,West Yorkshire,2016-7-5
+0,Vehicle crime,West Yorkshire,2016-7-5
+0,Violence and sexual offences,West Yorkshire,2016-7-5
+0,Bicycle theft,West Yorkshire,2016-7-6
+0,Burglary,West Yorkshire,2016-7-6
+0,Criminal damage and arson,West Yorkshire,2016-7-6
+0,Drugs,West Yorkshire,2016-7-6
+0,Other crime,West Yorkshire,2016-7-6
+0,Other theft,West Yorkshire,2016-7-6
+0,Possession of weapons,West Yorkshire,2016-7-6
+0,Public order,West Yorkshire,2016-7-6
+0,Robbery,West Yorkshire,2016-7-6
+0,Shoplifting,West Yorkshire,2016-7-6
+0,Theft from the person,West Yorkshire,2016-7-6
+0,Vehicle crime,West Yorkshire,2016-7-6
+0,Bicycle theft,West Yorkshire,2016-7-7
+0,Burglary,West Yorkshire,2016-7-7
+0,Criminal damage and arson,West Yorkshire,2016-7-7
+0,Drugs,West Yorkshire,2016-7-7
+0,Other crime,West Yorkshire,2016-7-7
+0,Other theft,West Yorkshire,2016-7-7
+0,Possession of weapons,West Yorkshire,2016-7-7
+0,Public order,West Yorkshire,2016-7-7
+0,Robbery,West Yorkshire,2016-7-7
+0,Shoplifting,West Yorkshire,2016-7-7
+0,Theft from the person,West Yorkshire,2016-7-7
+0,Vehicle crime,West Yorkshire,2016-7-7
+0,Violence and sexual offences,West Yorkshire,2016-7-7
+0,Bicycle theft,West Yorkshire,2016-7-14
+0,Burglary,West Yorkshire,2016-7-14
+0,Criminal damage and arson,West Yorkshire,2016-7-14
+0,Drugs,West Yorkshire,2016-7-14
+0,Other crime,West Yorkshire,2016-7-14
+0,Other theft,West Yorkshire,2016-7-14
+0,Possession of weapons,West Yorkshire,2016-7-14
+0,Public order,West Yorkshire,2016-7-14
+0,Robbery,West Yorkshire,2016-7-14
+0,Shoplifting,West Yorkshire,2016-7-14
+0,Theft from the person,West Yorkshire,2016-7-14
+0,Vehicle crime,West Yorkshire,2016-7-14
+0,Violence and sexual offences,West Yorkshire,2016-7-14
+0,Bicycle theft,West Yorkshire,2016-7-15
+0,Burglary,West Yorkshire,2016-7-15
+0,Criminal damage and arson,West Yorkshire,2016-7-15
+0,Drugs,West Yorkshire,2016-7-15
+0,Other crime,West Yorkshire,2016-7-15
+0,Other theft,West Yorkshire,2016-7-15
+0,Possession of weapons,West Yorkshire,2016-7-15
+0,Public order,West Yorkshire,2016-7-15
+0,Robbery,West Yorkshire,2016-7-15
+0,Shoplifting,West Yorkshire,2016-7-15
+0,Theft from the person,West Yorkshire,2016-7-15
+0,Vehicle crime,West Yorkshire,2016-7-15
+0,Violence and sexual offences,West Yorkshire,2016-7-15
+0,Bicycle theft,West Yorkshire,2016-7-22
+0,Burglary,West Yorkshire,2016-7-22
+0,Criminal damage and arson,West Yorkshire,2016-7-22
+0,Drugs,West Yorkshire,2016-7-22
+0,Other crime,West Yorkshire,2016-7-22
+0,Other theft,West Yorkshire,2016-7-22
+0,Possession of weapons,West Yorkshire,2016-7-22
+0,Public order,West Yorkshire,2016-7-22
+0,Robbery,West Yorkshire,2016-7-22
+0,Shoplifting,West Yorkshire,2016-7-22
+0,Theft from the person,West Yorkshire,2016-7-22
+0,Violence and sexual offences,West Yorkshire,2016-7-22
+0,Anti-social behaviour,West Yorkshire,2016-7-25
+0,Bicycle theft,West Yorkshire,2016-7-25
+0,Burglary,West Yorkshire,2016-7-25
+0,Criminal damage and arson,West Yorkshire,2016-7-25
+0,Drugs,West Yorkshire,2016-7-25
+0,Other crime,West Yorkshire,2016-7-25
+0,Other theft,West Yorkshire,2016-7-25
+0,Possession of weapons,West Yorkshire,2016-7-25
+0,Public order,West Yorkshire,2016-7-25
+0,Robbery,West Yorkshire,2016-7-25
+0,Shoplifting,West Yorkshire,2016-7-25
+0,Theft from the person,West Yorkshire,2016-7-25
+0,Vehicle crime,West Yorkshire,2016-7-25
+0,Violence and sexual offences,West Yorkshire,2016-7-25
+0,Anti-social behaviour,West Yorkshire,2016-7-3
+0,Bicycle theft,West Yorkshire,2016-7-3
+0,Burglary,West Yorkshire,2016-7-3
+0,Criminal damage and arson,West Yorkshire,2016-7-3
+0,Drugs,West Yorkshire,2016-7-3
+0,Other crime,West Yorkshire,2016-7-3
+0,Possession of weapons,West Yorkshire,2016-7-3
+0,Public order,West Yorkshire,2016-7-3
+0,Robbery,West Yorkshire,2016-7-3
+0,Shoplifting,West Yorkshire,2016-7-3
+0,Theft from the person,West Yorkshire,2016-7-3
+0,Vehicle crime,West Yorkshire,2016-7-3
+0,Violence and sexual offences,West Yorkshire,2016-7-3
+0,Anti-social behaviour,West Yorkshire,2016-7-11
+0,Bicycle theft,West Yorkshire,2016-7-11
+0,Burglary,West Yorkshire,2016-7-11
+0,Criminal damage and arson,West Yorkshire,2016-7-11
+0,Drugs,West Yorkshire,2016-7-11
+0,Other crime,West Yorkshire,2016-7-11
+0,Other theft,West Yorkshire,2016-7-11
+0,Possession of weapons,West Yorkshire,2016-7-11
+0,Public order,West Yorkshire,2016-7-11
+0,Robbery,West Yorkshire,2016-7-11
+0,Shoplifting,West Yorkshire,2016-7-11
+0,Theft from the person,West Yorkshire,2016-7-11
+0,Vehicle crime,West Yorkshire,2016-7-11
+0,Violence and sexual offences,West Yorkshire,2016-7-11
+0,Anti-social behaviour,West Yorkshire,2016-7-16
+0,Bicycle theft,West Yorkshire,2016-7-16
+0,Burglary,West Yorkshire,2016-7-16
+0,Criminal damage and arson,West Yorkshire,2016-7-16
+0,Drugs,West Yorkshire,2016-7-16
+0,Other crime,West Yorkshire,2016-7-16
+0,Other theft,West Yorkshire,2016-7-16
+0,Possession of weapons,West Yorkshire,2016-7-16
+0,Public order,West Yorkshire,2016-7-16
+0,Robbery,West Yorkshire,2016-7-16
+0,Shoplifting,West Yorkshire,2016-7-16
+0,Theft from the person,West Yorkshire,2016-7-16
+0,Vehicle crime,West Yorkshire,2016-7-16
+0,Violence and sexual offences,West Yorkshire,2016-7-16
+0,Anti-social behaviour,West Yorkshire,2016-7-29
+0,Bicycle theft,West Yorkshire,2016-7-29
+0,Burglary,West Yorkshire,2016-7-29
+0,Criminal damage and arson,West Yorkshire,2016-7-29
+0,Drugs,West Yorkshire,2016-7-29
+0,Other crime,West Yorkshire,2016-7-29
+0,Other theft,West Yorkshire,2016-7-29
+0,Possession of weapons,West Yorkshire,2016-7-29
+0,Public order,West Yorkshire,2016-7-29
+0,Robbery,West Yorkshire,2016-7-29
+0,Shoplifting,West Yorkshire,2016-7-29
+0,Theft from the person,West Yorkshire,2016-7-29
+0,Vehicle crime,West Yorkshire,2016-7-29
+0,Violence and sexual offences,West Yorkshire,2016-7-29
+0,Anti-social behaviour,West Yorkshire,2016-7-26
+0,Bicycle theft,West Yorkshire,2016-7-26
+0,Burglary,West Yorkshire,2016-7-26
+0,Criminal damage and arson,West Yorkshire,2016-7-26
+0,Drugs,West Yorkshire,2016-7-26
+0,Other crime,West Yorkshire,2016-7-26
+0,Other theft,West Yorkshire,2016-7-26
+0,Possession of weapons,West Yorkshire,2016-7-26
+0,Public order,West Yorkshire,2016-7-26
+0,Robbery,West Yorkshire,2016-7-26
+0,Shoplifting,West Yorkshire,2016-7-26
+0,Theft from the person,West Yorkshire,2016-7-26
+0,Vehicle crime,West Yorkshire,2016-7-26
+0,Violence and sexual offences,West Yorkshire,2016-7-26
+0,Anti-social behaviour,West Yorkshire,2016-7-30
+0,Bicycle theft,West Yorkshire,2016-7-30
+0,Burglary,West Yorkshire,2016-7-30
+0,Criminal damage and arson,West Yorkshire,2016-7-30
+0,Drugs,West Yorkshire,2016-7-30
+0,Other crime,West Yorkshire,2016-7-30
+0,Possession of weapons,West Yorkshire,2016-7-30
+0,Public order,West Yorkshire,2016-7-30
+0,Robbery,West Yorkshire,2016-7-30
+0,Shoplifting,West Yorkshire,2016-7-30
+0,Theft from the person,West Yorkshire,2016-7-30
+0,Vehicle crime,West Yorkshire,2016-7-30
+0,Anti-social behaviour,West Yorkshire,2016-7-17
+0,Bicycle theft,West Yorkshire,2016-7-17
+0,Burglary,West Yorkshire,2016-7-17
+0,Criminal damage and arson,West Yorkshire,2016-7-17
+0,Drugs,West Yorkshire,2016-7-17
+0,Other crime,West Yorkshire,2016-7-17
+0,Other theft,West Yorkshire,2016-7-17
+0,Possession of weapons,West Yorkshire,2016-7-17
+0,Public order,West Yorkshire,2016-7-17
+0,Robbery,West Yorkshire,2016-7-17
+0,Shoplifting,West Yorkshire,2016-7-17
+0,Theft from the person,West Yorkshire,2016-7-17
+0,Violence and sexual offences,West Yorkshire,2016-7-17
+0,Anti-social behaviour,West Yorkshire,2016-7-8
+0,Bicycle theft,West Yorkshire,2016-7-8
+0,Burglary,West Yorkshire,2016-7-8
+0,Criminal damage and arson,West Yorkshire,2016-7-8
+0,Drugs,West Yorkshire,2016-7-8
+0,Other crime,West Yorkshire,2016-7-8
+0,Other theft,West Yorkshire,2016-7-8
+0,Possession of weapons,West Yorkshire,2016-7-8
+0,Public order,West Yorkshire,2016-7-8
+0,Robbery,West Yorkshire,2016-7-8
+0,Shoplifting,West Yorkshire,2016-7-8
+0,Theft from the person,West Yorkshire,2016-7-8
+0,Vehicle crime,West Yorkshire,2016-7-8
+0,Violence and sexual offences,West Yorkshire,2016-7-8
+0,Anti-social behaviour,West Yorkshire,2016-7-18
+0,Bicycle theft,West Yorkshire,2016-7-18
+0,Burglary,West Yorkshire,2016-7-18
+0,Criminal damage and arson,West Yorkshire,2016-7-18
+0,Drugs,West Yorkshire,2016-7-18
+0,Other crime,West Yorkshire,2016-7-18
+0,Other theft,West Yorkshire,2016-7-18
+0,Possession of weapons,West Yorkshire,2016-7-18
+0,Public order,West Yorkshire,2016-7-18
+0,Robbery,West Yorkshire,2016-7-18
+0,Shoplifting,West Yorkshire,2016-7-18
+0,Theft from the person,West Yorkshire,2016-7-18
+0,Vehicle crime,West Yorkshire,2016-7-18
+0,Violence and sexual offences,West Yorkshire,2016-7-18
+0,Anti-social behaviour,West Yorkshire,2016-7-4
+0,Bicycle theft,West Yorkshire,2016-7-4
+0,Burglary,West Yorkshire,2016-7-4
+0,Criminal damage and arson,West Yorkshire,2016-7-4
+0,Drugs,West Yorkshire,2016-7-4
+0,Other crime,West Yorkshire,2016-7-4
+0,Other theft,West Yorkshire,2016-7-4
+0,Possession of weapons,West Yorkshire,2016-7-4
+0,Public order,West Yorkshire,2016-7-4
+0,Robbery,West Yorkshire,2016-7-4
+0,Shoplifting,West Yorkshire,2016-7-4
+0,Theft from the person,West Yorkshire,2016-7-4
+0,Vehicle crime,West Yorkshire,2016-7-4
+0,Violence and sexual offences,West Yorkshire,2016-7-4
+0,Anti-social behaviour,West Yorkshire,2016-7-13
+0,Bicycle theft,West Yorkshire,2016-7-13
+0,Burglary,West Yorkshire,2016-7-13
+0,Criminal damage and arson,West Yorkshire,2016-7-13
+0,Drugs,West Yorkshire,2016-7-13
+0,Other crime,West Yorkshire,2016-7-13
+0,Other theft,West Yorkshire,2016-7-13
+0,Possession of weapons,West Yorkshire,2016-7-13
+0,Public order,West Yorkshire,2016-7-13
+0,Robbery,West Yorkshire,2016-7-13
+0,Shoplifting,West Yorkshire,2016-7-13
+0,Theft from the person,West Yorkshire,2016-7-13
+0,Vehicle crime,West Yorkshire,2016-7-13
+0,Violence and sexual offences,West Yorkshire,2016-7-13
+0,Anti-social behaviour,West Yorkshire,2016-7-23
+0,Bicycle theft,West Yorkshire,2016-7-23
+0,Burglary,West Yorkshire,2016-7-23
+0,Criminal damage and arson,West Yorkshire,2016-7-23
+0,Drugs,West Yorkshire,2016-7-23
+0,Other crime,West Yorkshire,2016-7-23
+0,Possession of weapons,West Yorkshire,2016-7-23
+0,Public order,West Yorkshire,2016-7-23
+0,Robbery,West Yorkshire,2016-7-23
+0,Shoplifting,West Yorkshire,2016-7-23
+0,Theft from the person,West Yorkshire,2016-7-23
+0,Vehicle crime,West Yorkshire,2016-7-23
+0,Violence and sexual offences,West Yorkshire,2016-7-23
+0,Anti-social behaviour,West Yorkshire,2016-7-24
+0,Bicycle theft,West Yorkshire,2016-7-24
+0,Burglary,West Yorkshire,2016-7-24
+0,Drugs,West Yorkshire,2016-7-24
+0,Other crime,West Yorkshire,2016-7-24
+0,Other theft,West Yorkshire,2016-7-24
+0,Possession of weapons,West Yorkshire,2016-7-24
+0,Public order,West Yorkshire,2016-7-24
+0,Robbery,West Yorkshire,2016-7-24
+0,Shoplifting,West Yorkshire,2016-7-24
+0,Theft from the person,West Yorkshire,2016-7-24
+0,Vehicle crime,West Yorkshire,2016-7-24
+0,Violence and sexual offences,West Yorkshire,2016-7-24
+0,Anti-social behaviour,West Yorkshire,2016-7-27
+0,Bicycle theft,West Yorkshire,2016-7-27
+0,Burglary,West Yorkshire,2016-7-27
+0,Criminal damage and arson,West Yorkshire,2016-7-27
+0,Drugs,West Yorkshire,2016-7-27
+0,Other crime,West Yorkshire,2016-7-27
+0,Possession of weapons,West Yorkshire,2016-7-27
+0,Public order,West Yorkshire,2016-7-27
+0,Robbery,West Yorkshire,2016-7-27
+0,Shoplifting,West Yorkshire,2016-7-27
+0,Theft from the person,West Yorkshire,2016-7-27
+0,Vehicle crime,West Yorkshire,2016-7-27
+0,Violence and sexual offences,West Yorkshire,2016-7-27
+0,Anti-social behaviour,West Yorkshire,2016-7-28
+0,Bicycle theft,West Yorkshire,2016-7-28
+0,Burglary,West Yorkshire,2016-7-28
+0,Drugs,West Yorkshire,2016-7-28
+0,Other crime,West Yorkshire,2016-7-28
+0,Other theft,West Yorkshire,2016-7-28
+0,Possession of weapons,West Yorkshire,2016-7-28
+0,Public order,West Yorkshire,2016-7-28
+0,Robbery,West Yorkshire,2016-7-28
+0,Shoplifting,West Yorkshire,2016-7-28
+0,Theft from the person,West Yorkshire,2016-7-28
+0,Vehicle crime,West Yorkshire,2016-7-28
+0,Violence and sexual offences,West Yorkshire,2016-7-28
+0,Anti-social behaviour,West Yorkshire,2016-7-19
+0,Bicycle theft,West Yorkshire,2016-7-19
+0,Burglary,West Yorkshire,2016-7-19
+0,Criminal damage and arson,West Yorkshire,2016-7-19
+0,Drugs,West Yorkshire,2016-7-19
+0,Other crime,West Yorkshire,2016-7-19
+0,Other theft,West Yorkshire,2016-7-19
+0,Possession of weapons,West Yorkshire,2016-7-19
+0,Public order,West Yorkshire,2016-7-19
+0,Robbery,West Yorkshire,2016-7-19
+0,Shoplifting,West Yorkshire,2016-7-19
+0,Theft from the person,West Yorkshire,2016-7-19
+0,Vehicle crime,West Yorkshire,2016-7-19
+0,Violence and sexual offences,West Yorkshire,2016-7-19
+0,Anti-social behaviour,West Yorkshire,2016-7-21
+0,Bicycle theft,West Yorkshire,2016-7-21
+0,Burglary,West Yorkshire,2016-7-21
+0,Criminal damage and arson,West Yorkshire,2016-7-21
+0,Drugs,West Yorkshire,2016-7-21
+0,Other crime,West Yorkshire,2016-7-21
+0,Other theft,West Yorkshire,2016-7-21
+0,Possession of weapons,West Yorkshire,2016-7-21
+0,Public order,West Yorkshire,2016-7-21
+0,Robbery,West Yorkshire,2016-7-21
+0,Shoplifting,West Yorkshire,2016-7-21
+0,Theft from the person,West Yorkshire,2016-7-21
+0,Vehicle crime,West Yorkshire,2016-7-21
+0,Violence and sexual offences,West Yorkshire,2016-7-21
+0,Anti-social behaviour,West Yorkshire,2016-7-1
+0,Bicycle theft,West Yorkshire,2016-7-1
+0,Burglary,West Yorkshire,2016-7-1
+0,Criminal damage and arson,West Yorkshire,2016-7-1
+0,Drugs,West Yorkshire,2016-7-1
+0,Other crime,West Yorkshire,2016-7-1
+0,Other theft,West Yorkshire,2016-7-1
+0,Possession of weapons,West Yorkshire,2016-7-1
+0,Public order,West Yorkshire,2016-7-1
+0,Robbery,West Yorkshire,2016-7-1
+0,Shoplifting,West Yorkshire,2016-7-1
+0,Theft from the person,West Yorkshire,2016-7-1
+0,Vehicle crime,West Yorkshire,2016-7-1
+0,Violence and sexual offences,West Yorkshire,2016-7-1
+0,Anti-social behaviour,West Yorkshire,2016-7-9
+0,Bicycle theft,West Yorkshire,2016-7-9
+0,Burglary,West Yorkshire,2016-7-9
+0,Criminal damage and arson,West Yorkshire,2016-7-9
+0,Drugs,West Yorkshire,2016-7-9
+0,Other crime,West Yorkshire,2016-7-9
+0,Other theft,West Yorkshire,2016-7-9
+0,Possession of weapons,West Yorkshire,2016-7-9
+0,Public order,West Yorkshire,2016-7-9
+0,Robbery,West Yorkshire,2016-7-9
+0,Shoplifting,West Yorkshire,2016-7-9
+0,Theft from the person,West Yorkshire,2016-7-9
+0,Vehicle crime,West Yorkshire,2016-7-9
+0,Violence and sexual offences,West Yorkshire,2016-7-9
+0,Anti-social behaviour,West Yorkshire,2017-7-25
+0,Bicycle theft,West Yorkshire,2017-7-25
+0,Burglary,West Yorkshire,2017-7-25
+0,Criminal damage and arson,West Yorkshire,2017-7-25
+0,Drugs,West Yorkshire,2017-7-25
+0,Other crime,West Yorkshire,2017-7-25
+0,Other theft,West Yorkshire,2017-7-25
+0,Possession of weapons,West Yorkshire,2017-7-25
+0,Public order,West Yorkshire,2017-7-25
+0,Robbery,West Yorkshire,2017-7-25
+0,Shoplifting,West Yorkshire,2017-7-25
+0,Theft from the person,West Yorkshire,2017-7-25
+0,Violence and sexual offences,West Yorkshire,2017-7-25
+0,Anti-social behaviour,West Yorkshire,2017-7-27
+0,Bicycle theft,West Yorkshire,2017-7-27
+0,Burglary,West Yorkshire,2017-7-27
+0,Criminal damage and arson,West Yorkshire,2017-7-27
+0,Drugs,West Yorkshire,2017-7-27
+0,Other crime,West Yorkshire,2017-7-27
+0,Other theft,West Yorkshire,2017-7-27
+0,Possession of weapons,West Yorkshire,2017-7-27
+0,Public order,West Yorkshire,2017-7-27
+0,Robbery,West Yorkshire,2017-7-27
+0,Shoplifting,West Yorkshire,2017-7-27
+0,Theft from the person,West Yorkshire,2017-7-27
+0,Vehicle crime,West Yorkshire,2017-7-27
+0,Violence and sexual offences,West Yorkshire,2017-7-27
+0,Anti-social behaviour,West Yorkshire,2017-7-29
+0,Bicycle theft,West Yorkshire,2017-7-29
+0,Burglary,West Yorkshire,2017-7-29
+0,Criminal damage and arson,West Yorkshire,2017-7-29
+0,Drugs,West Yorkshire,2017-7-29
+0,Other crime,West Yorkshire,2017-7-29
+0,Other theft,West Yorkshire,2017-7-29
+0,Possession of weapons,West Yorkshire,2017-7-29
+0,Public order,West Yorkshire,2017-7-29
+0,Robbery,West Yorkshire,2017-7-29
+0,Shoplifting,West Yorkshire,2017-7-29
+0,Theft from the person,West Yorkshire,2017-7-29
+0,Vehicle crime,West Yorkshire,2017-7-29
+0,Violence and sexual offences,West Yorkshire,2017-7-29
+0,Bicycle theft,West Yorkshire,2017-7-1
+0,Burglary,West Yorkshire,2017-7-1
+0,Criminal damage and arson,West Yorkshire,2017-7-1
+0,Drugs,West Yorkshire,2017-7-1
+0,Other crime,West Yorkshire,2017-7-1
+0,Other theft,West Yorkshire,2017-7-1
+0,Possession of weapons,West Yorkshire,2017-7-1
+0,Public order,West Yorkshire,2017-7-1
+0,Robbery,West Yorkshire,2017-7-1
+0,Shoplifting,West Yorkshire,2017-7-1
+0,Theft from the person,West Yorkshire,2017-7-1
+0,Vehicle crime,West Yorkshire,2017-7-1
+0,Bicycle theft,West Yorkshire,2017-7-16
+0,Burglary,West Yorkshire,2017-7-16
+0,Criminal damage and arson,West Yorkshire,2017-7-16
+0,Drugs,West Yorkshire,2017-7-16
+0,Other crime,West Yorkshire,2017-7-16
+0,Other theft,West Yorkshire,2017-7-16
+0,Possession of weapons,West Yorkshire,2017-7-16
+0,Public order,West Yorkshire,2017-7-16
+0,Robbery,West Yorkshire,2017-7-16
+0,Shoplifting,West Yorkshire,2017-7-16
+0,Theft from the person,West Yorkshire,2017-7-16
+0,Vehicle crime,West Yorkshire,2017-7-16
+0,Violence and sexual offences,West Yorkshire,2017-7-16
+0,Bicycle theft,West Yorkshire,2017-7-18
+0,Burglary,West Yorkshire,2017-7-18
+0,Criminal damage and arson,West Yorkshire,2017-7-18
+0,Drugs,West Yorkshire,2017-7-18
+0,Other crime,West Yorkshire,2017-7-18
+0,Other theft,West Yorkshire,2017-7-18
+0,Possession of weapons,West Yorkshire,2017-7-18
+0,Public order,West Yorkshire,2017-7-18
+0,Robbery,West Yorkshire,2017-7-18
+0,Shoplifting,West Yorkshire,2017-7-18
+0,Theft from the person,West Yorkshire,2017-7-18
+0,Vehicle crime,West Yorkshire,2017-7-18
+0,Violence and sexual offences,West Yorkshire,2017-7-18
+0,Bicycle theft,West Yorkshire,2017-7-28
+0,Burglary,West Yorkshire,2017-7-28
+0,Criminal damage and arson,West Yorkshire,2017-7-28
+0,Drugs,West Yorkshire,2017-7-28
+0,Other crime,West Yorkshire,2017-7-28
+0,Other theft,West Yorkshire,2017-7-28
+0,Possession of weapons,West Yorkshire,2017-7-28
+0,Public order,West Yorkshire,2017-7-28
+0,Robbery,West Yorkshire,2017-7-28
+0,Shoplifting,West Yorkshire,2017-7-28
+0,Theft from the person,West Yorkshire,2017-7-28
+0,Vehicle crime,West Yorkshire,2017-7-28
+0,Violence and sexual offences,West Yorkshire,2017-7-28
+0,Bicycle theft,West Yorkshire,2017-7-31
+0,Criminal damage and arson,West Yorkshire,2017-7-31
+0,Drugs,West Yorkshire,2017-7-31
+0,Other crime,West Yorkshire,2017-7-31
+0,Other theft,West Yorkshire,2017-7-31
+0,Possession of weapons,West Yorkshire,2017-7-31
+0,Public order,West Yorkshire,2017-7-31
+0,Robbery,West Yorkshire,2017-7-31
+0,Shoplifting,West Yorkshire,2017-7-31
+0,Theft from the person,West Yorkshire,2017-7-31
+0,Vehicle crime,West Yorkshire,2017-7-31
+0,Anti-social behaviour,West Yorkshire,2017-7-3
+0,Bicycle theft,West Yorkshire,2017-7-3
+0,Burglary,West Yorkshire,2017-7-3
+0,Criminal damage and arson,West Yorkshire,2017-7-3
+0,Drugs,West Yorkshire,2017-7-3
+0,Other theft,West Yorkshire,2017-7-3
+0,Possession of weapons,West Yorkshire,2017-7-3
+0,Public order,West Yorkshire,2017-7-3
+0,Robbery,West Yorkshire,2017-7-3
+0,Shoplifting,West Yorkshire,2017-7-3
+0,Theft from the person,West Yorkshire,2017-7-3
+0,Vehicle crime,West Yorkshire,2017-7-3
+0,Violence and sexual offences,West Yorkshire,2017-7-3
+0,Anti-social behaviour,West Yorkshire,2017-7-30
+0,Bicycle theft,West Yorkshire,2017-7-30
+0,Burglary,West Yorkshire,2017-7-30
+0,Criminal damage and arson,West Yorkshire,2017-7-30
+0,Drugs,West Yorkshire,2017-7-30
+0,Other crime,West Yorkshire,2017-7-30
+0,Other theft,West Yorkshire,2017-7-30
+0,Possession of weapons,West Yorkshire,2017-7-30
+0,Robbery,West Yorkshire,2017-7-30
+0,Shoplifting,West Yorkshire,2017-7-30
+0,Theft from the person,West Yorkshire,2017-7-30
+0,Vehicle crime,West Yorkshire,2017-7-30
+0,Violence and sexual offences,West Yorkshire,2017-7-30
+0,Anti-social behaviour,West Yorkshire,2017-7-2
+0,Bicycle theft,West Yorkshire,2017-7-2
+0,Criminal damage and arson,West Yorkshire,2017-7-2
+0,Drugs,West Yorkshire,2017-7-2
+0,Other crime,West Yorkshire,2017-7-2
+0,Other theft,West Yorkshire,2017-7-2
+0,Possession of weapons,West Yorkshire,2017-7-2
+0,Public order,West Yorkshire,2017-7-2
+0,Robbery,West Yorkshire,2017-7-2
+0,Shoplifting,West Yorkshire,2017-7-2
+0,Theft from the person,West Yorkshire,2017-7-2
+0,Vehicle crime,West Yorkshire,2017-7-2
+0,Violence and sexual offences,West Yorkshire,2017-7-2
+0,Anti-social behaviour,West Yorkshire,2017-7-6
+0,Bicycle theft,West Yorkshire,2017-7-6
+0,Burglary,West Yorkshire,2017-7-6
+0,Criminal damage and arson,West Yorkshire,2017-7-6
+0,Drugs,West Yorkshire,2017-7-6
+0,Other crime,West Yorkshire,2017-7-6
+0,Other theft,West Yorkshire,2017-7-6
+0,Possession of weapons,West Yorkshire,2017-7-6
+0,Public order,West Yorkshire,2017-7-6
+0,Robbery,West Yorkshire,2017-7-6
+0,Shoplifting,West Yorkshire,2017-7-6
+0,Theft from the person,West Yorkshire,2017-7-6
+0,Vehicle crime,West Yorkshire,2017-7-6
+0,Violence and sexual offences,West Yorkshire,2017-7-6
+0,Anti-social behaviour,West Yorkshire,2017-7-22
+0,Bicycle theft,West Yorkshire,2017-7-22
+0,Burglary,West Yorkshire,2017-7-22
+0,Criminal damage and arson,West Yorkshire,2017-7-22
+0,Drugs,West Yorkshire,2017-7-22
+0,Other crime,West Yorkshire,2017-7-22
+0,Other theft,West Yorkshire,2017-7-22
+0,Possession of weapons,West Yorkshire,2017-7-22
+0,Robbery,West Yorkshire,2017-7-22
+0,Shoplifting,West Yorkshire,2017-7-22
+0,Theft from the person,West Yorkshire,2017-7-22
+0,Vehicle crime,West Yorkshire,2017-7-22
+0,Violence and sexual offences,West Yorkshire,2017-7-22
+0,Anti-social behaviour,West Yorkshire,2017-7-5
+0,Bicycle theft,West Yorkshire,2017-7-5
+0,Burglary,West Yorkshire,2017-7-5
+0,Drugs,West Yorkshire,2017-7-5
+0,Other crime,West Yorkshire,2017-7-5
+0,Other theft,West Yorkshire,2017-7-5
+0,Possession of weapons,West Yorkshire,2017-7-5
+0,Public order,West Yorkshire,2017-7-5
+0,Robbery,West Yorkshire,2017-7-5
+0,Shoplifting,West Yorkshire,2017-7-5
+0,Theft from the person,West Yorkshire,2017-7-5
+0,Vehicle crime,West Yorkshire,2017-7-5
+0,Anti-social behaviour,West Yorkshire,2017-7-9
+0,Bicycle theft,West Yorkshire,2017-7-9
+0,Burglary,West Yorkshire,2017-7-9
+0,Criminal damage and arson,West Yorkshire,2017-7-9
+0,Drugs,West Yorkshire,2017-7-9
+0,Other crime,West Yorkshire,2017-7-9
+0,Other theft,West Yorkshire,2017-7-9
+0,Possession of weapons,West Yorkshire,2017-7-9
+0,Public order,West Yorkshire,2017-7-9
+0,Robbery,West Yorkshire,2017-7-9
+0,Shoplifting,West Yorkshire,2017-7-9
+0,Theft from the person,West Yorkshire,2017-7-9
+0,Violence and sexual offences,West Yorkshire,2017-7-9
+0,Anti-social behaviour,West Yorkshire,2017-7-15
+0,Bicycle theft,West Yorkshire,2017-7-15
+0,Burglary,West Yorkshire,2017-7-15
+0,Criminal damage and arson,West Yorkshire,2017-7-15
+0,Drugs,West Yorkshire,2017-7-15
+0,Other crime,West Yorkshire,2017-7-15
+0,Other theft,West Yorkshire,2017-7-15
+0,Possession of weapons,West Yorkshire,2017-7-15
+0,Public order,West Yorkshire,2017-7-15
+0,Robbery,West Yorkshire,2017-7-15
+0,Shoplifting,West Yorkshire,2017-7-15
+0,Theft from the person,West Yorkshire,2017-7-15
+0,Vehicle crime,West Yorkshire,2017-7-15
+0,Anti-social behaviour,West Yorkshire,2017-7-10
+0,Bicycle theft,West Yorkshire,2017-7-10
+0,Burglary,West Yorkshire,2017-7-10
+0,Criminal damage and arson,West Yorkshire,2017-7-10
+0,Drugs,West Yorkshire,2017-7-10
+0,Other crime,West Yorkshire,2017-7-10
+0,Other theft,West Yorkshire,2017-7-10
+0,Possession of weapons,West Yorkshire,2017-7-10
+0,Public order,West Yorkshire,2017-7-10
+0,Robbery,West Yorkshire,2017-7-10
+0,Shoplifting,West Yorkshire,2017-7-10
+0,Theft from the person,West Yorkshire,2017-7-10
+0,Vehicle crime,West Yorkshire,2017-7-10
+0,Violence and sexual offences,West Yorkshire,2017-7-10
+0,Anti-social behaviour,West Yorkshire,2017-7-17
+0,Bicycle theft,West Yorkshire,2017-7-17
+0,Burglary,West Yorkshire,2017-7-17
+0,Criminal damage and arson,West Yorkshire,2017-7-17
+0,Drugs,West Yorkshire,2017-7-17
+0,Other crime,West Yorkshire,2017-7-17
+0,Other theft,West Yorkshire,2017-7-17
+0,Possession of weapons,West Yorkshire,2017-7-17
+0,Public order,West Yorkshire,2017-7-17
+0,Robbery,West Yorkshire,2017-7-17
+0,Shoplifting,West Yorkshire,2017-7-17
+0,Theft from the person,West Yorkshire,2017-7-17
+0,Vehicle crime,West Yorkshire,2017-7-17
+0,Violence and sexual offences,West Yorkshire,2017-7-17
+0,Anti-social behaviour,West Yorkshire,2017-7-8
+0,Bicycle theft,West Yorkshire,2017-7-8
+0,Criminal damage and arson,West Yorkshire,2017-7-8
+0,Drugs,West Yorkshire,2017-7-8
+0,Other crime,West Yorkshire,2017-7-8
+0,Other theft,West Yorkshire,2017-7-8
+0,Possession of weapons,West Yorkshire,2017-7-8
+0,Public order,West Yorkshire,2017-7-8
+0,Robbery,West Yorkshire,2017-7-8
+0,Shoplifting,West Yorkshire,2017-7-8
+0,Theft from the person,West Yorkshire,2017-7-8
+0,Vehicle crime,West Yorkshire,2017-7-8
+0,Violence and sexual offences,West Yorkshire,2017-7-8
+0,Anti-social behaviour,West Yorkshire,2017-7-20
+0,Bicycle theft,West Yorkshire,2017-7-20
+0,Burglary,West Yorkshire,2017-7-20
+0,Criminal damage and arson,West Yorkshire,2017-7-20
+0,Drugs,West Yorkshire,2017-7-20
+0,Other crime,West Yorkshire,2017-7-20
+0,Other theft,West Yorkshire,2017-7-20
+0,Possession of weapons,West Yorkshire,2017-7-20
+0,Robbery,West Yorkshire,2017-7-20
+0,Shoplifting,West Yorkshire,2017-7-20
+0,Theft from the person,West Yorkshire,2017-7-20
+0,Vehicle crime,West Yorkshire,2017-7-20
+0,Violence and sexual offences,West Yorkshire,2017-7-20
+0,Anti-social behaviour,West Yorkshire,2017-7-7
+0,Bicycle theft,West Yorkshire,2017-7-7
+0,Burglary,West Yorkshire,2017-7-7
+0,Criminal damage and arson,West Yorkshire,2017-7-7
+0,Drugs,West Yorkshire,2017-7-7
+0,Other crime,West Yorkshire,2017-7-7
+0,Other theft,West Yorkshire,2017-7-7
+0,Possession of weapons,West Yorkshire,2017-7-7
+0,Public order,West Yorkshire,2017-7-7
+0,Robbery,West Yorkshire,2017-7-7
+0,Shoplifting,West Yorkshire,2017-7-7
+0,Theft from the person,West Yorkshire,2017-7-7
+0,Vehicle crime,West Yorkshire,2017-7-7
+0,Violence and sexual offences,West Yorkshire,2017-7-7
+0,Anti-social behaviour,West Yorkshire,2017-7-14
+0,Bicycle theft,West Yorkshire,2017-7-14
+0,Burglary,West Yorkshire,2017-7-14
+0,Criminal damage and arson,West Yorkshire,2017-7-14
+0,Drugs,West Yorkshire,2017-7-14
+0,Other crime,West Yorkshire,2017-7-14
+0,Possession of weapons,West Yorkshire,2017-7-14
+0,Public order,West Yorkshire,2017-7-14
+0,Robbery,West Yorkshire,2017-7-14
+0,Shoplifting,West Yorkshire,2017-7-14
+0,Theft from the person,West Yorkshire,2017-7-14
+0,Vehicle crime,West Yorkshire,2017-7-14
+0,Violence and sexual offences,West Yorkshire,2017-7-14
+0,Anti-social behaviour,West Yorkshire,2017-7-11
+0,Bicycle theft,West Yorkshire,2017-7-11
+0,Burglary,West Yorkshire,2017-7-11
+0,Criminal damage and arson,West Yorkshire,2017-7-11
+0,Drugs,West Yorkshire,2017-7-11
+0,Other crime,West Yorkshire,2017-7-11
+0,Other theft,West Yorkshire,2017-7-11
+0,Possession of weapons,West Yorkshire,2017-7-11
+0,Public order,West Yorkshire,2017-7-11
+0,Robbery,West Yorkshire,2017-7-11
+0,Shoplifting,West Yorkshire,2017-7-11
+0,Theft from the person,West Yorkshire,2017-7-11
+0,Vehicle crime,West Yorkshire,2017-7-11
+0,Violence and sexual offences,West Yorkshire,2017-7-11
+0,Anti-social behaviour,West Yorkshire,2017-7-13
+0,Bicycle theft,West Yorkshire,2017-7-13
+0,Burglary,West Yorkshire,2017-7-13
+0,Criminal damage and arson,West Yorkshire,2017-7-13
+0,Drugs,West Yorkshire,2017-7-13
+0,Other crime,West Yorkshire,2017-7-13
+0,Other theft,West Yorkshire,2017-7-13
+0,Possession of weapons,West Yorkshire,2017-7-13
+0,Public order,West Yorkshire,2017-7-13
+0,Robbery,West Yorkshire,2017-7-13
+0,Shoplifting,West Yorkshire,2017-7-13
+0,Theft from the person,West Yorkshire,2017-7-13
+0,Vehicle crime,West Yorkshire,2017-7-13
+0,Violence and sexual offences,West Yorkshire,2017-7-13
+0,Anti-social behaviour,West Yorkshire,2017-7-19
+0,Bicycle theft,West Yorkshire,2017-7-19
+0,Burglary,West Yorkshire,2017-7-19
+0,Criminal damage and arson,West Yorkshire,2017-7-19
+0,Drugs,West Yorkshire,2017-7-19
+0,Other crime,West Yorkshire,2017-7-19
+0,Possession of weapons,West Yorkshire,2017-7-19
+0,Public order,West Yorkshire,2017-7-19
+0,Robbery,West Yorkshire,2017-7-19
+0,Shoplifting,West Yorkshire,2017-7-19
+0,Theft from the person,West Yorkshire,2017-7-19
+0,Vehicle crime,West Yorkshire,2017-7-19
+0,Violence and sexual offences,West Yorkshire,2017-7-19
+0,Anti-social behaviour,West Yorkshire,2017-7-26
+0,Bicycle theft,West Yorkshire,2017-7-26
+0,Burglary,West Yorkshire,2017-7-26
+0,Criminal damage and arson,West Yorkshire,2017-7-26
+0,Drugs,West Yorkshire,2017-7-26
+0,Other crime,West Yorkshire,2017-7-26
+0,Other theft,West Yorkshire,2017-7-26
+0,Possession of weapons,West Yorkshire,2017-7-26
+0,Public order,West Yorkshire,2017-7-26
+0,Robbery,West Yorkshire,2017-7-26
+0,Shoplifting,West Yorkshire,2017-7-26
+0,Theft from the person,West Yorkshire,2017-7-26
+0,Vehicle crime,West Yorkshire,2017-7-26
+0,Violence and sexual offences,West Yorkshire,2017-7-26
+0,Anti-social behaviour,West Yorkshire,2017-7-21
+0,Bicycle theft,West Yorkshire,2017-7-21
+0,Burglary,West Yorkshire,2017-7-21
+0,Criminal damage and arson,West Yorkshire,2017-7-21
+0,Drugs,West Yorkshire,2017-7-21
+0,Other crime,West Yorkshire,2017-7-21
+0,Other theft,West Yorkshire,2017-7-21
+0,Possession of weapons,West Yorkshire,2017-7-21
+0,Public order,West Yorkshire,2017-7-21
+0,Robbery,West Yorkshire,2017-7-21
+0,Shoplifting,West Yorkshire,2017-7-21
+0,Theft from the person,West Yorkshire,2017-7-21
+0,Vehicle crime,West Yorkshire,2017-7-21
+0,Violence and sexual offences,West Yorkshire,2017-7-21
+0,Anti-social behaviour,West Yorkshire,2017-7-12
+0,Bicycle theft,West Yorkshire,2017-7-12
+0,Burglary,West Yorkshire,2017-7-12
+0,Criminal damage and arson,West Yorkshire,2017-7-12
+0,Drugs,West Yorkshire,2017-7-12
+0,Other crime,West Yorkshire,2017-7-12
+0,Other theft,West Yorkshire,2017-7-12
+0,Possession of weapons,West Yorkshire,2017-7-12
+0,Public order,West Yorkshire,2017-7-12
+0,Robbery,West Yorkshire,2017-7-12
+0,Shoplifting,West Yorkshire,2017-7-12
+0,Theft from the person,West Yorkshire,2017-7-12
+0,Vehicle crime,West Yorkshire,2017-7-12
+0,Violence and sexual offences,West Yorkshire,2017-7-12
+0,Anti-social behaviour,West Yorkshire,2017-7-4
+0,Bicycle theft,West Yorkshire,2017-7-4
+0,Burglary,West Yorkshire,2017-7-4
+0,Criminal damage and arson,West Yorkshire,2017-7-4
+0,Drugs,West Yorkshire,2017-7-4
+0,Other crime,West Yorkshire,2017-7-4
+0,Other theft,West Yorkshire,2017-7-4
+0,Possession of weapons,West Yorkshire,2017-7-4
+0,Robbery,West Yorkshire,2017-7-4
+0,Shoplifting,West Yorkshire,2017-7-4
+0,Theft from the person,West Yorkshire,2017-7-4
+0,Vehicle crime,West Yorkshire,2017-7-4
+0,Violence and sexual offences,West Yorkshire,2017-7-4
+0,Anti-social behaviour,West Yorkshire,2017-7-23
+0,Bicycle theft,West Yorkshire,2017-7-23
+0,Burglary,West Yorkshire,2017-7-23
+0,Criminal damage and arson,West Yorkshire,2017-7-23
+0,Drugs,West Yorkshire,2017-7-23
+0,Other crime,West Yorkshire,2017-7-23
+0,Other theft,West Yorkshire,2017-7-23
+0,Possession of weapons,West Yorkshire,2017-7-23
+0,Public order,West Yorkshire,2017-7-23
+0,Robbery,West Yorkshire,2017-7-23
+0,Shoplifting,West Yorkshire,2017-7-23
+0,Theft from the person,West Yorkshire,2017-7-23
+0,Vehicle crime,West Yorkshire,2017-7-23
+0,Violence and sexual offences,West Yorkshire,2017-7-23
+0,Anti-social behaviour,West Yorkshire,2017-7-24
+0,Bicycle theft,West Yorkshire,2017-7-24
+0,Burglary,West Yorkshire,2017-7-24
+0,Criminal damage and arson,West Yorkshire,2017-7-24
+0,Drugs,West Yorkshire,2017-7-24
+0,Other crime,West Yorkshire,2017-7-24
+0,Other theft,West Yorkshire,2017-7-24
+0,Possession of weapons,West Yorkshire,2017-7-24
+0,Public order,West Yorkshire,2017-7-24
+0,Robbery,West Yorkshire,2017-7-24
+0,Shoplifting,West Yorkshire,2017-7-24
+0,Theft from the person,West Yorkshire,2017-7-24
+0,Vehicle crime,West Yorkshire,2017-7-24
+0,Violence and sexual offences,West Yorkshire,2017-7-24

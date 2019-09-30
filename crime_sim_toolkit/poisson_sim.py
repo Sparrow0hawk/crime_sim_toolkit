@@ -9,6 +9,7 @@ import scipy.stats
 from sklearn.linear_model import LinearRegression as linReg
 from sklearn.metrics import mean_squared_error, median_absolute_error, mean_absolute_error
 from crime_sim_toolkit.initialiser import Initialiser
+from crime_sim_toolkit import utils
 
 
 class Poisson_sim:
@@ -17,9 +18,11 @@ class Poisson_sim:
     Requires data from https://data.police.uk/ in data folder
     """
 
-    def __init__(self, LA_names, directory=None, timeframe='Week'):
+    def __init__(self, LA_names, directory=None, timeframe='Week', aggregate=False):
 
-        self.data = Initialiser(LA_names=LA_names).get_data(directory=directory, timeframe=timeframe)
+        self.data = Initialiser(LA_names=LA_names).get_data(directory=directory,
+                                                            timeframe=timeframe,
+                                                            aggregate=aggregate)
 
     @classmethod
     def out_of_bag_prep(cls, full_data):
@@ -32,20 +35,13 @@ class Poisson_sim:
         Output: Pandas dataframe of crime counts for maximum year in dataset to be held as out of bag test set
         """
 
-        original_frame = full_data
+        original_frame = utils.validate_datetime(full_data)
 
         # identify highest year with complete counts for entire year
-        # this will be used as out-of-bag comparator
-        try:
-            oob_year = original_frame.Year.unique()[original_frame.groupby('Year')['Mon'].unique().map(lambda x: len(x) == 12)].max()
-
-        except ValueError:
-            print('The passed data does not appear to have a full years (Jan-Dec) worth of data.')
-            print('Defaulting to select out-of-bag sample for most recent year.')
-            oob_year = original_frame.Year.unique().max()
+        oob_year = original_frame.datetime.max().year
 
         # slice get dataframe for that year
-        oob_data = original_frame[original_frame.Year == oob_year]
+        oob_data = original_frame[original_frame.datetime.dt.year == oob_year]
 
         return oob_data
 
@@ -63,17 +59,22 @@ class Poisson_sim:
             train_data = Pandas dataframe of crime counts that are not in test_data
         """
 
-        oob_year = test_data.Year.unique().max()
+        # ensure datetime is configured to datetime dtype
+        test_data = utils.validate_datetime(test_data)
 
-        original_frame = full_data
+
+        oob_year = test_data.datetime.max().year
+
+        # ensure datetime is configured to datetime dtype
+        original_frame = utils.validate_datetime(full_data)
 
         # define data for modelling that removes year being modelled
-        train_data = original_frame[(original_frame.Year != oob_year)]
+        train_data = original_frame[(original_frame.datetime.dt.year != oob_year)]
 
         return train_data
 
     @classmethod
-    def SimplePoission(cls, train_data, test_data, method='simple'):
+    def SimplePoission(cls, train_data, test_data, method='simple', mv_window=0):
         """
         Function for generating synthetic crime count data at LSOA at timescale resolution
         based on historic data loaded from the initialiser.
@@ -90,12 +91,10 @@ class Poisson_sim:
             Could this be performed before the psuedo day/week allocation?
         """
 
-        # building a model that incorporates these local populations
-        year = test_data.Year.unique().max()
+        # validate datetime columns within input data
+        oob_data = utils.validate_datetime(test_data.copy())
 
-        oob_data = test_data
-
-        historic_data = train_data
+        historic_data = utils.validate_datetime(train_data.copy())
 
         # method dict for sampling approaches
         # simple : fits a poisson based on all data passed
@@ -105,15 +104,18 @@ class Poisson_sim:
 
         methods_dict = {'simple' : cls.simple_sampler,
                         'mixed' : cls.mixed_sampler,
-                        'mw' : cls.moving_window,
                         'zero' : cls.zero_sampler}
 
         # test if psuedo-Weeks have been allocated
         if 'Week' in historic_data.columns:
             time_res = 'Week'
-        else:
-            time_res = 'Day'
 
+            # select the year from the oob_data
+            year = oob_data.datetime.max().year
+        else:
+            time_res = 'datetime'
+
+        print('Time resolution set to: ', time_res)
 
         # a list for all rows of data frame produced
         print('Beginning sampling.')
@@ -127,48 +129,88 @@ class Poisson_sim:
         crime_types_lst = historic_data['Crime_type'].unique()
 
         # for each month in the range of months in oob data
-        for mon in range(oob_data.Mon.unique().min(), (oob_data.Mon.unique().max() + 1)):
+        for date in np.sort(np.unique(oob_data[time_res].tolist())):
 
-            # use week range for oob year
-            accepted_wk_range = oob_data[(oob_data.Year.values == year) & (oob_data.Mon.values == mon)][time_res].unique()
+            print('Simulating '+time_res+': '+str(date))
 
-            # for each week
-            for wk in np.sort(accepted_wk_range):
+            # create a loop for creating a date list based on
+            # moving window arguement
+            if time_res != 'Week':
 
-                print('Month: '+str(mon)+' '+time_res+': '+str(wk))
+                date_lst = []
+
+                date_lst += cls.moving_window_datetime(datetime=date,
+                                                   window=mv_window)
+
+            # for each crime type
+            for crim_typ in crime_types_lst:
+
+                # include if-else block to catch different handling of week/day
+                if time_res == 'Week':
+
+                    # moving window for weeks
+                    date_lst = []
+
+                    date_lst += cls.moving_window_week(week=date,
+                                                   window=mv_window)
 
 
-                # for each crime type
-                for crim_typ in crime_types_lst:
-
-                    frame_OI = historic_data[(historic_data['Mon'].isin([mon])) &
-                                             (historic_data[time_res].isin([wk])) &
+                    frame_OI = historic_data[(historic_data[time_res].isin([week for week in date_lst])) &
                                              (historic_data['Crime_type'].isin([crim_typ]))]
 
-                    for LSOA in frame_OI['LSOA_code'].unique():
+                else:
+                    frame_OI = historic_data[(historic_data[time_res].dt.day.isin([date.day for date in date_lst])) &
+                                             (historic_data[time_res].dt.month.isin([date.month for date in date_lst])) &
+                                             (historic_data['Crime_type'].isin([crim_typ]))]
 
-                        frame_OI2 = frame_OI[(frame_OI['LSOA_code'].isin([LSOA]))]
+                for LSOA in frame_OI['LSOA_code'].unique():
 
-                        if len(frame_OI2) > 0:
+                    frame_OI2 = frame_OI[(frame_OI['LSOA_code'].isin([LSOA]))]
 
-                            sim_count = methods_dict[method](narrow_frame=frame_OI2)
+                    if len(frame_OI2) > 0:
 
-                            # append values to lists that will be merged into dict in final step
-                            time_lbl.append(wk)
-                            mon_lbl.append(mon)
-                            crime_lbl.append(crim_typ)
-                            count_lbl.append(sim_count)
-                            LSOA_lbl.append(LSOA)
+                        # append values to lists that will be merged into dict in final step
+                        time_lbl.append(date)
+                        # section to capture datetime for week sim
+                        if time_res == 'Week':
+
+                            mon_lbl.append(str(year) + '-' + str(frame_OI2.datetime.dt.month.tolist()[0]))
+
+                        crime_lbl.append(crim_typ)
+                        count_lbl.append(methods_dict[method](narrow_frame=frame_OI2))
+                        LSOA_lbl.append(LSOA)
+
+                    # need else catch here incase data is missing
+                    # becase order of lists is messed up if absent
+                    elif len(frame_OI2) == 0:
+
+                        # append values to lists that will be merged into dict in final step
+                        time_lbl.append(date)
+                        # section to capture datetime for week sim
+                        if time_res == 'Week':
+
+                            mon_lbl.append(str(year) + '-' + str(frame_OI2.datetime.dt.month.tolist()[0]))
+
+                        crime_lbl.append(crim_typ)
+                        count_lbl.append(0)
+                        LSOA_lbl.append(LSOA)
+
+        if time_res == 'Week':
+
+            results_dict = {time_res : time_lbl,
+                         'datetime' : mon_lbl,
+                         'Crime_type' : crime_lbl,
+                         'Counts' : count_lbl,
+                         'LSOA_code' : LSOA_lbl}
+        else:
+
+            results_dict = {time_res : time_lbl,
+                         'Crime_type' : crime_lbl,
+                         'Counts' : count_lbl,
+                         'LSOA_code' : LSOA_lbl}
 
         # concatenate all these compiled dataframe rows into one large dataframe
-        simulated_year_frame = pd.DataFrame.from_dict({time_res : time_lbl,
-                                                       'Mon' : mon_lbl,
-                                                       'Crime_type' : crime_lbl,
-                                                       'Counts' : count_lbl,
-                                                       'LSOA_code' : LSOA_lbl})
-
-        # set simulated data to return the year data is simulated for
-        simulated_year_frame['Year'] = year
+        simulated_year_frame = pd.DataFrame.from_dict(results_dict)
 
 
         return simulated_year_frame
@@ -188,13 +230,17 @@ class Poisson_sim:
                                with error scores printed and plot
         """
 
+
+        test_data = utils.validate_datetime(test_data)
+
+        simulated_data = utils.validate_datetime(simulated_data)
         # test for days or Weeks
         # TODO: improve this somehow??
         # specify value as class attribute earlier?
         if 'Week' in simulated_data.columns:
             time_res = 'Week'
         else:
-            time_res = 'Day'
+            time_res = 'datetime'
 
         comparison_frame = pd.concat([simulated_data.groupby([time_res,'LSOA_code'])['Counts'].sum(), test_data.groupby([time_res,'LSOA_code'])['Counts'].sum()],axis=1)
 
@@ -223,13 +269,13 @@ class Poisson_sim:
         print('Total crime events in holdout data: ', comparison_frame.Actual.sum())
 
         if (comparison_frame.Pred_counts.sum() - comparison_frame.Actual.sum()) > 0:
-            print('Oversampling by: ', 100 *((round(comparison_frame.Pred_counts.sum() / comparison_frame.Actual.sum(), 1) - 1)), '%')
+            print('Oversampling by: ', 100 *((round(comparison_frame.Pred_counts.sum() / comparison_frame.Actual.sum(), 3) - 1)), '%')
         else:
-            print('Undersampling by: ', 100 *((round(comparison_frame.Pred_counts.sum() / comparison_frame.Actual.sum(), 1)) - 1), '%')
+            print('Undersampling by: ', 100 *((round(comparison_frame.Pred_counts.sum() / comparison_frame.Actual.sum(), 3)) - 1), '%')
         print('-------')
 
         comparison_frame[['Pred_counts','Actual']].plot.scatter(x='Actual',y='Pred_counts')
-        plt.plot([0,175],[0,175], 'k--')
+        plt.plot([0,comparison_frame[['Pred_counts','Actual']].max().max() + 25 ],[0,comparison_frame[['Pred_counts','Actual']].max().max() + 25 ], 'k--')
 
         plt.show()
 
@@ -258,7 +304,8 @@ class Poisson_sim:
             # prep data for linear model
 
             # get years as the X variable
-            x_Years = narrow_frame['Year'].values.reshape(-1, 1)
+            # TODO: correct this to account for new datetime column
+            x_Years = narrow_frame['datetime'].dt.year.values.reshape(-1, 1)
 
             # get counts as the Y variable
             y_Counts = narrow_frame['Counts'].values
@@ -267,7 +314,7 @@ class Poisson_sim:
             model = linReg().fit(x_Years, y_Counts)
 
             # predict the counts for the next year
-            lin_count = round(np.asscalar(model.predict(np.array([x_Years[-1] + 1]))),0)
+            lin_count = round(model.predict(np.array([x_Years[-1] + 1])).item(),0)
 
             # calculate the mean of linear and poisson counts
             mixed_val = round(np.mean([lin_count, poi_count]), 0)
@@ -295,13 +342,47 @@ class Poisson_sim:
 
             return sim_count
 
-    @classmethod
-    def moving_window(cls, narrow_frame):
-            """
-            A moving window sampler function
-            TODO: this actually requires quite a significant refactor
-            As other functions are able to take reduced dataframe whereas this will
-            change behaviours in loops above.
-            """
+    @staticmethod
+    def moving_window_week(week, window=0):
+        """
+        Simple method for getting week numbers adjacent to
+        a given week value
+        """
 
-            return
+        # get list of week numbers
+        week_lst = [x for x in range(1,53)]
+
+        # get the index of given week
+        date_idx = week_lst.index(week)
+
+        window_lst = [week]
+
+        for win in range(1, window+1):
+
+            # get the index ahead
+            jInd = (date_idx - win) % len(week_lst)
+
+            kInd = (date_idx + win) % len(week_lst)
+
+            window_lst.append(week_lst[jInd])
+
+            window_lst.append(week_lst[kInd])
+
+        return window_lst
+
+    @staticmethod
+    def moving_window_datetime(datetime, window=0):
+        """
+        Simple method for getting week numbers adjacent to
+        a given week value
+        """
+
+        window_lst = [datetime]
+
+        for window in range(1,window+1):
+
+            window_lst.append(datetime + pd.DateOffset(days=window))
+
+            window_lst.append(datetime - pd.DateOffset(days=window))
+
+        return window_lst

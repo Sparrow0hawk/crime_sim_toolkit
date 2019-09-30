@@ -1,0 +1,80 @@
+Counts,Crime_type,LSOA_code,Week,datetime
+2,Criminal damage and arson,West Yorkshire,27,2018-7
+1,Criminal damage and arson,West Yorkshire,28,2018-7
+1,Criminal damage and arson,West Yorkshire,29,2018-7
+1,Criminal damage and arson,West Yorkshire,30,2018-7
+3,Other theft,West Yorkshire,27,2018-7
+1,Other theft,West Yorkshire,28,2018-7
+1,Other theft,West Yorkshire,29,2018-7
+1,Other theft,West Yorkshire,30,2018-7
+1,Other theft,West Yorkshire,31,2018-7
+1,Public order,West Yorkshire,26,2018-7
+1,Public order,West Yorkshire,27,2018-7
+1,Public order,West Yorkshire,30,2018-7
+1,Vehicle crime,West Yorkshire,28,2018-7
+1,Vehicle crime,West Yorkshire,29,2018-7
+1,Vehicle crime,West Yorkshire,30,2018-7
+2,Violence and sexual offences,West Yorkshire,28,2018-7
+2,Violence and sexual offences,West Yorkshire,29,2018-7
+2,Violence and sexual offences,West Yorkshire,30,2018-7
+1,Violence and sexual offences,West Yorkshire,26,2018-7
+1,Violence and sexual offences,West Yorkshire,27,2018-7
+1,Violence and sexual offences,West Yorkshire,31,2018-7
+0,Anti-social behaviour,West Yorkshire,29,2018-7
+0,Bicycle theft,West Yorkshire,29,2018-7
+0,Drugs,West Yorkshire,29,2018-7
+0,Other crime,West Yorkshire,29,2018-7
+0,Possession of weapons,West Yorkshire,29,2018-7
+0,Public order,West Yorkshire,29,2018-7
+0,Robbery,West Yorkshire,29,2018-7
+0,Shoplifting,West Yorkshire,29,2018-7
+0,Theft from the person,West Yorkshire,29,2018-7
+0,Bicycle theft,West Yorkshire,28,2018-7
+0,Drugs,West Yorkshire,28,2018-7
+0,Other crime,West Yorkshire,28,2018-7
+0,Possession of weapons,West Yorkshire,28,2018-7
+0,Public order,West Yorkshire,28,2018-7
+0,Robbery,West Yorkshire,28,2018-7
+0,Shoplifting,West Yorkshire,28,2018-7
+0,Theft from the person,West Yorkshire,28,2018-7
+0,Bicycle theft,West Yorkshire,30,2018-7
+0,Burglary,West Yorkshire,30,2018-7
+0,Drugs,West Yorkshire,30,2018-7
+0,Other crime,West Yorkshire,30,2018-7
+0,Possession of weapons,West Yorkshire,30,2018-7
+0,Robbery,West Yorkshire,30,2018-7
+0,Shoplifting,West Yorkshire,30,2018-7
+0,Theft from the person,West Yorkshire,30,2018-7
+0,Bicycle theft,West Yorkshire,27,2018-7
+0,Burglary,West Yorkshire,27,2018-7
+0,Drugs,West Yorkshire,27,2018-7
+0,Other crime,West Yorkshire,27,2018-7
+0,Possession of weapons,West Yorkshire,27,2018-7
+0,Robbery,West Yorkshire,27,2018-7
+0,Shoplifting,West Yorkshire,27,2018-7
+0,Theft from the person,West Yorkshire,27,2018-7
+0,Vehicle crime,West Yorkshire,27,2018-7
+0,Anti-social behaviour,West Yorkshire,31,2018-7
+0,Bicycle theft,West Yorkshire,31,2018-7
+0,Burglary,West Yorkshire,31,2018-7
+0,Criminal damage and arson,West Yorkshire,31,2018-7
+0,Drugs,West Yorkshire,31,2018-7
+0,Other crime,West Yorkshire,31,2018-7
+0,Possession of weapons,West Yorkshire,31,2018-7
+0,Public order,West Yorkshire,31,2018-7
+0,Robbery,West Yorkshire,31,2018-7
+0,Shoplifting,West Yorkshire,31,2018-7
+0,Theft from the person,West Yorkshire,31,2018-7
+0,Vehicle crime,West Yorkshire,31,2018-7
+0,Anti-social behaviour,West Yorkshire,26,2018-7
+0,Bicycle theft,West Yorkshire,26,2018-7
+0,Burglary,West Yorkshire,26,2018-7
+0,Criminal damage and arson,West Yorkshire,26,2018-7
+0,Drugs,West Yorkshire,26,2018-7
+0,Other crime,West Yorkshire,26,2018-7
+0,Other theft,West Yorkshire,26,2018-7
+0,Possession of weapons,West Yorkshire,26,2018-7
+0,Robbery,West Yorkshire,26,2018-7
+0,Shoplifting,West Yorkshire,26,2018-7
+0,Theft from the person,West Yorkshire,26,2018-7
+0,Vehicle crime,West Yorkshire,26,2018-7

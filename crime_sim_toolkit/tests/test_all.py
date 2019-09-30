@@ -2,6 +2,7 @@ import os
 import json
 import unittest
 from unittest.mock import patch
+import numpy as np
 import pandas as pd
 import folium
 from crime_sim_toolkit import vis_utils, utils
@@ -84,7 +85,7 @@ class Test(unittest.TestCase):
         Test the counts_to_reports util function
         """
 
-        self.data = pd.read_csv(pkg_resources.resource_filename(resource_package, 'tests/testing_data/test_data4pois.csv'))
+        self.data = pd.read_csv(pkg_resources.resource_filename(resource_package, 'tests/testing_data/test_oobsplit.csv'))
 
         self.output = utils.counts_to_reports(self.data)
 
@@ -95,7 +96,7 @@ class Test(unittest.TestCase):
         self.assertTrue(isinstance(self.output, pd.DataFrame))
 
         # test unique IDs are produced as expected
-        self.assertEqual(self.output.UID[0], 'E0101277A0')
+        self.assertEqual(self.output.UID[0], 'E010117AN0')
 
     def test_get_Geojson(self):
         """
@@ -138,13 +139,9 @@ class Test(unittest.TestCase):
 
         self.dataFalse = pd.read_csv(pkg_resources.resource_filename(resource_package, 'tests/testing_data/random_date2.csv'))
 
-        self.assertTrue('Mon' in self.init.random_date_allocate(data=self.dataTrue).columns)
+        self.assertTrue('datetime' in self.init.random_date_allocate(data=self.dataTrue).columns)
 
-        self.assertTrue('Day' in self.init.random_date_allocate(data=self.dataTrue).columns)
-
-        self.assertTrue('Week' in self.init.random_date_allocate(data=self.dataTrue).columns)
-
-        self.assertFalse('Week' in self.init.random_date_allocate(data=self.dataTrue, timeframe='Day').columns)
+        self.assertFalse('Week' in self.init.random_date_allocate(data=self.dataTrue).columns)
 
         self.assertFalse(self.init.random_date_allocate(data=self.dataFalse))
 
@@ -168,17 +165,44 @@ class Test(unittest.TestCase):
         self.assertEqual(self.init.LSOA_hh_counts.columns.tolist(), col_head2)
 
     def test_reports_2_counts(self):
-
         """
         Test to check the reports to counts converter works
+
+        Aggregate set to false
+        """
+
+        self.data = pd.read_csv(pkg_resources.resource_filename(resource_package, 'tests/testing_data/report_2_counts.csv'))
+
+        test_frame = self.init.reports_to_counts(self.data)
+
+        self.assertEqual(test_frame['datetime'].value_counts().sort_index().index.tolist(),
+                         pd.to_datetime(['2017-01-03','2017-01-07','2017-01-08',
+                                         '2017-01-09','2017-01-12','2017-01-13',
+                                         '2017-01-24','2017-01-26','2017-01-31']).tolist())
+
+        self.assertEqual(test_frame['Counts'].sort_index().tolist(), [1, 1, 1, 1, 1, 1, 1, 1, 1, 1])
+
+        self.assertFalse('West Yorkshire' in test_frame.LSOA_code.unique().tolist())
+
+    def test_reports_2_counts_agg(self):
+        """
+        Test to check the reports to counts converter works
+
+        Includes test of aggregate function
+
         """
         self.data = pd.read_csv(pkg_resources.resource_filename(resource_package, 'tests/testing_data/report_2_counts.csv'))
 
-        test_frame = self.init.reports_to_counts(self.data, timeframe='Day')
+        test_frame = self.init.reports_to_counts(self.data, aggregate=True)
 
-        pd.testing.assert_series_equal(test_frame['Day'].value_counts().sort_index(), pd.Series([3,2,2,4,1,1], index=[1,4,6,20,7,3], name='Day').sort_index())
+        self.assertEqual(test_frame['datetime'].value_counts().sort_index().index.tolist(),
+                         pd.to_datetime(['2017-01-03','2017-01-07','2017-01-08',
+                                         '2017-01-09','2017-01-12','2017-01-13',
+                                         '2017-01-24','2017-01-26','2017-01-31']).tolist())
 
-        pd.testing.assert_series_equal(test_frame['Counts'].sort_index(), pd.Series([1,1,2,1,1,1,1,1,1,1,1,1,2], index=range(0,13), name='Counts').sort_index())
+        self.assertEqual(test_frame['Counts'].sort_index().tolist(), [1, 1, 1, 1, 1, 1, 1, 1, 1, 1])
+
+        self.assertTrue(test_frame.LSOA_code.unique().tolist()[0], 'West Yorkshire')
 
     def test_add_zero_counts(self):
         """
@@ -186,14 +210,11 @@ class Test(unittest.TestCase):
         """
         self.data = pd.read_csv(pkg_resources.resource_filename(resource_package, 'tests/testing_data/test_counts1.csv'))
 
-        self.init = Initialiser.Initialiser(LA_names=['Kirklees','Calderdale','Leeds','Bradford','Wakefield'])
-
-        self.test = self.init.add_zero_counts(self.data)
+        self.test = self.init.add_zero_counts(self.data, timeframe='Day')
 
         self.assertTrue(isinstance(self.test, pd.DataFrame))
 
-        self.assertEqual(len(self.test[self.test.Day == 3].LSOA_code.unique()), 1388)
-
+        self.assertEqual(len(self.test[self.test.datetime == '2017-01-07'].LSOA_code.unique()), 1388)
 
     def test_oob(self):
         """
@@ -201,13 +222,13 @@ class Test(unittest.TestCase):
         """
 
 
-        self.data = pd.read_csv(pkg_resources.resource_filename(resource_package, 'tests/testing_data/test_data4pois.csv'))
+        self.data = pd.read_csv(pkg_resources.resource_filename(resource_package, 'tests/testing_data/test_oobsplit.csv'))
 
         self.output = self.poisson.out_of_bag_prep(self.data)
 
         self.assertTrue(isinstance(self.output, pd.DataFrame))
 
-        self.assertEqual(self.output.Year.unique().max(), 2018)
+        self.assertEqual(self.output.datetime.dt.year.max(), 2018)
 
     def test_oob_split(self):
         """
@@ -216,15 +237,17 @@ class Test(unittest.TestCase):
 
         self.oobdata = pd.read_csv(pkg_resources.resource_filename(resource_package, 'tests/testing_data/test_oobdata.csv'))
 
-        self.data = pd.read_csv(pkg_resources.resource_filename(resource_package, 'tests/testing_data/test_data4pois.csv'))
+        self.data = pd.read_csv(pkg_resources.resource_filename(resource_package, 'tests/testing_data/test_oobsplit.csv'))
 
         self.train_output = self.poisson.oob_train_split(full_data=self.data, test_data=self.oobdata)
 
         self.assertTrue(isinstance(self.train_output, pd.DataFrame))
 
-        self.assertTrue(2017 in self.train_output.Year.unique())
+        self.assertEqual(2017, self.train_output.datetime.max().year)
 
-        self.assertFalse(2018 in self.train_output.Year.unique())
+        self.assertEqual(2016, self.train_output.datetime.min().year)
+
+        self.assertFalse(2018 in self.train_output.datetime.dt.year.unique().tolist())
 
     def test_sampler(self):
         """
@@ -239,13 +262,14 @@ class Test(unittest.TestCase):
 
         self.assertTrue(isinstance(self.poi_data, pd.DataFrame))
 
-        self.assertEqual(self.poi_data.columns.tolist(), ['Week','Mon','Crime_type','Counts','LSOA_code','Year'])
+        self.assertEqual(self.poi_data.columns.tolist(), ['Week','datetime','Crime_type','Counts','LSOA_code'])
 
         self.assertEqual(self.poi_data.Week.unique().tolist(), [26,27,28,29,30,31])
 
-        self.assertEqual(self.poi_data.Year.unique().tolist(), self.oobdata.Year.unique().tolist())
+        self.assertEqual(self.poi_data.datetime.apply(lambda x: x.split('-')[0]).unique().tolist(),
+                         self.oobdata.datetime.apply(lambda x: x.split('-')[0]).unique().tolist())
 
-    def test_sampler_day(self):
+    def test_sampler_day_func_simp(self):
         """
         Test for checking the output of the poisson sampler is as expected
         when sampling using days
@@ -259,11 +283,11 @@ class Test(unittest.TestCase):
 
         self.assertTrue(isinstance(self.poi_data, pd.DataFrame))
 
-        self.assertEqual(self.poi_data.columns.tolist(), ['Day','Mon','Crime_type','Counts','LSOA_code','Year'])
+        self.assertEqual(self.poi_data.columns.tolist(), ['datetime','Crime_type','Counts','LSOA_code'])
 
-        self.assertEqual(len(self.poi_data.Day.unique()), 31)
+        self.assertEqual(len(self.poi_data.datetime.dt.day.unique()), 31)
 
-    def test_sampler_day(self):
+    def test_sampler_day_func_zero(self):
         """
         Test for checking the output of the poisson sampler is as expected
         when sampling using days
@@ -277,9 +301,9 @@ class Test(unittest.TestCase):
 
         self.assertTrue(isinstance(self.poi_data, pd.DataFrame))
 
-        self.assertEqual(self.poi_data.columns.tolist(), ['Day','Mon','Crime_type','Counts','LSOA_code','Year'])
+        self.assertEqual(self.poi_data.columns.tolist(), ['datetime','Crime_type','Counts','LSOA_code'])
 
-        self.assertEqual(len(self.poi_data.Day.unique()), 31)
+        self.assertEqual(len(self.poi_data.datetime.dt.day.unique()), 31)
 
     def test_sampler_day(self):
         """
@@ -295,9 +319,9 @@ class Test(unittest.TestCase):
 
         self.assertTrue(isinstance(self.poi_data, pd.DataFrame))
 
-        self.assertEqual(self.poi_data.columns.tolist(), ['Day','Mon','Crime_type','Counts','LSOA_code','Year'])
+        self.assertEqual(self.poi_data.columns.tolist(), ['datetime','Crime_type','Counts','LSOA_code'])
 
-        self.assertEqual(len(self.poi_data.Day.unique()), 31)
+        self.assertEqual(len(self.poi_data.datetime.dt.day.unique()), 31)
 
     @patch('matplotlib.pyplot.show')
     def test_sampler_error(self, mock_show):
@@ -337,7 +361,7 @@ class Test(unittest.TestCase):
 
         self.assertTrue(isinstance(self.plot, pd.DataFrame))
 
-        self.assertEqual(self.plot.columns.tolist(), ['Day','Pred_counts','Actual','Difference'])
+        self.assertEqual(self.plot.columns.tolist(), ['datetime','Pred_counts','Actual','Difference'])
 
 
     def test_get_crime_description(self):
@@ -352,11 +376,163 @@ class Test(unittest.TestCase):
 
         self.assertTrue(isinstance(self.descriptions, pd.DataFrame))
 
-        self.assertTrue(self.descriptions.Crime_description[0], 'Anti-social behaviour')
+        # check anti-social behaviour match is anti-social behaviour and is lowercase
+        self.assertEqual(self.descriptions.Crime_description[0], 'anti-social behaviour')
 
-        self.assertEqual(self.descriptions.columns.tolist(), ['UID','Year','Mon','Day','Crime_description','Crime_type','LSOA_code','Police_force'])
+        # check value is contained in list of crime descriptions for Violence and sexual offences
+        self.assertTrue(self.descriptions.Crime_description[7] in ['abuse of children through sexual exploitation',
+                                                                   'abuse of position of trust of a sexual nature',
+                                                                   'assault with injury', 'assault with injury on a constable',
+                                                                   'assault with intent to cause serious harm',
+                                                                   'assault without injury', 'assault without injury on a constable',
+                                                                   'attempted murder', 'causing death by aggravated vehicle taking',
+                                                                   'causing death by careless driving under influence of drink or drugs',
+                                                                   'causing death by careless or inconsiderate driving',
+                                                                   'causing death by driving: unlicensed or disqualified or uninsured drivers',
+                                                                   'causing death or serious injury by dangerous driving',
+                                                                   'causing or allowing death of child or vulnerable person',
+                                                                   'causing sexual activity without consent', 'child abduction',
+                                                                   'conspiracy to murder', 'cruelty to children/young persons',
+                                                                   'endangering life', 'exposure and voyeurism', 'harassment',
+                                                                   'homicide', 'incest or familial sexual offences',
+                                                                   'intentional destruction of a viable unborn child', 'kidnapping',
+                                                                   'malicious communications', 'modern slavery',
+                                                                   'other miscellaneous sexual offences',
+                                                                   'procuring illegal abortion',
+                                                                   'racially or religiously aggravated assault with injury',
+                                                                   'racially or religiously aggravated assault without injury',
+                                                                   'racially or religiously aggravated harassment',
+                                                                   'rape of a female aged 16 and over',
+                                                                   'rape of a female child under 13',
+                                                                   'rape of a female child under 16',
+                                                                   'rape of a male aged 16 and over', 'rape of a male child under 13',
+                                                                   'rape of a male child under 16',
+                                                                   'sexual activity etc with a person with a mental disorder',
+                                                                   'sexual activity involving a child under 13',
+                                                                   'sexual activity involving child under 16',
+                                                                   'sexual assault on a female aged 13 and over',
+                                                                   'sexual assault on a female child under 13',
+                                                                   'sexual assault on a male aged 13 and over',
+                                                                   'sexual assault on a male child under 13', 'sexual grooming',
+                                                                   'stalking', 'threats to kill',
+                                                                   'trafficking for sexual exploitation', 'unnatural sexual offences']
+       )
 
-        # TODO: write a test to catch actual random choice outputs
+        self.assertEqual(self.descriptions.columns.tolist(), ['UID','datetime','Crime_description','Crime_type','LSOA_code','Police_force'])
+
+    def test_validate_datetime(self):
+        """
+        Test that adding zero function works
+        """
+        self.datatrue = pd.read_csv(pkg_resources.resource_filename(resource_package, 'tests/testing_data/report_2_counts.csv'))
+
+        self.datafalse = pd.read_csv(pkg_resources.resource_filename(resource_package, 'tests/testing_data/random_date1.csv'))
+
+        self.test1 = utils.validate_datetime(self.datatrue)
+
+        self.test2 = utils.validate_datetime(self.datafalse)
+
+        self.assertTrue(isinstance(self.test1, pd.DataFrame))
+
+        self.assertTrue(np.dtype('datetime64[ns]') in self.test1.dtypes.tolist())
+
+        self.assertFalse(np.dtype('datetime64[ns]') in self.test2.dtypes.tolist())
+
+    def test_sampler_day_agg(self):
+        """
+        Test for checking the output of the poisson sampler is as expected
+        when sampling using days
+        """
+
+        self.oobdata = pd.read_csv(pkg_resources.resource_filename(resource_package, 'tests/testing_data/test_aggoobDay_data.csv'))
+
+        self.traindata = pd.read_csv(pkg_resources.resource_filename(resource_package, 'tests/testing_data/test_aggtrainDay_data.csv'))
+
+        self.poi_data = self.poisson_day.SimplePoission(train_data = self.traindata, test_data = self.oobdata, method = 'simple')
+
+        self.assertTrue(isinstance(self.poi_data, pd.DataFrame))
+
+        self.assertEqual(self.poi_data.columns.tolist(), ['datetime','Crime_type','Counts','LSOA_code'])
+
+        self.assertEqual(len(self.poi_data.datetime.dt.day.unique()), 31)
+
+        self.assertEqual(self.poi_data.shape[0], 14 * 31)
+
+    def test_sampler_week_agg(self):
+        """
+        Test for checking the output of the poisson sampler is as expected
+        """
+
+        self.oobdata = pd.read_csv(pkg_resources.resource_filename(resource_package, 'tests/testing_data/test_aggoobdata.csv'),
+                                   parse_dates=['datetime'])
+
+        self.traindata = pd.read_csv(pkg_resources.resource_filename(resource_package, 'tests/testing_data/test_aggtraindata.csv'))
+
+        self.poi_data = self.poisson.SimplePoission(train_data = self.traindata, test_data = self.oobdata, method = 'simple')
+
+        self.assertTrue(isinstance(self.poi_data, pd.DataFrame))
+
+        self.assertEqual(self.poi_data.columns.tolist(), ['Week','datetime','Crime_type','Counts','LSOA_code'])
+
+        self.assertEqual(self.poi_data.Week.unique().tolist(), [26,27,28,29,30,31])
+
+        self.assertEqual(pd.to_datetime(self.poi_data.datetime).dt.year.unique().tolist(), self.oobdata.datetime.dt.year.unique().tolist())
+
+        self.assertEqual(self.poi_data.shape[0], 14 * 6)
+
+    def test_moving_window_week(self):
+
+        self.week = 4
+
+        self.test1 = Poisson_sim.Poisson_sim.moving_window_week(self.week, window=1)
+
+        self.test2 = Poisson_sim.Poisson_sim.moving_window_week(self.week, window=0)
+
+        self.test3 = Poisson_sim.Poisson_sim.moving_window_week(self.week, window=2)
+
+        self.assertEqual(self.test1, [4, 3, 5])
+
+        self.assertEqual(self.test2, [4])
+
+        self.assertEqual(self.test3, [4, 3, 5, 2, 6])
+
+    def test_moving_window_datetime(self):
+
+        self.week = pd.to_datetime("2017-01-01")
+
+        self.test1 = [x.strftime("%Y-%m-%d") for x in Poisson_sim.Poisson_sim.moving_window_datetime(self.week, window=1)]
+
+        self.test2 = [x.strftime("%Y-%m-%d") for x in Poisson_sim.Poisson_sim.moving_window_datetime(self.week, window=0)]
+
+        self.test3 = [x.strftime("%Y-%m-%d") for x in Poisson_sim.Poisson_sim.moving_window_datetime(self.week, window=2)]
+
+        self.assertEqual(self.test1, ["2017-01-01",
+                                      "2017-01-02",
+                                      "2016-12-31"])
+
+        self.assertEqual(self.test2, ["2017-01-01"])
+
+        self.assertEqual(self.test3, ["2017-01-01",
+                                      "2017-01-02",
+                                      "2016-12-31",
+                                      "2017-01-03",
+                                      "2016-12-30"]
+                                      )
+
+    def test_sample_perturb(self):
+        """
+        Test that adding zero function works
+        """
+        self.data = pd.read_csv(pkg_resources.resource_filename(resource_package, 'tests/testing_data/test_sample_perturb.csv'),
+                                    index_col=False)
+
+        self.testpos = utils.sample_perturb(self.data, crime_type='Anti-social behaviour', pct_change=1.1)
+
+        self.testneg = utils.sample_perturb(self.data, crime_type='Violence and sexual offences', pct_change=0.666)
+
+        self.assertEqual(self.testpos.loc[0,'Counts'], 11)
+
+        self.assertEqual(self.testneg.loc[4,'Counts'], 10)
 
 
 if __name__ == "__main__":
