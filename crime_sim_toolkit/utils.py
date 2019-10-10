@@ -208,4 +208,7 @@ def sample_perturb(counts_frame, crime_type, pct_change):
 
     new_counts_frame.loc[mask,'Counts'] = round(mask_frame.Counts * pct_change, 0)
 
+    # need to set new masked data to int
+    new_counts_frame['Counts'] = new_counts_frame['Counts'].astype(int)
+
     return new_counts_frame
