@@ -28,3 +28,6 @@ htmlcov/*
 .coveragerc
 coverage.xml
 request_debug.sh
+
+# vscode
+.vscode
