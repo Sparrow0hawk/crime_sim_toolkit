@@ -31,3 +31,4 @@ request_debug.sh
 
 # vscode
 .vscode
+build_send2pip.sh
