@@ -242,7 +242,10 @@ class Poisson_sim:
         else:
             time_res = 'datetime'
 
-        comparison_frame = pd.concat([simulated_data.groupby([time_res,'LSOA_code'])['Counts'].sum(), test_data.groupby([time_res,'LSOA_code'])['Counts'].sum()],axis=1)
+        comparison_frame = pd.concat(
+        [simulated_data.groupby([time_res,'LSOA_code'])['Counts'].sum(),
+         test_data.groupby([time_res,'LSOA_code'])['Counts'].sum()],
+                                     axis=1)
 
         comparison_frame.reset_index(time_res, inplace=True)
 
