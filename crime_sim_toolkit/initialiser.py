@@ -68,7 +68,7 @@ class Initialiser:
 
         # is aggregate is not true then LSOA codes will be used by default
         # therefore add_zero_counts should be used
-        if aggregate != True:
+        if aggregate is not True:
 
             mut_counts_frame = self.add_zero_counts(mut_counts_frame, timeframe=timeframe)
 
@@ -89,7 +89,7 @@ class Initialiser:
 
         print('Number of data files found: ', str(len(files_list)))
 
-        if directory == None:
+        if directory is None:
             print('No directory passed.')
             print('Defaulting to test data.')
             files_list = glob.glob(pkg_resources.resource_filename(resource_package, 'tests/testing_data/test_policedata/')+'*/*.csv')
@@ -124,7 +124,7 @@ class Initialiser:
         """
 
         try:
-            data['Month'] == True
+            data['Month'] is True
         except KeyError:
             print('Your data does not appear to have a month column.')
             print('Please try again with Month in a Year-Month format.')
@@ -172,7 +172,9 @@ class Initialiser:
         if aggregate == True:
 
             # map LSOAs to police force area
-            counts_frame['LSOA_code'] = counts_frame.LSOA_code.map(lambda x: self.PolForce_LSOA_map[self.PolForce_LSOA_map['LSOA Code'].isin([x])].Police_force.tolist()[0])
+            counts_frame['LSOA_code'] = counts_frame.LSOA_code.map(
+            lambda x: self.PolForce_LSOA_map[self.PolForce_LSOA_map['LSOA Code'].isin([x])].Police_force.tolist()[0]
+            )
 
             # group columns by Police force for crime type and date and sum the counts column
             # thus aggregating data into the new police force category
@@ -228,13 +230,15 @@ class Initialiser:
         ## new section for adding Weeks
 
         if timeframe == 'Week':
-        # get week of the year based on month, year and psuedo-day allocated above
-        # we'll just extract it from the datetime object created above
+            # get week of the year based on month, year and psuedo-day allocated above
+            # we'll just extract it from the datetime object created above
             new_tot_counts['Week'] = new_tot_counts.apply(lambda x: x.datetime.week, axis=1)
 
             new_tot_counts['datetime'] = new_tot_counts.datetime.apply(lambda x: x.strftime('%Y-%m'))
 
-            new_tot_counts = pd.DataFrame(new_tot_counts.groupby(['datetime','Crime_type','LSOA_code'])['Week'].value_counts()).reset_index(level=['datetime','Crime_type','LSOA_code'])
+            new_tot_counts = pd.DataFrame(
+                new_tot_counts.groupby(['datetime','Crime_type','LSOA_code'])['Week'].value_counts()
+                                         ).reset_index(level=['datetime','Crime_type','LSOA_code'])
 
             new_tot_counts.columns = ['datetime','Crime_type','LSOA_code', 'Counts']
 
