@@ -8,6 +8,8 @@ crime_sim_toolkit/output/*
 crime_sim_toolkit/data/policedata/*
 dist/*
 scrapbook/*
+data_manipulation/outputs/*
+data_manipulation/data/*
 
 # specific files
 scrapbook.ipynb
