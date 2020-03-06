@@ -52,4 +52,4 @@ class Microsimulator():
             print('Warning: The year in the dataframe does not match the passed seed year')
             print('Passed seed year: ',year,' dataframe year: ',dat_year)
 
-        return
+        
