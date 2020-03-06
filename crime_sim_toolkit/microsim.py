@@ -60,6 +60,22 @@ class Microsimulator():
 
         :param: demographic_cols list: list of strings corresponding to demographic
         trait columns
+
+        TODO: this could be a staticmethod? That is subsequently called within other functions
+              in the class workflow
         """
 
         self.crime_data['victim_profile'] = self.crime_data[demographic_cols].astype(str).apply('-'.join ,axis=1)
+
+
+    def generate_probability_table(self,):
+        """
+        Generate a probability table of chance of specific crime description occuring
+        to person of specific demographic class on a given day in a given month
+
+        : param: synthetic_population_dir string: a string of the path to a directory containing
+                 spenser synthetic population data
+        """
+
+        self.crime_data.groupby(['Month','victim_profile','Crime_description'])['Crime_description'].count()
+        # START HERE refer to hackmd notes
