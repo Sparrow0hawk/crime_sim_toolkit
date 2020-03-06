@@ -16,33 +16,27 @@ resource_package = 'crime_sim_toolkit'
 
 class Test(unittest.TestCase):
 
-    # leaving in for the future
-    #def setUp(self):
+    def setUp(self):
 
-
-
+        self.test_sim = Microsim.Microsimulator()
 
     def test_VictimData(self):
         """
         Test VictimData class
         """
 
-        self.VicDat = Microsim.VictimData(year = 2017.0,
-                                          directory = os.path.join(test_dir,'testing_data/test_microsim/sample_vic_data_WY2017.csv')
-                                         )
+        self.test_sim.load_data(year = 2017.0,
+                                directory = os.path.join(test_dir,'testing_data/test_microsim/sample_vic_data_WY2017.csv')
+                                )
 
-        self.VicDat_bad = Microsim.VictimData(year = 2017.0,
-                                              directory = os.path.join(test_dir,'testing_data/test_microsim/sample_vic_data_WY2018.csv')
-                                             )
-
-        self.test_data = self.VicDat.load_data()
-
-        self.assertTrue(isinstance(self.test_data, pd.DataFrame))
+        self.assertTrue(isinstance(self.test_sim.crime_data, pd.DataFrame))
 
         # test that on passing bad path system exits
         with self.assertRaises(SystemExit) as cm:
 
-            self.VicDat_bad.load_data()
+            self.test_sim.load_data(year = 2017.0,
+                                    directory = os.path.join(test_dir,'testing_data/test_microsim/sample_vic_data_WY2018.csv')
+                                    )
 
         self.assertEqual(cm.exception.code, 0)
 
