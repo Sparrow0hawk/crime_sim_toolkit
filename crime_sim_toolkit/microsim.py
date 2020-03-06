@@ -52,4 +52,14 @@ class Microsimulator():
             print('Warning: The year in the dataframe does not match the passed seed year')
             print('Passed seed year: ',year,' dataframe year: ',dat_year)
 
-        
+
+    def create_combined_profiles(self, demographic_cols=['sex','age','ethnicity']):
+        """
+        A function for combining individual demographic traits into one hyphen separated
+        string.
+
+        :param: demographic_cols list: list of strings corresponding to demographic
+        trait columns
+        """
+
+        self.crime_data['victim_profile'] = self.crime_data[demographic_cols].astype(str).apply('-'.join ,axis=1)
