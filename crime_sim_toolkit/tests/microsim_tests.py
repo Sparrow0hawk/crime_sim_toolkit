@@ -20,7 +20,11 @@ class Test(unittest.TestCase):
 
         self.test_sim = Microsim.Microsimulator()
 
-    def test_VictimData(self):
+        self.loaded_sim = self.test_sim.load_data(year = 2017.0,
+                                directory = os.path.join(test_dir,'testing_data/test_microsim/to_profile_data.csv')
+                                )
+
+    def test_load_data(self):
         """
         Test VictimData class
         """
@@ -39,6 +43,18 @@ class Test(unittest.TestCase):
                                     )
 
         self.assertEqual(cm.exception.code, 0)
+
+    def test_combined_profiles(self):
+        """
+        Test create_combined_profiles function
+        """
+
+        self.test_sim.create_combined_profiles(['sex','age','ethnicity'])
+
+        self.assertTrue('victim_profile' in self.test_sim.crime_data.columns.tolist())
+
+        self.assertTrue(self.test_sim.crime_data.victim_profile[4] == '2-42-2')
+
 
 
 if __name__ == "__main__":
