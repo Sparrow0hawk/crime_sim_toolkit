@@ -1,41 +1,40 @@
 """
-A series of classes that work to sample crime events based on
-a synthetic population and victimisation data
+A microsimulator class for performing the microsimulations using victim data
 """
 
 import os
 import sys
 import pandas as pd
 
-class VictimData():
+class Microsimulator():
     """
     A class for initialising data on victimisation for the simulation.
-    
-    :param: year int: specify seed year of victim data
-    :param: directory str: string of full path to data
+    Includes some validation tests to ensure user has passed a real file path,
+    and the seed year specified matches data passed.
 
     """
 
-    def __init__(self, year: int, directory: str):
+    def __init__(self):
 
-        self.year = year
+        return
 
-        self.directory = directory
-
-    def load_data(self):
+    def load_data(self, year: int, directory: str):
         """
-        Handle loading data from alternate sources.
-        If user does not have local CSEW data, can fall back on police reported
-        data
+        Load individual police crime reports with victims data into
+        Microsimulator object
+
+        :param: year int: specify seed year of victim data
+        :param: directory str: string of full path to data
+
         """
 
-        if os.path.isfile(self.directory):
+        if os.path.isfile(directory):
 
-            victim_data = pd.read_csv(self.directory)
+            self.crime_data = pd.read_csv(directory)
 
         else:
             print('File does not exist.')
-            print('Please check the directory you passed: \n',self.directory)
+            print('Please check the directory you passed: \n',directory)
             sys.exit(0)
 
         # set internal check that the year is the same for the entire
@@ -46,11 +45,11 @@ class VictimData():
         # select first col at 0 index and get unique entries
         # then convert to int and calculate the mean
         # if only 1 unique year should give round number as mean i.e. 2017.0
-        dat_year = victim_data.Month.str.split('-', expand=True)[0].unique().astype(int).mean()
+        dat_year = self.crime_data.Month.str.split('-', expand=True)[0].unique().astype(int).mean()
 
-        if dat_year != self.year:
+        if dat_year != year:
 
             print('Warning: The year in the dataframe does not match the passed seed year')
-            print('Passed seed year: ',self.year,' dataframe year: ',dat_year)
+            print('Passed seed year: ',year,' dataframe year: ',dat_year)
 
-        return victim_data
+        return
