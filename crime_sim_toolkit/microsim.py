@@ -6,12 +6,11 @@ import os
 import sys
 import pandas as pd
 
-class VictimData():
+class Microsimulator():
     """
     A class for initialising data on victimisation for the simulation.
-
-    :param: year int: specify seed year of victim data
-    :param: directory str: string of full path to data
+    Includes some validation tests to ensure user has passed a real file path,
+    and the seed year specified matches data passed.
 
     """
 
@@ -48,7 +47,9 @@ class VictimData():
         # if only 1 unique year should give round number as mean i.e. 2017.0
         dat_year = self.crime_data.Month.str.split('-', expand=True)[0].unique().astype(int).mean()
 
-        if dat_year != self.year:
+        if dat_year != year:
 
             print('Warning: The year in the dataframe does not match the passed seed year')
             print('Passed seed year: ',year,' dataframe year: ',dat_year)
+
+        
