@@ -6,15 +6,11 @@ a synthetic population and victimisation data
 import os
 import sys
 import pandas as pd
-from crime_sim_toolkit.initialiser import Initialiser
 
-class VictimData(Initialiser):
+class VictimData():
     """
     A class for initialising data on victimisation for the simulation.
-    Inherits from Initialiser class on the instance that victimisation must be
-    infered from reported police data.
-
-    :param: CSEW bool: querying if user is using CSEW data
+    
     :param: year int: specify seed year of victim data
     :param: directory str: string of full path to data
 
@@ -52,7 +48,7 @@ class VictimData(Initialiser):
         # if only 1 unique year should give round number as mean i.e. 2017.0
         dat_year = victim_data.Month.str.split('-', expand=True)[0].unique().astype(int).mean()
 
-        if dat_year is not self.year:
+        if dat_year != self.year:
 
             print('Warning: The year in the dataframe does not match the passed seed year')
             print('Passed seed year: ',self.year,' dataframe year: ',dat_year)
