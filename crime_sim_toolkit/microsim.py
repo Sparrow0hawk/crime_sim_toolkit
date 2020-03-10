@@ -4,6 +4,7 @@ A microsimulator class for performing the microsimulations using victim data
 
 import os
 import sys
+import glob
 import pandas as pd
 
 class Microsimulator():
@@ -53,11 +54,12 @@ class Microsimulator():
             print('Passed seed year: ',year,' dataframe year: ',dat_year)
 
 
-    def create_combined_profiles(self, demographic_cols=['sex','age','ethnicity']):
+    def create_combined_profiles(self, dataframe, demographic_cols=['sex','age','ethnicity']):
         """
         A function for combining individual demographic traits into one hyphen separated
         string.
 
+        :param: dataframe pd.DataFrame: a pandas dataframe containing demographic cols
         :param: demographic_cols list: list of strings corresponding to demographic
         trait columns
 
@@ -65,17 +67,72 @@ class Microsimulator():
               in the class workflow
         """
 
-        self.crime_data['victim_profile'] = self.crime_data[demographic_cols].astype(str).apply('-'.join ,axis=1)
+        try:
 
+            dataframe['victim_profile'] = dataframe[demographic_cols].astype(str).apply('-'.join ,axis=1)
 
-    def generate_probability_table(self,):
+        except KeyError:
+
+            print('Column names passed ('+' '.join(demographic_cols)+') do not match column names in dataframe.')
+
+        return dataframe
+
+    def generate_probability_table(self):
         """
         Generate a probability table of chance of specific crime description occuring
         to person of specific demographic class on a given day in a given month
 
-        : param: synthetic_population_dir string: a string of the path to a directory containing
-                 spenser synthetic population data
         """
 
+        # groupby crime_data by month, victim profile and crime description
+        # then count the number of each Crime_description in those groups
         self.crime_data.groupby(['Month','victim_profile','Crime_description'])['Crime_description'].count()
         # START HERE refer to hackmd notes
+
+    def load_seed_pop(self, seed_population_dir, demographic_cols=['DC1117EW_C_SEX','DC1117EW_C_AGE','DC2101EW_C_ETHPUK11']):
+        """
+        A function for loading the specific seed population for generating
+        transition probailities.
+
+        : param: seed_population_dir string: a string of the path to the SPENSER synthetic population
+                 file
+        """
+
+        self.seed_population = pd.read_csv(seed_population_dir)
+
+        self.seed_population = self.create_combined_profiles(self.seed_population,
+                                                        demographic_cols=demographic_cols)
+
+
+    def load_future_pop(self, synthetic_population_dir):
+        """
+        A function for loading the synthetic future populations
+
+        : param: synthetic_population_dir string: a string of the path to a directory containing
+                 spenser synthetic population data expects path to end in /
+        """
+
+        # section for testing if synthetic_population_dir ends in /
+
+        if synthetic_population_dir[-1] != '/':
+
+            synthetic_population_dir += '/'
+
+
+        file_list = glob.glob(str(synthetic_population_dir)+'*')
+
+        selected_files = [file for file in file_list if year_str in file]
+
+        print('Number of files found: ',len(selected_files))
+
+        files_combo = []
+
+        for file in selected_files:
+
+                open_file = pd.read_csv(file)
+
+                files_combo.append(open_file)
+
+        combined_files = pd.concat(files_combo, axis=0)
+
+        combined_files.reset_index(inplace=True, drop=True)
