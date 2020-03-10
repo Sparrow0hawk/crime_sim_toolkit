@@ -49,11 +49,23 @@ class Test(unittest.TestCase):
         Test create_combined_profiles function
         """
 
-        self.test_sim.create_combined_profiles(['sex','age','ethnicity'])
+        self.test_sim.crime_data = self.test_sim.create_combined_profiles(dataframe = self.test_sim.crime_data,
+                                               demographic_cols = ['sex','age','ethnicity'])
 
         self.assertTrue('victim_profile' in self.test_sim.crime_data.columns.tolist())
 
         self.assertTrue(self.test_sim.crime_data.victim_profile[4] == '2-42-2')
+
+
+    def test_load_seed_pop(self):
+        """
+        Test for loading the seed population dataset
+        and ensuring demographic columns are combined
+        """
+
+        self.test_sim.load_seed_pop(os.path.join(test_dir,'testing_data/test_microsim/sample_seed_pop.csv'))
+
+        self.assertTrue(isinstance(self.test_sim.seed_population, pd.DataFrame))
 
 
 
