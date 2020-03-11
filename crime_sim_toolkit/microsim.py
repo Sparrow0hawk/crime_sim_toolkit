@@ -71,11 +71,11 @@ class Microsimulator():
 
             dataframe['victim_profile'] = dataframe[demographic_cols].astype(str).apply('-'.join ,axis=1)
 
+            return dataframe
+
         except KeyError:
 
-            print('Column names passed ('+' '.join(demographic_cols)+') do not match column names in dataframe.')
-
-        return dataframe
+            raise KeyError('Column names passed ('+' '.join(demographic_cols)+') do not match column names in dataframe.')
 
     def generate_probability_table(self):
         """

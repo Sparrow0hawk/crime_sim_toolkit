@@ -56,6 +56,12 @@ class Test(unittest.TestCase):
 
         self.assertTrue(self.test_sim.crime_data.victim_profile[4] == '2-42-2')
 
+        # test error raise if invalid column names passed
+        with self.assertRaises(KeyError) as context:
+
+            self.test_sim.create_combined_profiles(dataframe = self.test_sim.crime_data,
+                                                   demographic_cols = ['name','age','ethnicity'])
+
 
     def test_load_seed_pop(self):
         """
