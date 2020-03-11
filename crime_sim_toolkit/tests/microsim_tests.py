@@ -73,6 +73,21 @@ class Test(unittest.TestCase):
 
         self.assertTrue(isinstance(self.test_sim.seed_population, pd.DataFrame))
 
+    def test_load_future_pop(self):
+        """
+        Test function for loading future_population
+        """
+        self.test_sim.load_future_pop(synthetic_population_dir=os.path.join(test_dir,'testing_data/test_microsim/test_load_future_pop'),
+                                      year=2019)
+
+        self.assertTrue(isinstance(self.test_sim.future_population, pd.DataFrame))
+
+        self.assertEqual(self.test_sim.future_population.shape[0], 2303 * 3)
+
+        self.test_sim.load_future_pop(synthetic_population_dir=os.path.join(test_dir,'testing_data/test_microsim'),
+                                      year=2019)
+
+
 
 
 if __name__ == "__main__":

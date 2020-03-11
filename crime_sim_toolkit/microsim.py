@@ -106,12 +106,15 @@ class Microsimulator():
                                                         demographic_cols=demographic_cols)
 
 
-    def load_future_pop(self, synthetic_population_dir):
+    def load_future_pop(self, synthetic_population_dir: str, year: int):
         """
         A function for loading the synthetic future populations
 
         : param: synthetic_population_dir string: a string of the path to a directory containing
                  spenser synthetic population data expects path to end in /
+
+        : param: year int: a integer the year of the synthetic population that
+                 the user wishes to load
         """
 
         # section for testing if synthetic_population_dir ends in /
@@ -120,21 +123,26 @@ class Microsimulator():
 
             synthetic_population_dir += '/'
 
+        # create a file list of all files containing year
+        file_list = glob.glob(str(synthetic_population_dir)+'*'+str(year)+'*.csv')
 
-        file_list = glob.glob(str(synthetic_population_dir)+'*')
+        # we need to combine files from spenser into the police force area
+        # this assumes spenser files are from local authority areas within the same
+        # police force area
 
-        selected_files = [file for file in file_list if year_str in file]
+        try:
+            files_combo = []
 
-        print('Number of files found: ',len(selected_files))
-
-        files_combo = []
-
-        for file in selected_files:
+            for file in file_list:
 
                 open_file = pd.read_csv(file)
 
                 files_combo.append(open_file)
 
-        combined_files = pd.concat(files_combo, axis=0)
+            combined_files = pd.concat(files_combo, axis=0)
 
-        combined_files.reset_index(inplace=True, drop=True)
+            self.future_population = combined_files.reset_index(inplace=True, drop=True)
+
+        except ValueError:
+
+            raise ValueError('No data files to load. Following files found in directory passed: '+str(file_list))
