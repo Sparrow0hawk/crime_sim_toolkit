@@ -6,6 +6,7 @@ import os
 import sys
 import glob
 import pandas as pd
+from crime_sim_toolkit import utils
 
 class Microsimulator():
     """
@@ -107,11 +108,32 @@ class Microsimulator():
 
         # groupby crime_data by month, victim profile and crime description
         # then count the number of each Crime_description in those groups
-        self.crime_data.groupby(['Month','victim_profile','Crime_description'])['Crime_description'].count()
+        crimes_grouped = self.crime_data.groupby(['Month','victim_profile','Crime_description'])['Crime_description'].count()
 
-        self.load_seed_pop()
+        crimes_grouped = crimes_grouped.reset_index(['Month','victim_profile'])
 
-        self.transition_table = None
+        crimes_grouped.columns = ['Month','victim_profile','crime_counts']
+
+        crimes_grouped.reset_index(inplace=True)
+
+        # get counts of each demographic group in seed population
+        population_grp_counts = self.seed_population.victim_profile.value_counts().reset_index()
+
+        population_grp_counts.columns = ['victim_profile','demo_group_counts']
+
+        # merge grouped crime by demographic victim profile with total counts of
+        # demographic groups in population
+        crime_and_pop = pd.merge(crimes_grouped, population_grp_counts, on='victim_profile')
+
+        # calculate rate of crime within population for a given month and demographic group
+        crime_and_pop['crime_count_per_pop'] = crime_and_pop.crime_counts / crime_and_pop.demo_group_counts
+
+        # divide the rate of crime within population/ month/ demographic group by
+        # number of days in month to give rate of crime within population/monht/demographic group/day
+        crime_and_pop['chance_crime_per_day_demo'] = crime_and_pop['crime_count_per_pop'] / crime_and_pop['Month'].map(utils.days_in_month_dict(crime_and_pop))
+
+        # set this final table as transition_table
+        self.transition_table = crime_and_pop[['Crime_description','Month','victim_profile','chance_crime_per_day_demo']]
 
 
     def load_seed_pop(self, seed_population_dir: str, demographic_cols=['DC1117EW_C_SEX','DC1117EW_C_AGE','DC2101EW_C_ETHPUK11']):

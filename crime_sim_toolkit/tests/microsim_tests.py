@@ -101,7 +101,9 @@ class Test(unittest.TestCase):
 
         self.loaded_sim.generate_probability_table()
 
-        self.assertTrue(isinstance(self.loaded_sim.transition_table))
+        self.assertTrue(isinstance(self.loaded_sim.transition_table, pd.DataFrame))
+
+        self.assertAlmostEqual(self.loaded_sim.transition_table.chance_crime_per_day_demo[10], 0.00714, places=5)
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)
