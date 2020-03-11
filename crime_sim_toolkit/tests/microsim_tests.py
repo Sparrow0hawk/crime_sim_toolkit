@@ -20,27 +20,32 @@ class Test(unittest.TestCase):
 
         self.test_sim = Microsim.Microsimulator()
 
-        self.loaded_sim = self.test_sim.load_data(year = 2017.0,
-                                directory = os.path.join(test_dir,'testing_data/test_microsim/to_profile_data.csv')
-                                )
+        self.loaded_sim = Microsim.Microsimulator()
 
-    def test_load_data(self):
+        self.loaded_sim.load_data(seed_year = 2017,
+                                  police_data_dir = os.path.join(test_dir,'testing_data/test_microsim/to_profile_data.csv'),
+                                  seed_pop_dir = os.path.join(test_dir,'testing_data/test_microsim/sample_seed_pop.csv'),
+                                  spenser_demographic_cols = ['DC1117EW_C_SEX','DC1117EW_C_AGE','DC2101EW_C_ETHPUK11'],
+                                  police_demographic_cols = ['sex','age','ethnicity']
+                                  )
+
+    def test_load_crime_data(self):
         """
         Test VictimData class
         """
 
-        self.test_sim.load_data(year = 2017.0,
-                                directory = os.path.join(test_dir,'testing_data/test_microsim/sample_vic_data_WY2017.csv')
-                                )
+        self.test_sim.load_crime_data(year = 2017.0,
+                                      directory = os.path.join(test_dir,'testing_data/test_microsim/sample_vic_data_WY2017.csv')
+                                      )
 
         self.assertTrue(isinstance(self.test_sim.crime_data, pd.DataFrame))
 
         # test that on passing bad path system exits
         with self.assertRaises(SystemExit) as cm:
 
-            self.test_sim.load_data(year = 2017.0,
-                                    directory = os.path.join(test_dir,'testing_data/test_microsim/sample_vic_data_WY2018.csv')
-                                    )
+            self.test_sim.load_crime_data(year = 2017.0,
+                                          directory = os.path.join(test_dir,'testing_data/test_microsim/sample_vic_data_WY2018.csv')
+                                         )
 
         self.assertEqual(cm.exception.code, 0)
 
@@ -49,17 +54,17 @@ class Test(unittest.TestCase):
         Test create_combined_profiles function
         """
 
-        self.test_sim.crime_data = self.test_sim.create_combined_profiles(dataframe = self.test_sim.crime_data,
+        self.loaded_sim.crime_data = self.loaded_sim.create_combined_profiles(dataframe = self.loaded_sim.crime_data,
                                                demographic_cols = ['sex','age','ethnicity'])
 
-        self.assertTrue('victim_profile' in self.test_sim.crime_data.columns.tolist())
+        self.assertTrue('victim_profile' in self.loaded_sim.crime_data.columns.tolist())
 
-        self.assertTrue(self.test_sim.crime_data.victim_profile[4] == '2-42-2')
+        self.assertTrue(self.loaded_sim.crime_data.victim_profile[4] == '2-42-2')
 
         # test error raise if invalid column names passed
         with self.assertRaises(KeyError) as context:
 
-            self.test_sim.create_combined_profiles(dataframe = self.test_sim.crime_data,
+            self.test_sim.create_combined_profiles(dataframe = self.loaded_sim.crime_data,
                                                    demographic_cols = ['name','age','ethnicity'])
 
 
