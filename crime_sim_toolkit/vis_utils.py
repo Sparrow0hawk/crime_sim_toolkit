@@ -101,9 +101,7 @@ def get_choropleth(data=None, inline=True, counts_col='Counts'):
     colorscale.add_to(m)
     # call display to show map
 
-    if inline == True:
-        display(m)
-    else:
+    if inline is not True:
         # user can define map output name
         file_name = input('Please pass a name for your choropleth: ')
 
