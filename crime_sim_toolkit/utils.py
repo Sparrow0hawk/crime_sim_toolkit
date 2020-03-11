@@ -4,6 +4,7 @@ Utility functions for general use
 
 import pandas as pd
 import numpy as np
+from calendar import monthrange
 import pkg_resources
 
 resource_package = 'crime_sim_toolkit'
@@ -197,3 +198,31 @@ def sample_perturb(counts_frame, crime_type, pct_change):
     new_counts_frame['Counts'] = new_counts_frame['Counts'].astype(int)
 
     return new_counts_frame
+
+def days_in_month_dict(dataframe):
+    """
+    Simple function that takes a dataframe with Month column (as default in police uk data)
+    and returns a dictionary of Month (year-mon format) with number of days in that month
+    """
+
+    date_lst = []
+
+    days_in_month_lst = []
+
+    date_dict = dict()
+
+    for date in dataframe['Month'].unique().tolist():
+
+        year = date.split('-')[0]
+
+        month = date.split('-')[1]
+
+        monthdays = monthrange(int(year), int(month))[1]
+
+        date_lst.append(date)
+
+        days_in_month_lst.append(monthdays)
+
+        date_dict[date] = monthdays
+
+    return date_dict
