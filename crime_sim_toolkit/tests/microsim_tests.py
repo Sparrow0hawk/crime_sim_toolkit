@@ -84,7 +84,9 @@ class Test(unittest.TestCase):
 
         self.assertEqual(self.test_sim.future_population.shape[0], 2303 * 3)
 
-        self.test_sim.load_future_pop(synthetic_population_dir=os.path.join(test_dir,'testing_data/test_microsim'),
+        with self.assertRaises(ValueError) as context:
+
+            self.test_sim.load_future_pop(synthetic_population_dir=os.path.join(test_dir,'testing_data/test_microsim'),
                                       year=2019)
 
 
