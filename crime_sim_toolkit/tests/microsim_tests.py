@@ -94,7 +94,14 @@ class Test(unittest.TestCase):
             self.test_sim.load_future_pop(synthetic_population_dir=os.path.join(test_dir,'testing_data/test_microsim'),
                                           year=2019)
 
+    def test_get_prob_table(self):
+        """
+        Test for getting probability table
+        """
 
+        self.loaded_sim.generate_probability_table()
+
+        self.assertTrue(isinstance(self.loaded_sim.transition_table))
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)
