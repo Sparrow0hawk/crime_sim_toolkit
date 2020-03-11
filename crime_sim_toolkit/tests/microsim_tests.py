@@ -77,18 +77,17 @@ class Test(unittest.TestCase):
         """
         Test function for loading future_population
         """
-        self.test_sim.load_future_pop(synthetic_population_dir=os.path.join(test_dir,'testing_data/test_microsim/test_load_future_pop'),
+        self.test_sim.load_future_pop(synthetic_population_dir=os.path.join(test_dir,'testing_data/test_microsim/test_future_pop'),
                                       year=2019)
 
         self.assertTrue(isinstance(self.test_sim.future_population, pd.DataFrame))
 
-        self.assertEqual(self.test_sim.future_population.shape[0], 2303 * 3)
+        self.assertEqual(self.test_sim.future_population.shape[0], 2302 * 3)
 
         with self.assertRaises(ValueError) as context:
 
             self.test_sim.load_future_pop(synthetic_population_dir=os.path.join(test_dir,'testing_data/test_microsim'),
-                                      year=2019)
-
+                                          year=2019)
 
 
 

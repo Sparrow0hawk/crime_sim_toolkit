@@ -143,6 +143,8 @@ class Microsimulator():
 
             self.future_population = combined_files.reset_index(inplace=True, drop=True)
 
-        except ValueError:
+            self.future_population = combined_files
 
-            raise ValueError('No data files to load. Following files found in directory passed: '+str(file_list))
+        except ValueError as e:
+
+            raise type(e)(str(e) + '\nNo data files to load. Following files found in directory passed: '+str(file_list))
