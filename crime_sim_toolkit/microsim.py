@@ -19,13 +19,30 @@ class Microsimulator():
 
         return
 
-    def load_data(self, year: int, directory: str):
+    def load_data(self, seed_year: int, police_data_dir: str, seed_pop_dir: str,
+                  spenser_demographic_cols: list, police_demographic_cols: list):
+        """
+        A wrapper function that loads police data and seed population data
+
+        :param: seed_year int:
+        :param: police_data_dir str:
+        :param: seed_pop_dir str:
+        :param: spenser_demographic_cols list:
+        :param: police_demographic_cols list:
+        """
+
+        self.load_crime_data(year=seed_year, directory=police_data_dir, demographic_cols=police_demographic_cols)
+
+        self.load_seed_pop(seed_population_dir=seed_pop_dir, demographic_cols=spenser_demographic_cols)
+
+    def load_crime_data(self, year: int, directory: str, demographic_cols=['sex','age','ethnicity']):
         """
         Load individual police crime reports with victims data into
         Microsimulator object
 
         :param: year int: specify seed year of victim data
         :param: directory str: string of full path to data
+        :param: demographic_cols list:
 
         """
 
@@ -55,7 +72,7 @@ class Microsimulator():
 
         # create victim_profile column, using default columns
 
-        self.crime_data = self.create_combined_profiles(self.crime_data, demographic_cols=['sex','age','ethnicity'])
+        self.crime_data = self.create_combined_profiles(self.crime_data, demographic_cols=demographic_cols)
 
 
     def create_combined_profiles(self, dataframe, demographic_cols=['sex','age','ethnicity']):
