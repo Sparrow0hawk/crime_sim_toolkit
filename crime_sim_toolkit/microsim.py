@@ -109,6 +109,10 @@ class Microsimulator():
         # then count the number of each Crime_description in those groups
         self.crime_data.groupby(['Month','victim_profile','Crime_description'])['Crime_description'].count()
 
+        self.load_seed_pop()
+
+        self.transition_table = None
+
 
     def load_seed_pop(self, seed_population_dir: str, demographic_cols=['DC1117EW_C_SEX','DC1117EW_C_AGE','DC2101EW_C_ETHPUK11']):
         """
