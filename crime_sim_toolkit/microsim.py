@@ -53,6 +53,10 @@ class Microsimulator():
             print('Warning: The year in the dataframe does not match the passed seed year')
             print('Passed seed year: ',year,' dataframe year: ',dat_year)
 
+        # create victim_profile column, using default columns
+
+        self.crime_data = self.create_combined_profiles(self.crime_data, demographic_cols=['sex','age','ethnicity'])
+
 
     def create_combined_profiles(self, dataframe, demographic_cols=['sex','age','ethnicity']):
         """
