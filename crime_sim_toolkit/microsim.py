@@ -87,15 +87,17 @@ class Microsimulator():
         # groupby crime_data by month, victim profile and crime description
         # then count the number of each Crime_description in those groups
         self.crime_data.groupby(['Month','victim_profile','Crime_description'])['Crime_description'].count()
-        # START HERE refer to hackmd notes
 
-    def load_seed_pop(self, seed_population_dir, demographic_cols=['DC1117EW_C_SEX','DC1117EW_C_AGE','DC2101EW_C_ETHPUK11']):
+
+    def load_seed_pop(self, seed_population_dir: str, demographic_cols=['DC1117EW_C_SEX','DC1117EW_C_AGE','DC2101EW_C_ETHPUK11']):
         """
         A function for loading the specific seed population for generating
         transition probailities.
 
         : param: seed_population_dir string: a string of the path to the SPENSER synthetic population
                  file
+        : param: demographic_cols list: list of strings corresponding to demographic
+        trait columns - preset to default to spenser column names
         """
 
         self.seed_population = pd.read_csv(seed_population_dir)
