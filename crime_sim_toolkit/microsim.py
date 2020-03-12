@@ -6,6 +6,7 @@ import os
 import sys
 import glob
 import pandas as pd
+import numpy as np
 from crime_sim_toolkit import utils
 
 class Microsimulator():
@@ -200,3 +201,10 @@ class Microsimulator():
         except ValueError as e:
 
             raise type(e)(str(e) + '\nNo data files to load. Following files found in directory passed: '+str(file_list))
+
+
+        def run_simulation():
+            """
+            A function that takes loaded transition table and a future population and
+            simulates a years worth of crime based on transition table
+            """
