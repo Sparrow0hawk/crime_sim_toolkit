@@ -71,7 +71,7 @@ class Microsimulator():
             print('Warning: The year in the dataframe does not match the passed seed year')
             print('Passed seed year: ',year,' dataframe year: ',dat_year)
 
-        # create victim_profile column, using default columns
+        # create demographic_profile column, using default columns
 
         self.crime_data = self.create_combined_profiles(self.crime_data, demographic_cols=demographic_cols)
 
@@ -91,7 +91,7 @@ class Microsimulator():
 
         try:
 
-            dataframe['victim_profile'] = dataframe[demographic_cols].astype(str).apply('-'.join ,axis=1)
+            dataframe['demographic_profile'] = dataframe[demographic_cols].astype(str).apply('-'.join ,axis=1)
 
             return dataframe
 
@@ -108,32 +108,33 @@ class Microsimulator():
 
         # groupby crime_data by month, victim profile and crime description
         # then count the number of each Crime_description in those groups
-        crimes_grouped = self.crime_data.groupby(['Month','victim_profile','Crime_description'])['Crime_description'].count()
+        crimes_grouped = self.crime_data.groupby(['Month','demographic_profile','Crime_description'])['Crime_description'].count()
 
-        crimes_grouped = crimes_grouped.reset_index(['Month','victim_profile'])
+        crimes_grouped = crimes_grouped.reset_index(['Month','demographic_profile'])
 
-        crimes_grouped.columns = ['Month','victim_profile','crime_counts']
+        crimes_grouped.columns = ['Month','demographic_profile','crime_counts']
 
         crimes_grouped.reset_index(inplace=True)
 
         # get counts of each demographic group in seed population
-        population_grp_counts = self.seed_population.victim_profile.value_counts().reset_index()
+        population_grp_counts = self.seed_population.demographic_profile.value_counts().reset_index()
 
-        population_grp_counts.columns = ['victim_profile','demo_group_counts']
+        population_grp_counts.columns = ['demographic_profile','demo_group_counts']
 
         # merge grouped crime by demographic victim profile with total counts of
         # demographic groups in population
-        crime_and_pop = pd.merge(crimes_grouped, population_grp_counts, on='victim_profile')
+        crime_and_pop = pd.merge(crimes_grouped, population_grp_counts, on='demographic_profile')
 
         # calculate rate of crime within population for a given month and demographic group
         crime_and_pop['crime_count_per_pop'] = crime_and_pop.crime_counts / crime_and_pop.demo_group_counts
 
+        crime_and_pop['day_in_month'] = crime_and_pop['Month'].map(utils.days_in_month_dict(crime_and_pop))
         # divide the rate of crime within population/ month/ demographic group by
         # number of days in month to give rate of crime within population/monht/demographic group/day
-        crime_and_pop['chance_crime_per_day_demo'] = crime_and_pop['crime_count_per_pop'] / crime_and_pop['Month'].map(utils.days_in_month_dict(crime_and_pop))
+        crime_and_pop['chance_crime_per_day_demo'] = crime_and_pop['crime_count_per_pop'] / crime_and_pop['day_in_month']
 
         # set this final table as transition_table
-        self.transition_table = crime_and_pop[['Crime_description','Month','victim_profile','chance_crime_per_day_demo']]
+        self.transition_table = crime_and_pop[['Crime_description','Month','day_in_month','demographic_profile','chance_crime_per_day_demo']]
 
 
     def load_seed_pop(self, seed_population_dir: str, demographic_cols=['DC1117EW_C_SEX','DC1117EW_C_AGE','DC2101EW_C_ETHPUK11']):
@@ -144,7 +145,7 @@ class Microsimulator():
         : param: seed_population_dir string: a string of the path to the SPENSER synthetic population
                  file
         : param: demographic_cols list: list of strings corresponding to demographic
-        trait columns - preset to default to spenser column names
+                 trait columns - preset to default to spenser column names
         """
 
         self.seed_population = pd.read_csv(seed_population_dir)
