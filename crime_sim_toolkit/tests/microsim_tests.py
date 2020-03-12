@@ -57,9 +57,9 @@ class Test(unittest.TestCase):
         self.loaded_sim.crime_data = self.loaded_sim.create_combined_profiles(dataframe = self.loaded_sim.crime_data,
                                                demographic_cols = ['sex','age','ethnicity'])
 
-        self.assertTrue('victim_profile' in self.loaded_sim.crime_data.columns.tolist())
+        self.assertTrue('demographic_profile' in self.loaded_sim.crime_data.columns.tolist())
 
-        self.assertTrue(self.loaded_sim.crime_data.victim_profile[4] == '2-42-2')
+        self.assertTrue(self.loaded_sim.crime_data.demographic_profile[4] == '2-42-2')
 
         # test error raise if invalid column names passed
         with self.assertRaises(KeyError) as context:
@@ -88,6 +88,8 @@ class Test(unittest.TestCase):
         self.assertTrue(isinstance(self.test_sim.future_population, pd.DataFrame))
 
         self.assertEqual(self.test_sim.future_population.shape[0], 2302 * 3)
+
+        self.assertTrue('demographic_profile' in self.test_sim.future_population.columns.tolist())
 
         with self.assertRaises(ValueError) as context:
 
