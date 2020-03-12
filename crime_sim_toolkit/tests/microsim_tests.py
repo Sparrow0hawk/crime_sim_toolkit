@@ -107,5 +107,11 @@ class Test(unittest.TestCase):
 
         self.assertAlmostEqual(self.loaded_sim.transition_table.chance_crime_per_day_demo[10], 0.00714, places=5)
 
+    def test_run_simulation(self):
+        """
+        A test for the run_simulator function
+        """
+
+
 if __name__ == "__main__":
     unittest.main(verbosity=2)
