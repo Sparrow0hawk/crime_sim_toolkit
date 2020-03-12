@@ -153,15 +153,16 @@ class Microsimulator():
                                                         demographic_cols=demographic_cols)
 
 
-    def load_future_pop(self, synthetic_population_dir: str, year: int):
+    def load_future_pop(self, synthetic_population_dir: str, year: int, demographic_cols=['DC1117EW_C_SEX','DC1117EW_C_AGE','DC2101EW_C_ETHPUK11']):
         """
         A function for loading the synthetic future populations
 
         : param: synthetic_population_dir string: a string of the path to a directory containing
                  spenser synthetic population data expects path to end in /
-
         : param: year int: a integer the year of the synthetic population that
                  the user wishes to load
+        : param: demographic_cols list: list of strings corresponding to demographic
+                 trait columns - preset to default to spenser column names
         """
 
         # section for testing if synthetic_population_dir ends in /
@@ -191,6 +192,9 @@ class Microsimulator():
             self.future_population = combined_files.reset_index(inplace=True, drop=True)
 
             self.future_population = combined_files
+
+            self.future_population = self.create_combined_profiles(self.future_population,
+                                                            demographic_cols=demographic_cols)
 
         except ValueError as e:
 
