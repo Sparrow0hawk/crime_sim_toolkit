@@ -139,14 +139,13 @@ class Microsimulator():
         # number of days in month to give rate of crime within population/monht/demographic group/day
         crime_and_pop['chance_crime_per_day_demo'] = crime_and_pop['crime_count_per_pop'] / crime_and_pop['day_in_month']
 
+        # for rows with 0 in their demographic subpopulation we get NaNs to solve this we'll convert them all to 0
+        crime_and_pop['chance_crime_per_day_demo'] = crime_and_pop['chance_crime_per_day_demo'].fillna(0)
+
         # set this final table as transition_table
         self.transition_table = crime_and_pop[['Crime_description','Month','day_in_month',
                                                'demographic_profile','crime_counts',
                                                'chance_crime_per_day_demo']]
-
-        # drop NaN values in daily probabilities
-        # NaN is probably derived from lack of subpopulation in demographic data
-        self.transition_table = self.transition_table.dropna(subset=['chance_crime_per_day_demo'])
 
 
     def load_seed_pop(self, seed_population_dir: str, demographic_cols=['DC1117EW_C_SEX','DC1117EW_C_AGE','DC2101EW_C_ETHPUK11']):
@@ -214,8 +213,69 @@ class Microsimulator():
             raise type(e)(str(e) + '\nNo data files to load. Following files found in directory passed: '+str(file_list))
 
 
-        def run_simulation():
-            """
-            A function that takes loaded transition table and a future population and
-            simulates a years worth of crime based on transition table
-            """
+    def run_simulation(self):
+        """
+        A function that takes loaded transition table and a future population and
+        simulates a years worth of crime based on transition table
+        """
+        results = {'Month' : [],
+                   'Day' : [],
+                   'Person' : [],
+                   'crime' : []
+                   }
+
+        # for each month in transition table of crime probability
+        for month in self.transition_table.Month.unique():
+
+            # create a specific table for the given month
+            month_trans_table = self.transition_table[self.transition_table.Month.isin([month])]
+
+            # for each crime in Crime_description of crime table
+            for crime in month_trans_table.Crime_description.unique():
+
+                # narrow table to the given crime in the given month
+                month_crime = month_trans_table[month_trans_table.Crime_description.isin([crime])]
+
+                # create a dictionary of each demographic profile and their risk
+                cond_dict = month_crime[['demographic_profile','chance_crime_per_day_demo']]\
+                            .set_index('demographic_profile')['chance_crime_per_day_demo'].to_dict()
+
+                # run a simulation for each day in the given month
+                for day in range(1, month_trans_table.day_in_month.unique()[0] + 1):
+
+                    # create a boolean mask for each person in the future population
+                    # this corresponds to a 1 or 0 generated from randomly sampling based on
+                    # demographic probability of being victimised by the given crime
+                    # if not in that demographic return False
+                    # if True returns means that person was victimised
+                    bool_mask = self.future_population.demographic_profile.apply( \
+                                            lambda x: bool(int(np.random.choice([1,0], \
+                                                                                p=[cond_dict.get(x), \
+                                                                                1 - cond_dict.get(x)] \
+                                                                                ))) \
+                                                                                if cond_dict.get(x) is not None else False
+                                                                                )
+
+                    # slice future population array by generated boolean mask
+                    masked_victim_pop = self.future_population[bool_mask]
+
+                    # if that sliced array has greater than 0 rows
+                    # append data to results dict
+                    if masked_victim_pop.shape[0] != 0:
+
+                        results['Month'].append(month)
+
+                        results['Day'].append(day)
+
+                        results['Person'].append(masked_victim_pop.PID.tolist())
+
+                        results['crime'].append(crime)
+
+        # create dataframe from result dict
+        results_frame = pd.DataFrame.from_dict(results)
+
+        # explode person row into a row per person in returned list
+        results_frame = results_frame.explode('Person')
+
+        # set class variable 
+        self.simulation_run = results_frame
