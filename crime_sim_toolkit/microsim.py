@@ -122,9 +122,14 @@ class Microsimulator():
 
         population_grp_counts.columns = ['demographic_profile','demo_group_counts']
 
-        # merge grouped crime by demographic victim profile with total counts of
-        # demographic groups in population
-        crime_and_pop = pd.merge(crimes_grouped, population_grp_counts, on='demographic_profile')
+        # create a dict of population-group-ids and counts of those groups
+        pop_group_dict = population_grp_counts.set_index('demographic_profile')['demo_group_counts'].to_dict()
+
+        # map the dictionary onto the demographic profiles column in crimes dataframe to get populations
+        crimes_grouped['demo_group_counts'] = crimes_grouped.demographic_profile.map(pop_group_dict)
+
+        # assign this to a new variable
+        crime_and_pop = crimes_grouped
 
         # calculate rate of crime within population for a given month and demographic group
         crime_and_pop['crime_count_per_pop'] = crime_and_pop.crime_counts / crime_and_pop.demo_group_counts
@@ -135,7 +140,9 @@ class Microsimulator():
         crime_and_pop['chance_crime_per_day_demo'] = crime_and_pop['crime_count_per_pop'] / crime_and_pop['day_in_month']
 
         # set this final table as transition_table
-        self.transition_table = crime_and_pop[['Crime_description','Month','day_in_month','demographic_profile','chance_crime_per_day_demo']]
+        self.transition_table = crime_and_pop[['Crime_description','Month','day_in_month',
+                                               'demographic_profile','crime_counts',
+                                               'chance_crime_per_day_demo']]
 
 
     def load_seed_pop(self, seed_population_dir: str, demographic_cols=['DC1117EW_C_SEX','DC1117EW_C_AGE','DC2101EW_C_ETHPUK11']):
