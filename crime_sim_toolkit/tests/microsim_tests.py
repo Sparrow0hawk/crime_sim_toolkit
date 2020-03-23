@@ -22,12 +22,25 @@ class Test(unittest.TestCase):
 
         self.loaded_sim = Microsim.Microsimulator()
 
+        self.running_sim = Microsim.Microsimulator()
+
         self.loaded_sim.load_data(seed_year = 2017,
                                   police_data_dir = os.path.join(test_dir,'testing_data/test_microsim/sample_vic_data_WY2017.csv'),
                                   seed_pop_dir = os.path.join(test_dir,'testing_data/test_microsim/sample_seed_pop.csv'),
                                   spenser_demographic_cols = ['DC1117EW_C_SEX','DC1117EW_C_AGE','DC2101EW_C_ETHPUK11'],
                                   police_demographic_cols = ['sex','age','ethnicity']
                                   )
+
+        self.running_sim.load_data(seed_year = 2017,
+                                  police_data_dir = os.path.join(test_dir,'testing_data/test_microsim/sample_vic_data_WY2017.csv'),
+                                  seed_pop_dir = os.path.join(test_dir,'testing_data/test_microsim/sample_seed_pop.csv'),
+                                  spenser_demographic_cols = ['DC1117EW_C_SEX','DC1117EW_C_AGE','DC2101EW_C_ETHPUK11'],
+                                  police_demographic_cols = ['sex','age','ethnicity']
+                                  )
+
+        self.running_sim.load_future_pop('/home/osboxes/Code/forks/crime_sim_toolkit/crime_sim_toolkit/tests/testing_data/test_microsim/test_future_pop', 2019)
+
+        self.running_sim.generate_probability_table()
 
     def test_load_crime_data(self):
         """
@@ -114,6 +127,31 @@ class Test(unittest.TestCase):
         A test for the run_simulator function
         """
 
+        self.running_sim.run_simulation()
+
+        self.assertTrue(isinstance(self.running_sim.simulation_run, pd.DataFrame))
+
+        self.assertTrue(self.running_sim.simulation_run.shape[1], 4)
+
+        # test the proportions of overall crime generated versus
+        # seed data
+
+        seed_crime_prop = self.running_sim.crime_data.shape[0] / self.running_sim.seed_population.shape[0]
+
+        sim_crime_prop = self.running_sim.simulation_run.shape[0] / self.running_sim.future_population.shape[0]
+
+        # test if absolute crime proportions are within 5% tolerance
+        np.testing.assert_allclose(sim_crime_prop, seed_crime_prop, rtol=0.05)
+
+        # testing crime specific proportions are similar
+
+        seed_crimes = (self.running_sim.crime_data.Crime_description.value_counts() \
+                        / self.running_sim.crime_data.shape[0])[:3].sort_index()
+
+        sim_crimes = ((self.running_sim.simulation_run.crime.value_counts() \
+                       / self.running_sim.simulation_run.shape[0])[:3]).sort_index()
+
+        np.testing.assert_allclose(seed_crimes.to_numpy(), sim_crimes.to_numpy(), rtol=1.5)
 
 
 if __name__ == "__main__":
