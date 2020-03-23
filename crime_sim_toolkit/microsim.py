@@ -144,6 +144,10 @@ class Microsimulator():
                                                'demographic_profile','crime_counts',
                                                'chance_crime_per_day_demo']]
 
+        # drop NaN values in daily probabilities
+        # NaN is probably derived from lack of subpopulation in demographic data
+        self.transition_table = self.transition_table.dropna(subset=['chance_crime_per_day_demo'])
+
 
     def load_seed_pop(self, seed_population_dir: str, demographic_cols=['DC1117EW_C_SEX','DC1117EW_C_AGE','DC2101EW_C_ETHPUK11']):
         """
