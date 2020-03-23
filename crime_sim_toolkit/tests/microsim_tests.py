@@ -103,11 +103,11 @@ class Test(unittest.TestCase):
 
         self.loaded_sim.generate_probability_table()
 
-        self.assertEqual(self.loaded_sim.crime_data.shape[0], self.loaded_sim.transition_table.shape[0])
+        self.assertEqual(self.loaded_sim.crime_data.shape[0], self.loaded_sim.transition_table.crime_counts.sum())
 
         self.assertTrue(isinstance(self.loaded_sim.transition_table, pd.DataFrame))
 
-        self.assertAlmostEqual(self.loaded_sim.transition_table.chance_crime_per_day_demo[10], 0.00714, places=5)
+        self.assertAlmostEqual(self.loaded_sim.transition_table.chance_crime_per_day_demo[10], 0.000512, places=4)
 
     def test_run_simulation(self):
         """
