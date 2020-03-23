@@ -23,7 +23,7 @@ class Test(unittest.TestCase):
         self.loaded_sim = Microsim.Microsimulator()
 
         self.loaded_sim.load_data(seed_year = 2017,
-                                  police_data_dir = os.path.join(test_dir,'testing_data/test_microsim/to_profile_data.csv'),
+                                  police_data_dir = os.path.join(test_dir,'testing_data/test_microsim/sample_vic_data_WY2017.csv'),
                                   seed_pop_dir = os.path.join(test_dir,'testing_data/test_microsim/sample_seed_pop.csv'),
                                   spenser_demographic_cols = ['DC1117EW_C_SEX','DC1117EW_C_AGE','DC2101EW_C_ETHPUK11'],
                                   police_demographic_cols = ['sex','age','ethnicity']
