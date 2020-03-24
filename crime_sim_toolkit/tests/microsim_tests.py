@@ -146,7 +146,7 @@ class Test(unittest.TestCase):
         sim_crime_prop = self.running_sim.simulation_run.shape[0] / self.running_sim.future_population.shape[0]
 
         # test if absolute crime proportions are within 5% tolerance
-        np.testing.assert_allclose(sim_crime_prop, seed_crime_prop, rtol=0.05)
+        np.testing.assert_allclose(sim_crime_prop, seed_crime_prop, rtol=0.01, atol=0.05)
 
         # testing crime specific proportions are similar
 
@@ -156,7 +156,7 @@ class Test(unittest.TestCase):
         sim_crimes = ((self.running_sim.simulation_run.crime.value_counts() \
                        / self.running_sim.simulation_run.shape[0])[:3]).sort_index()
 
-        np.testing.assert_allclose(seed_crimes.to_numpy(), sim_crimes.to_numpy(), rtol=1.5)
+        np.testing.assert_allclose(seed_crimes.to_numpy(), sim_crimes.to_numpy(), atol=1.5, rtol=1.0)
 
 
 if __name__ == "__main__":
