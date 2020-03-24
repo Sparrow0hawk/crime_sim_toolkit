@@ -38,7 +38,9 @@ class Test(unittest.TestCase):
                                   police_demographic_cols = ['sex','age','ethnicity']
                                   )
 
-        self.running_sim.load_future_pop('/home/osboxes/Code/forks/crime_sim_toolkit/crime_sim_toolkit/tests/testing_data/test_microsim/test_future_pop', 2019)
+        self.running_sim.load_future_pop(synthetic_population_dir='/home/osboxes/Code/forks/crime_sim_toolkit/crime_sim_toolkit/tests/testing_data/test_microsim/test_future_pop',
+                                         year=2019,
+                                         demographic_cols=['DC1117EW_C_SEX','DC1117EW_C_AGE','DC2101EW_C_ETHPUK11'])
 
         self.running_sim.generate_probability_table()
 
@@ -48,8 +50,8 @@ class Test(unittest.TestCase):
         """
 
         self.test_sim.load_crime_data(year = 2017.0,
-                                      directory = os.path.join(test_dir,'testing_data/test_microsim/sample_vic_data_WY2017.csv')
-                                      )
+                                      directory = os.path.join(test_dir,'testing_data/test_microsim/sample_vic_data_WY2017.csv'),
+                                      demographic_cols=['sex','age','ethnicity'])
 
         self.assertTrue(isinstance(self.test_sim.crime_data, pd.DataFrame))
 
@@ -57,8 +59,8 @@ class Test(unittest.TestCase):
         with self.assertRaises(SystemExit) as cm:
 
             self.test_sim.load_crime_data(year = 2017.0,
-                                          directory = os.path.join(test_dir,'testing_data/test_microsim/sample_vic_data_WY2018.csv')
-                                         )
+                                          directory = os.path.join(test_dir,'testing_data/test_microsim/sample_vic_data_WY2018.csv'),
+                                         demographic_cols=['sex','age','ethnicity'])
 
         self.assertEqual(cm.exception.code, 0)
 
@@ -87,7 +89,8 @@ class Test(unittest.TestCase):
         and ensuring demographic columns are combined
         """
 
-        self.test_sim.load_seed_pop(os.path.join(test_dir,'testing_data/test_microsim/sample_seed_pop.csv'))
+        self.test_sim.load_seed_pop(os.path.join(test_dir,'testing_data/test_microsim/sample_seed_pop.csv'),
+                                    demographic_cols=['DC1117EW_C_SEX','DC1117EW_C_AGE','DC2101EW_C_ETHPUK11'])
 
         self.assertTrue(isinstance(self.test_sim.seed_population, pd.DataFrame))
 
@@ -96,7 +99,8 @@ class Test(unittest.TestCase):
         Test function for loading future_population
         """
         self.test_sim.load_future_pop(synthetic_population_dir=os.path.join(test_dir,'testing_data/test_microsim/test_future_pop'),
-                                      year=2019)
+                                      year=2019,
+                                      demographic_cols=['DC1117EW_C_SEX','DC1117EW_C_AGE','DC2101EW_C_ETHPUK11'])
 
         self.assertTrue(isinstance(self.test_sim.future_population, pd.DataFrame))
 
@@ -107,7 +111,8 @@ class Test(unittest.TestCase):
         with self.assertRaises(ValueError) as context:
 
             self.test_sim.load_future_pop(synthetic_population_dir=os.path.join(test_dir,'testing_data/test_microsim'),
-                                          year=2019)
+                                          year=2019,
+                                          demographic_cols=['DC1117EW_C_SEX','DC1117EW_C_AGE','DC2101EW_C_ETHPUK11'])
 
     def test_get_prob_table(self):
         """
