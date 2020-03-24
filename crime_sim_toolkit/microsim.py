@@ -37,14 +37,14 @@ class Microsimulator():
 
         self.load_seed_pop(seed_population_dir=seed_pop_dir, demographic_cols=spenser_demographic_cols)
 
-    def load_crime_data(self, year: int, directory: str, demographic_cols=['sex','age','ethnicity']):
+    def load_crime_data(self, year: int, directory: str, demographic_cols: list):
         """
         Load individual police crime reports with victims data into
         Microsimulator object
 
         :param: year int: specify seed year of victim data
         :param: directory str: string of full path to data
-        :param: demographic_cols list:
+        :param: demographic_cols list: suggested preset ['sex','age','ethnicity']
 
         """
 
@@ -77,14 +77,14 @@ class Microsimulator():
         self.crime_data = self.create_combined_profiles(self.crime_data, demographic_cols=demographic_cols)
 
 
-    def create_combined_profiles(self, dataframe, demographic_cols=['sex','age','ethnicity']):
+    def create_combined_profiles(self, dataframe, demographic_cols: list):
         """
         A function for combining individual demographic traits into one hyphen separated
         string.
 
         :param: dataframe pd.DataFrame: a pandas dataframe containing demographic cols
         :param: demographic_cols list: list of strings corresponding to demographic
-        trait columns
+        trait columns, suggested preset ['sex','age','ethnicity']
 
         TODO: this could be a staticmethod? That is subsequently called within other functions
               in the class workflow
@@ -148,7 +148,7 @@ class Microsimulator():
                                                'chance_crime_per_day_demo']]
 
 
-    def load_seed_pop(self, seed_population_dir: str, demographic_cols=['DC1117EW_C_SEX','DC1117EW_C_AGE','DC2101EW_C_ETHPUK11']):
+    def load_seed_pop(self, seed_population_dir: str, demographic_cols: list):
         """
         A function for loading the specific seed population for generating
         transition probailities.
@@ -156,7 +156,7 @@ class Microsimulator():
         : param: seed_population_dir string: a string of the path to the SPENSER synthetic population
                  file
         : param: demographic_cols list: list of strings corresponding to demographic
-                 trait columns - preset to default to spenser column names
+                 trait columns - suggest to use spenser columns ['DC1117EW_C_SEX','DC1117EW_C_AGE','DC2101EW_C_ETHPUK11']
         """
 
         self.seed_population = pd.read_csv(seed_population_dir)
@@ -165,7 +165,7 @@ class Microsimulator():
                                                         demographic_cols=demographic_cols)
 
 
-    def load_future_pop(self, synthetic_population_dir: str, year: int, demographic_cols=['DC1117EW_C_SEX','DC1117EW_C_AGE','DC2101EW_C_ETHPUK11']):
+    def load_future_pop(self, synthetic_population_dir: str, year: int, demographic_cols: list):
         """
         A function for loading the synthetic future populations
 
@@ -174,7 +174,7 @@ class Microsimulator():
         : param: year int: a integer the year of the synthetic population that
                  the user wishes to load
         : param: demographic_cols list: list of strings corresponding to demographic
-                 trait columns - preset to default to spenser column names
+                 trait columns - suggest to use spenser columns ['DC1117EW_C_SEX','DC1117EW_C_AGE','DC2101EW_C_ETHPUK11']
         """
 
         # section for testing if synthetic_population_dir ends in /
@@ -277,5 +277,5 @@ class Microsimulator():
         # explode person row into a row per person in returned list
         results_frame = results_frame.explode('Person')
 
-        # set class variable 
+        # set class variable
         self.simulation_run = results_frame
