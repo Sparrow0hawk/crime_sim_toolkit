@@ -213,10 +213,12 @@ class Microsimulator():
             raise type(e)(str(e) + '\nNo data files to load. Following files found in directory passed: '+str(file_list))
 
 
-    def run_simulation(self):
+    def run_simulation(self, future_population):
         """
         A function that takes loaded transition table and a future population and
         simulates a years worth of crime based on transition table
+
+        :param: future_population pd.DataFrame: dataframe of future population
         """
         results = {'Month' : [],
                    'Day' : [],
@@ -248,7 +250,7 @@ class Microsimulator():
                     # demographic probability of being victimised by the given crime
                     # if not in that demographic return False
                     # if True returns means that person was victimised
-                    bool_mask = self.future_population.demographic_profile.apply( \
+                    bool_mask = future_population.demographic_profile.apply( \
                                             lambda x: bool(int(np.random.choice([1,0], \
                                                                                 p=[cond_dict.get(x), \
                                                                                 1 - cond_dict.get(x)] \
@@ -257,7 +259,7 @@ class Microsimulator():
                                                                                 )
 
                     # slice future population array by generated boolean mask
-                    masked_victim_pop = self.future_population[bool_mask]
+                    masked_victim_pop = future_population[bool_mask]
 
                     # if that sliced array has greater than 0 rows
                     # append data to results dict
@@ -278,4 +280,26 @@ class Microsimulator():
         results_frame = results_frame.explode('Person')
 
         # set class variable
-        self.simulation_run = results_frame
+        return results_frame
+
+
+    def run_mp_simulation(self, nprocs):
+        """
+        A method for performing the simulation using multiprocessing
+        to chunk the population dataset and run multiple simulations in
+        parrallel on each chunk of data before recombining them into the final
+        output
+
+        :param: nprocs int: number of processors avaiable to use
+        """
+
+        # split data into chunks based on number of processors
+        split_data = np.array_split(self.future_population, nprocs)
+
+        results = []
+
+        pool = Pool(processes=nprocs)
+
+        results += pool.map(run_simulation, split_data)
+
+        return pd.concat(results)
