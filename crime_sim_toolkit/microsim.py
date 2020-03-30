@@ -8,6 +8,7 @@ import glob
 import pandas as pd
 import numpy as np
 from crime_sim_toolkit import utils
+import multiprocessing as mp
 
 class Microsimulator():
     """
@@ -283,7 +284,7 @@ class Microsimulator():
         return results_frame
 
 
-    def run_mp_simulation(self, nprocs):
+    def run_mp_simulation(self):
         """
         A method for performing the simulation using multiprocessing
         to chunk the population dataset and run multiple simulations in
@@ -293,13 +294,15 @@ class Microsimulator():
         :param: nprocs int: number of processors avaiable to use
         """
 
+        nprocs = mp.cpu_count()
+
         # split data into chunks based on number of processors
         split_data = np.array_split(self.future_population, nprocs)
 
         results = []
 
-        pool = Pool(processes=nprocs)
+        pool = mp.Pool(processes=nprocs)
 
-        results += pool.map(run_simulation, split_data)
+        results += pool.map(self.run_simulation, split_data)
 
         return pd.concat(results)
