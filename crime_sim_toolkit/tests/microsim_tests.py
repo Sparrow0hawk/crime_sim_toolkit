@@ -132,18 +132,18 @@ class Test(unittest.TestCase):
         A test for the run_simulator function
         """
 
-        self.running_sim.run_simulation()
+        sim_run01 = self.running_sim.run_simulation(future_population = self.running_sim.future_population)
 
-        self.assertTrue(isinstance(self.running_sim.simulation_run, pd.DataFrame))
+        self.assertTrue(isinstance(sim_run01, pd.DataFrame))
 
-        self.assertTrue(self.running_sim.simulation_run.shape[1], 4)
+        self.assertTrue(sim_run01.shape[1], 4)
 
         # test the proportions of overall crime generated versus
         # seed data
 
         seed_crime_prop = self.running_sim.crime_data.shape[0] / self.running_sim.seed_population.shape[0]
 
-        sim_crime_prop = self.running_sim.simulation_run.shape[0] / self.running_sim.future_population.shape[0]
+        sim_crime_prop = sim_run01.shape[0] / self.running_sim.future_population.shape[0]
 
         # test if absolute crime proportions are within 5% tolerance
         np.testing.assert_allclose(sim_crime_prop, seed_crime_prop, rtol=0.01, atol=0.05)
@@ -153,8 +153,8 @@ class Test(unittest.TestCase):
         seed_crimes = (self.running_sim.crime_data.Crime_description.value_counts() \
                         / self.running_sim.crime_data.shape[0])[:3].sort_index()
 
-        sim_crimes = ((self.running_sim.simulation_run.crime.value_counts() \
-                       / self.running_sim.simulation_run.shape[0])[:3]).sort_index()
+        sim_crimes = ((sim_run01.crime.value_counts() \
+                       / sim_run01.shape[0])[:3]).sort_index()
 
         np.testing.assert_allclose(seed_crimes.to_numpy(), sim_crimes.to_numpy(), atol=1.5, rtol=1.0)
 
