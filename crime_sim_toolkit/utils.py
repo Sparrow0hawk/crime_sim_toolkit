@@ -93,11 +93,6 @@ def populate_offence(crime_frame):
     # format columns to remove spaces
     crime_frame.columns = crime_frame.columns.str.replace(' ','_')
 
-    if 'Week' in crime_frame.columns:
-        time_res = 'Week'
-    else:
-        time_res = 'datetime'
-
     # initially load reference tables
     LSOA_pf_reference = pd.read_csv(pkg_resources.resource_filename(resource_package, 'src/LSOA_data/PoliceforceLSOA.csv'),
                                     index_col=0)
@@ -152,16 +147,6 @@ def populate_offence(crime_frame):
         list_of_slices.append(shortened_frame)
 
     populated_frame = pd.concat(list_of_slices)
-
-    # reorder columns for ABM
-
-    if time_res == 'Week':
-
-        populated_frame = populated_frame[['UID','datetime',time_res,'Crime_description','Crime_type','LSOA_code','Police_force']]
-
-    else:
-
-        populated_frame = populated_frame[['UID','datetime','Crime_description','Crime_type','LSOA_code','Police_force']]
 
     return populated_frame
 
