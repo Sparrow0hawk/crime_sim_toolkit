@@ -18,6 +18,9 @@ resource_package = 'crime_sim_toolkit'
 
 test_dir = os.path.dirname(os.path.abspath(__file__))
 
+# Could be any dot-separated package/module name or a "Requirement"
+resource_package = 'crime_sim_toolkit'
+
 class Test(unittest.TestCase):
 
     def setUp(self):
