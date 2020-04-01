@@ -25,20 +25,20 @@ class Test(unittest.TestCase):
         self.running_sim = Microsim.Microsimulator()
 
         self.loaded_sim.load_data(seed_year = 2017,
-                                  police_data_dir = os.path.join(test_dir,'testing_data/test_microsim/sample_vic_data_WY2017.csv'),
-                                  seed_pop_dir = os.path.join(test_dir,'testing_data/test_microsim/sample_seed_pop.csv'),
+                                  police_data_dir = pkg_resources.resource_filename(resource_package,'tests/testing_data/test_microsim/sample_vic_data_WY2017.csv'),
+                                  seed_pop_dir = pkg_resources.resource_filename(resource_package,'tests/testing_data/test_microsim/sample_seed_pop.csv'),
                                   spenser_demographic_cols = ['DC1117EW_C_SEX','DC1117EW_C_AGE','DC2101EW_C_ETHPUK11'],
                                   police_demographic_cols = ['sex','age','ethnicity']
                                   )
 
         self.running_sim.load_data(seed_year = 2017,
-                                  police_data_dir = os.path.join(test_dir,'testing_data/test_microsim/sample_vic_data_WY2017.csv'),
-                                  seed_pop_dir = os.path.join(test_dir,'testing_data/test_microsim/sample_seed_pop.csv'),
+                                  police_data_dir = pkg_resources.resource_filename(resource_package, 'tests/testing_data/test_microsim/sample_vic_data_WY2017.csv'),
+                                  seed_pop_dir = pkg_resources.resource_filename(resource_package, 'tests/testing_data/test_microsim/sample_seed_pop.csv'),
                                   spenser_demographic_cols = ['DC1117EW_C_SEX','DC1117EW_C_AGE','DC2101EW_C_ETHPUK11'],
                                   police_demographic_cols = ['sex','age','ethnicity']
                                   )
 
-        self.running_sim.load_future_pop(synthetic_population_dir='/home/osboxes/Code/forks/crime_sim_toolkit/crime_sim_toolkit/tests/testing_data/test_microsim/test_future_pop',
+        self.running_sim.load_future_pop(synthetic_population_dir=pkg_resources.resource_filename(resource_package, 'tests/testing_data/test_microsim/test_future_pop'),
                                          year=2019,
                                          demographic_cols=['DC1117EW_C_SEX','DC1117EW_C_AGE','DC2101EW_C_ETHPUK11'])
 
@@ -50,7 +50,7 @@ class Test(unittest.TestCase):
         """
 
         self.test_sim.load_crime_data(year = 2017.0,
-                                      directory = os.path.join(test_dir,'testing_data/test_microsim/sample_vic_data_WY2017.csv'),
+                                      directory = pkg_resources.resource_filename(resource_package, 'tests/testing_data/test_microsim/sample_vic_data_WY2017.csv'),
                                       demographic_cols=['sex','age','ethnicity'])
 
         self.assertTrue(isinstance(self.test_sim.crime_data, pd.DataFrame))
@@ -59,7 +59,7 @@ class Test(unittest.TestCase):
         with self.assertRaises(SystemExit) as cm:
 
             self.test_sim.load_crime_data(year = 2017.0,
-                                          directory = os.path.join(test_dir,'testing_data/test_microsim/sample_vic_data_WY2018.csv'),
+                                          directory = pkg_resources.resource_filename(resource_package, 'tests/testing_data/test_microsim/sample_vic_data_WY2018.csv'),
                                          demographic_cols=['sex','age','ethnicity'])
 
         self.assertEqual(cm.exception.code, 0)
@@ -89,7 +89,7 @@ class Test(unittest.TestCase):
         and ensuring demographic columns are combined
         """
 
-        self.test_sim.load_seed_pop(os.path.join(test_dir,'testing_data/test_microsim/sample_seed_pop.csv'),
+        self.test_sim.load_seed_pop(pkg_resources.resource_filename(resource_package, 'tests/testing_data/test_microsim/sample_seed_pop.csv'),
                                     demographic_cols=['DC1117EW_C_SEX','DC1117EW_C_AGE','DC2101EW_C_ETHPUK11'])
 
         self.assertTrue(isinstance(self.test_sim.seed_population, pd.DataFrame))
@@ -98,7 +98,7 @@ class Test(unittest.TestCase):
         """
         Test function for loading future_population
         """
-        self.test_sim.load_future_pop(synthetic_population_dir=os.path.join(test_dir,'testing_data/test_microsim/test_future_pop'),
+        self.test_sim.load_future_pop(synthetic_population_dir=pkg_resources.resource_filename(resource_package, 'tests/testing_data/test_microsim/test_future_pop'),
                                       year=2019,
                                       demographic_cols=['DC1117EW_C_SEX','DC1117EW_C_AGE','DC2101EW_C_ETHPUK11'])
 
@@ -110,7 +110,7 @@ class Test(unittest.TestCase):
 
         with self.assertRaises(ValueError) as context:
 
-            self.test_sim.load_future_pop(synthetic_population_dir=os.path.join(test_dir,'testing_data/test_microsim'),
+            self.test_sim.load_future_pop(synthetic_population_dir=pkg_resources.resource_filename(resource_package, 'tests/testing_data/test_microsim'),
                                           year=2019,
                                           demographic_cols=['DC1117EW_C_SEX','DC1117EW_C_AGE','DC2101EW_C_ETHPUK11'])
 
