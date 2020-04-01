@@ -10,10 +10,6 @@ branches:
     - release
     - develop-microsim
 
-addons:
-  sonarcloud:
-    organization: "sparrow0hawk"
-
 install:
   - pip install -r requirements.txt
 
@@ -23,4 +19,3 @@ script:
   - coverage run -m pytest crime_sim_toolkit/tests/
   - coverage xml
   - python-codacy-coverage -r coverage.xml
-  - sonar-scanner -Dsonar.login=$SONAR_TOKEN
