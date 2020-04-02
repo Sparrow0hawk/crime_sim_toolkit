@@ -13,7 +13,7 @@ def main():
     simulation_0 = Microsim.Microsimulator()
 
     # specifing the directory path to where the test data is for this example
-    data_dir = '/content/'
+    data_dir = '.'
 
     simulation_0.load_data(
                            # we specify the seed year, this is the year from which crime probabilities are determined
