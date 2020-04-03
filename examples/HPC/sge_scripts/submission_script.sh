@@ -15,6 +15,6 @@
 #$ -M a.coleman1@leeds.ac.uk
 
 # main job
-conda activate crime-sim
+source activate crime-sim
 
 python microsim_batch.py
