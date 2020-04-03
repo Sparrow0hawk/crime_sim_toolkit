@@ -10,7 +10,6 @@ import numpy as np
 import pandas as pd
 import glob
 from crime_sim_toolkit import utils
-import pkg_resources
 
 def main():
 
