@@ -265,8 +265,8 @@ class Microsimulator():
                     # if that sliced array has greater than 0 rows
                     # append data to results dict
                     if masked_victim_pop.shape[0] != 0:
-
-                        results['Month'].append(month)
+                      
+                        results['Month'].append(month.split("-")[1])
 
                         results['Day'].append(day)
 
