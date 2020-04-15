@@ -50,6 +50,6 @@ def main():
 
     sim_output.to_csv('simulation_output_'+str(os.environ['JOB_ID'])+'.csv')
 
-if __name__ = '__main__':
+if __name__ == '__main__':
 
     main()
