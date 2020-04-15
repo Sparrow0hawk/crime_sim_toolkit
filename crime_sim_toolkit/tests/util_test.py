@@ -122,5 +122,20 @@ class Test(unittest.TestCase):
 
         self.assertEqual(self.testneg.loc[4,'Counts'], 10)
 
+    def test_reverse_offence(self):
+        """
+        A series of tests for the util.reverse_offence function
+        """
+
+        self.data = pd.read_csv(pkg_resources.resource_filename(resource_package, 'tests/testing_data/reverse_Crimedescription_test.csv'),
+                                index_col=False)
+
+        self.output = utils.reverse_offence(self.data)
+
+        self.assertTrue(isinstance(self.output, pd.DataFrame))
+
+        pd.testing.assert_series_equal(self.output.Crime_type.str.lower(), self.output.Crime_category,
+                                       check_names=False)
+
 if __name__ == "__main__":
     unittest.main(verbosity=2)

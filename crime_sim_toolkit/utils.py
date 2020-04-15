@@ -226,3 +226,24 @@ def days_in_month_dict(dataframe):
         date_dict[date] = monthdays
 
     return date_dict
+
+def reverse_offence(dataframe):
+    """
+    A function that returns the Police UK Crime category (broad) based on offence description column
+    created by populate_offence util function.
+    """
+
+    descriptions_reference = pd.read_csv(pkg_resources.resource_filename(resource_package, 'src/prc-pfa-201718_new.csv'),
+                             index_col=0)
+
+    reference_dict = descriptions_reference[['Policeuk_Cat','Offence_Description']].set_index('Offence_Description')['Policeuk_Cat'].to_dict()
+
+    # convert to lowercase
+    reference_dict = dict((idx.lower(), val.lower()) for idx, val in reference_dict.items())
+
+    # manually add in anti-social behaviour (as not present in reference table)
+    reference_dict['anti-social behaviour'] = 'anti-social behaviour'
+
+    dataframe['Crime_category'] = dataframe.Crime_description.map(reference_dict)
+
+    return dataframe
