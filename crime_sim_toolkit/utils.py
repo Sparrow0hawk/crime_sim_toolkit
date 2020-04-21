@@ -4,6 +4,7 @@ Utility functions for general use
 
 import pandas as pd
 import numpy as np
+from calendar import monthrange
 import pkg_resources
 
 resource_package = 'crime_sim_toolkit'
@@ -93,11 +94,6 @@ def populate_offence(crime_frame):
     # format columns to remove spaces
     crime_frame.columns = crime_frame.columns.str.replace(' ','_')
 
-    if 'Week' in crime_frame.columns:
-        time_res = 'Week'
-    else:
-        time_res = 'datetime'
-
     # initially load reference tables
     LSOA_pf_reference = pd.read_csv(pkg_resources.resource_filename(resource_package, 'src/LSOA_data/PoliceforceLSOA.csv'),
                                     index_col=0)
@@ -153,16 +149,6 @@ def populate_offence(crime_frame):
 
     populated_frame = pd.concat(list_of_slices)
 
-    # reorder columns for ABM
-
-    if time_res == 'Week':
-
-        populated_frame = populated_frame[['UID','datetime',time_res,'Crime_description','Crime_type','LSOA_code','Police_force']]
-
-    else:
-
-        populated_frame = populated_frame[['UID','datetime','Crime_description','Crime_type','LSOA_code','Police_force']]
-
     return populated_frame
 
 
@@ -212,3 +198,52 @@ def sample_perturb(counts_frame, crime_type, pct_change):
     new_counts_frame['Counts'] = new_counts_frame['Counts'].astype(int)
 
     return new_counts_frame
+
+def days_in_month_dict(dataframe):
+    """
+    Simple function that takes a dataframe with Month column (as default in police uk data)
+    and returns a dictionary of Month (year-mon format) with number of days in that month
+    """
+
+    date_lst = []
+
+    days_in_month_lst = []
+
+    date_dict = dict()
+
+    for date in dataframe['Month'].unique().tolist():
+
+        year = date.split('-')[0]
+
+        month = date.split('-')[1]
+
+        monthdays = monthrange(int(year), int(month))[1]
+
+        date_lst.append(date)
+
+        days_in_month_lst.append(monthdays)
+
+        date_dict[date] = monthdays
+
+    return date_dict
+
+def reverse_offence(dataframe):
+    """
+    A function that returns the Police UK Crime category (broad) based on offence description column
+    created by populate_offence util function.
+    """
+
+    descriptions_reference = pd.read_csv(pkg_resources.resource_filename(resource_package, 'src/prc-pfa-201718_new.csv'),
+                             index_col=0)
+
+    reference_dict = descriptions_reference[['Policeuk_Cat','Offence_Description']].set_index('Offence_Description')['Policeuk_Cat'].to_dict()
+
+    # convert to lowercase
+    reference_dict = dict((idx.lower(), val.lower()) for idx, val in reference_dict.items())
+
+    # manually add in anti-social behaviour (as not present in reference table)
+    reference_dict['anti-social behaviour'] = 'anti-social behaviour'
+
+    dataframe['Crime_category'] = dataframe.Crime_description.map(reference_dict)
+
+    return dataframe
