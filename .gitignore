@@ -7,6 +7,7 @@ __pycache__
 crime_sim_toolkit/output/*
 crime_sim_toolkit/data/policedata/*
 dist/*
+build/*
 scrapbook/*
 data_manipulation/outputs/*
 data_manipulation/data/*
@@ -29,3 +30,4 @@ htmlcov/*
 .coveragerc
 coverage.xml
 request_debug.sh
+upload_to_pypi.sh
