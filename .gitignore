@@ -8,7 +8,8 @@ crime_sim_toolkit/output/*
 crime_sim_toolkit/data/policedata/*
 dist/*
 scrapbook/*
-build/*
+data_manipulation/outputs/*
+data_manipulation/data/*
 
 # specific files
 scrapbook.ipynb
@@ -28,7 +29,3 @@ htmlcov/*
 .coveragerc
 coverage.xml
 request_debug.sh
-
-# vscode
-.vscode
-build_send2pip.sh
