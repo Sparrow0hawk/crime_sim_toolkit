@@ -13,34 +13,52 @@ from crime_sim_toolkit import utils
 
 def main():
 
+    # load all SPENSER populations for west yorkshire
+    # populations in SPENSER are outputted at local authority level
+    # the load_pop function opens all files and combines them into one
+    # dataframe which here it writes out to disk
     load_pop(2017).to_csv('WY_pop_2017.csv', index=False)
 
     load_pop(2018).to_csv('WY_pop_2018.csv', index=False)
 
-    # we'll use this crime dataframe to add demographic data
+    # use the load_and_squash function to load all police data for 2017
+    # (police data exists as series of sub directories for each month)
+    # and combine it into one dataframe
     big_crime_data = load_and_squash('wyp_data_2017/')
 
-
+    # load the population for 2017 to use for applying demographic proportions
+    # to crime data
     pop_2017 = load_pop(2017)
 
+    # on the population dataframe create a column of demographic class
+    # with the format "SEX-AGE-ETHNICITY" by combining the separate
+    # demographic category columns
     pop_2017['multi_cat_col'] = pop_2017.DC1117EW_C_SEX.astype(str) \
                                 + '-' + pop_2017.DC1117EW_C_AGE.astype(str) \
                                 + '-' + pop_2017.DC2101EW_C_ETHPUK11.astype(str)
 
+    # create a pandas series of the proportion of each demographic class within the population
     demographic_prop = pop_2017['multi_cat_col'].value_counts() / pop_2017['multi_cat_col'].value_counts().sum()
 
+    # we need to add demographic data to the crime data
+    # to do that we take the proportions calculated above and randomly select a demographic class
+    # by weighting choices based on the demographic proportions
+    # these selected demographic proportions are added as a new column
     big_crime_data['victim_profile'] = big_crime_data\
     .apply(lambda x: np.random.choice(demographic_prop.index, p=demographic_prop.values), axis=1)
 
-    # we now need to split the victim_profile column (as we don't actually expect data to look like this)
-
+    # because we don't actually expect real data to have this combined demographic class column
+    # so now we  split the victim_profile column into three separate columns
     expanded_demo = big_crime_data['victim_profile'].str.split('-', expand=True)
 
     expanded_demo.columns = ['sex','age','ethnicity']
 
+    # and stick these columns back on the dataframe
     big_crime_data = pd.concat([big_crime_data, expanded_demo], axis=1)
 
     # we will also now drop lines with NaN in LSOA_code columns
+    # we do this because of issues with the populate_offence function below
+    # it drops 3-4% of offences in 2017 and 2018 respectively
     big_crime_data = big_crime_data.dropna(subset=['LSOA code'])
 
     big_crime_data = utils.populate_offence(big_crime_data)
@@ -92,3 +110,6 @@ def load_pop(year=2017):
     combined_files.reset_index(inplace=True, drop=True)
 
     return combined_files
+
+if __name__ == '__main__':
+    main()
