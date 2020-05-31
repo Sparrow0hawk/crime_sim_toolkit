@@ -17,4 +17,5 @@ script:
   - python setup.py install
   - coverage run -m pytest crime_sim_toolkit/tests/
   - coverage xml
-  - python-codacy-coverage -r coverage.xml
+  - bash <(wget -q -O - https://coverage.codacy.com/get.sh) report -l python -r coverage.xml
+
