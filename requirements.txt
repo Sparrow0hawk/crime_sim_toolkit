@@ -6,7 +6,7 @@ coverage==4.5.4
 cycler==0.10.0
 folium==0.10.0
 idna==2.8
-Jinja2==2.10.1
+Jinja2==2.11.3
 joblib==0.13.2
 kiwisolver==1.1.0
 MarkupSafe==1.1.1
